@@ -1,10 +1,10 @@
--*- mode: text; coding: utf-8; -*-
+<!-- -*- coding: utf-8; -*- -->
 
 #Introducción
 
 Alrededor de julio de 2004 David Heinemeier Hansson lanzó la versión pública del framework Ruby on Rails, el cual surgió como consecuencia del desarrollo de una aplicación llamada Basecamp. Después de tres años, el 7 de Diciembre de 2007 se publicó Ruby on Rails 2.0 con una cantidad importante de cambios.
 
-Six months have passed since then, and during this time more than **1400 developers** from all around the world have contributed  **1600 patches** to the framework. Today, June 1st 2008, version 2.1 of the Ruby on Rails framework was released.
+Seis meses después, y durante este todo este tiempo han contribuido más de **1400 desarrolladores** alrededor de todo el mundo con **1600 parches** para elframework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.
 
 Major new features according to David:
 
@@ -21,7 +21,7 @@ As always, to update or install the new version:
 
 ##Acknowledgment
 
-To Marcos TapajÃ³s, co-author of this book. If it wasn't for him, you probably you wouldn't be reading this right now.
+To Marcos Tapajós, co-author of this book. If it wasn't for him, you probably you wouldn't be reading this right now.
 
 To Daniel Lopes who made the beautiful cover for this edition.
 
