@@ -1,0 +1,4 @@
+# ActiveSupport
+
+Active Support is a collection of useful classes and default libraries extensions which were considered useful for Ruby on Rails Applications.
+(wikipedia)

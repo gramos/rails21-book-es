@@ -1,0 +1,4 @@
+# ActionPack
+
+Comprises ActionView (visualization generation for end user, like HTML, XML, JavaScript, and etc) and ActionController (business flow control)
+(adapted from wikipedia)
