@@ -99,7 +99,7 @@ El método **has\_one** ahora tiene la opción **through**. Esta funciona como *
 
 ### Has\_one con :source\_type
 
-El método **has\_one :through** que acabamos de ver, puede también tomar **:source\_type**. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:
+El método **has\_one :through** que acabamos de ver, puede también tomar **:source\_type** como argumento. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:
 
         class Client < ActiveRecord::Base
           has_many :contact_cards
@@ -148,163 +148,175 @@ Note que ahora tenemos dos maneras diferentes de recuperar nuestros contactos y 
         Client.find(:first).people_contacts
         Client.find(:first).business_contacts
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Named_scope
-              
-The *has\_finder* gem has been added to Rails with a different name: **named\_scope**.
-                       
-To fully understand what this adition brought to Rails let's look at the following examples:
 
-	class Article < ActiveRecord::Base
-	  named_scope :published, :conditions => {:published => true}
-	  named_scope :containing_the_letter_a, :conditions => "body LIKE '%a%’"
-	end 
+La gema  *has\_finder*  ha sido incluida en Rails pero con un nombre diferente: **named\_scope**.
 
-	Article.published.paginate(:page => 1)
-	Article.published.containing_the_letter_a.count
-	Article.containing_the_letter_a.find(:first)
-	Article.containing_the_letter_a.find(:all, :conditions => {…})
- 
-Instead of creating a new method named **published** to return all published posts, I'm using a **named\_scope** to do it for me. But it can go even further than this. Let's look at another example of how it can be used:
+Para entender lo que significa este agregado en Rails vamos a ver los siguientes ejemplos:
 
-	named_scope :written_before, lambda { |time|
-	  { :conditions => ['written_on < ?', time] }
-	}
+        class Article < ActiveRecord::Base
+          named_scope :published, :conditions => {:published => true}
+          named_scope :containing_the_letter_a, :conditions => "body LIKE '%a%â€™"
+        end
 
-	named_scope :anonymous_extension do
-	  def one
-	    1
-	  end
-	end
+        Article.published.paginate(:page => 1)
+        Article.published.containing_the_letter_a.count
+        Article.containing_the_letter_a.find(:first)
+        Article.containing_the_letter_a.find(:all, :conditions => {â€¦})
 
-	named_scope :named_extension, :extend => NamedExtension 
+En vez de crear un método nuevo llamado **published** para retornar todos los posts publicados, estoy usando un **named\_scope** para que lo haga por mí. Pero puedo ir más allá que esto. Vamos a ver otro ejemplo para ver como se puede usar esto:
 
-	named_scope :multiple_extensions, 
-		:extend => [MultipleExtensionTwo, MultipleExtensionOne]
+        named_scope :written_before, lambda { |time|
+          { :conditions => ['written_on < ?', time] }
+        }
 
-## Testing named\_scope with proxy\_options 
-                                                                                 
-**Named scopes** is a very interesting new feature for Rails 2.1, but after using it awhile you might have a hard time creating tests for more complex situations.
+        named_scope :anonymous_extension do
+          def one
+            1
+          end
+        end
 
-Let's look at an example:
+        named_scope :named_extension, :extend => NamedExtension
 
-		class Shirt < ActiveRecord::Base
-		  named_scope :colored, lambda { |color|
-		    { :conditions => { :color => color } }
-		  }
-		end
+        named_scope :multiple_extensions,
+                :extend => [MultipleExtensionTwo, MultipleExtensionOne]
 
-How to create a test that validates the generation of the scope ?
+## Testeando named\_scope con proxy\_options
 
-To solve this issue, the method **proxy\_options** was created. It allows us to examine the options used in **named_scope**. To test the code above we could write:
 
-		class ShirtTest < Test::Unit
-		  def test_colored_scope
-		    red_scope = { :conditions => { :colored => 'red' } }
-		    blue_scope = { :conditions => { :colored => 'blue' } }
-		    assert_equal red_scope, Shirt.colored('red').scope_options
-		    assert_equal blue_scope, Shirt.colored('blue').scope_options
-		  end
-		end
+**Named scopes** es una nueva e interesante caraterística de Rails 2.1, pero después de usarlo durante un tiempo quizás sea díficil testear estas estructuras más complejas.
 
-## Increment and decrement
+Veamos un ejemplo:
 
-**ActiveRecord**'s methods **increment**, **increment!**, **decrement** and **decrement!** can now take a new optional parameter. On previous verions of Rails you could use these methods to add or subtract 1 (one) from a given column. In Rails 2.1 you can tell which value that is to be added or subtracted. Like this:
+                class Shirt < ActiveRecord::Base
+                  named_scope :colored, lambda { |color|
+                    { :conditions => { :color => color } }
+                  }
+                end
 
-	player1.increment!(:points, 5)
-	player2.decrement!(:points, 2)
-                                      
-In the above example I am adding 5 points to player1 and subtracting 2 points from player2. Since this is an optional parameter, legacy code is not affected.
+
+Como creamos un test que valide la generación de este scope ?
+
+Para solucionar esto, se creó el método **proxy\_options**. El cual nos permite examinar las opciones usadas en in **named_scope**. Para testear el código de arriba podríamos escribir esto:
+
+                class ShirtTest < Test::Unit
+                  def test_colored_scope
+                    red_scope = { :conditions => { :colored => 'red' } }
+                    blue_scope = { :conditions => { :colored => 'blue' } }
+                    assert_equal red_scope, Shirt.colored('red').scope_options
+                    assert_equal blue_scope, Shirt.colored('blue').scope_options
+                  end
+                end
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+## Incremento y decremento
+
+Los métodos de **ActiveRecord** **increment**, **increment!**, **decrement** y **decrement!** ahora toman un nuevo parámetro opcional. En las versiones previas de Rails se podían usar estos métodos para restar 1 a una columna dada.  En rails 2.1 podemos decir que valor restar o sumar. Así:
+
+        player1.increment!(:points, 5)
+        player2.decrement!(:points, 2)
+
+En el ejemplo estoy sumando 5 puntos al jugador 1 y restando 2 puntos al jugador 2. Cómo este es un parámetro opcional, el código viejo no se ve afectado.
+
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Find
 
 ### Conditions
-            
-From now on, you can pass an object as a parameter to **ActiveRecord**'s **find** method. See this example:
 
-	class Account < ActiveRecord::Base
-	  composed_of :balance, :class_name => "Money", :mapping => %w(balance amount)
-	end
-            
-In this case, you can pass an instance of **Money** as a parameter to the **find** method from the **Account** class, like this:
+A partir de ahora, se va a poder pasar un objeto como parámetro al método  **find** de  **ActiveRecord**, Vea este caso como ejemplo:
 
-	amount = 500
-	currency = "USD"
-	Account.find(:all, :conditions => { :balance => Money.new(amount, currency) })
-	
+        class Account < ActiveRecord::Base
+          composed_of :balance, :class_name => "Money", :mapping => %w(balance amount)
+        end
+
+En este caso, ud. puede pasar una instancia de **Money** cómo parámetro al método **find** de la clase  **Account**, de la siguiente manera:
+
+        amount = 500
+        currency = "USD"
+        Account.find(:all, :conditions => { :balance => Money.new(amount, currency) })
+
 ### Last
-           
-Up to now we could only use three operators to look for data using **ActiveRecord**'s **find** method. These are: **:first**, **:all** and the object's own id (in this case whe don't pass any argument to **find** besides the id itself)
 
-In Rails 2.1 there is a fourth operator named **:last**. A few examples:
+Hasta ahora sólo podíamos usar tres operadores para buscar datos usando el método **find** de **ActiveRecord**: **:first**, **:all** o el propio id del objeto (en este caso no pasamos ningún operador específico más que el id en sí mismo)
 
-	Person.find(:last)
-	Person.find(:last, :conditions => [ "user_name = ?", user_name])
-	Person.find(:last, :order => "created_on DESC", :offset => 5)
-	                                                             
-To fully understand how this new operator works, just look at the following test:
+En Rails 2.1 hay un cuarto operador llamado  **:last**. Vea algunos ejemplos:
 
-	def test_find_last
-	  last  = Developer.find :last
-	  assert_equal last, Developer.find(:first, :order => 'id desc')
-	end
-	
+        Person.find(:last)
+        Person.find(:last, :conditions => [ "user_name = ?", user_name])
+        Person.find(:last, :order => "created_on DESC", :offset => 5)
+
+Para entender como funciona este nuevo operador, veamos el siguiente test:
+
+        def test_find_last
+          last  = Developer.find :last
+          assert_equal last, Developer.find(:first, :order => 'id desc')
+        end
+
 ### All
-                      
-The static method **all** is an alias to the also static **find(:all)**. Example:
-	
-	Topic.all is the same as Topic.find(:all)
+
+El método estático **all** es un alias al método estático **find(:all)**. Por ejemplo:
+
+        Topic.all es lo mismo que Topic.find(:all)
 
 ### First
-              
-The static method **first** is an alias to the also static **find(:first)**. Example:
 
-	Topic.first is the same as Topic.find(:first)
+El método estático **first** es un alias al método estático **find(:first)**. Por ejemplo:
+
+        Topic.first es lo mismo que Topic.find(:first)
 
 ### Last
 
-The static method **last** is an alias to the also static **find(:last)**. Example:
+El método estático **last** es un alias al método estático **find(:last)**. Por ejemplo:
 
-	Topic.last is the same as Topic.find(:last)
+        Topic.last es lo mismo que Topic.find(:last)
 
-             
-## Using **first** and **last** methods in named\_scope
 
-All the methods mentioned above also work in **named\_scope**. Suppose we create a **named\_scope** named **recent**. The following is legal:
+## Usando **first** y **last** con named\_scope
 
-		post.comments.recent.last
+Todo los métodos mencionados anteriormente funcionan con **named\_scope**. Supongamos que creamos un **named\_scope** llamado **recent**. Entonces podríamos hacer esto:
+
+                post.comments.recent.last
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ##Eager Loading
 
-To explain this new funcionality, let's look at the following code:
+Para explicar esta nueva funcionalidad, veamos el siguiente código:
 
-	Author.find(:all, :include => [:posts, :comments])
-	
-I'm searching through table **authors** and also including tables **posts** and **comments** in my query through the **author_id** column, which is the default column name according to Rails' convention for foreign_key names. 
+        Author.find(:all, :include => [:posts, :comments])
+
+I'm searching through table **authors** and also including tables **posts** and **comments** in my query through the **author_id** column, which is the default column name according to Rails' convention for foreign_key names.
 This search used to generate SQL queries like this:
 
-	SELECT
-	  authors."id"          AS t0_r0,
-	  authors."created_at"  AS t0_r1,
-	  authors."updated_at"  AS t0_r2,
-	  posts."id"            AS t1_r0,
-	  posts."author_id"     AS t1_r1,
-	  posts."created_at"    AS t1_r2,
-	  posts."updated_at"    AS t1_r3,
-	  comments."id"         AS t2_r0,
-	  comments."author_id"  AS t2_r1,
-	  comments."created_at" AS t2_r2,
-	  comments."updated_at" AS t2_r3
-	FROM
-	  authors
-	  LEFT OUTER JOIN posts ON posts.author_id = authors.id
-	  LEFT OUTER JOIN comments ON comments.author_id = authors.id
+        SELECT
+          authors."id"          AS t0_r0,
+          authors."created_at"  AS t0_r1,
+          authors."updated_at"  AS t0_r2,
+          posts."id"            AS t1_r0,
+          posts."author_id"     AS t1_r1,
+          posts."created_at"    AS t1_r2,
+          posts."updated_at"    AS t1_r3,
+          comments."id"         AS t2_r0,
+          comments."author_id"  AS t2_r1,
+          comments."created_at" AS t2_r2,
+          comments."updated_at" AS t2_r3
+        FROM
+          authors
+          LEFT OUTER JOIN posts ON posts.author_id = authors.id
+          LEFT OUTER JOIN comments ON comments.author_id = authors.id
 
-Exactly one long SQL query with **joins** between tables **authors**, **posts** and **comments**. We call this **cartesian product**.	
+Exactly one long SQL query with **joins** between tables **authors**, **posts** and **comments**. We call this **cartesian product**.
 
 This type of query is not always good performance-wise, so it was changed for Rails 2.1. The same query for **Author** class now uses a different approach to retrieve information from all three tables. Instead of using one SQL query with all three tables, Rails now uses three different queries - one for each table - which are shorter queries than the former that used to be generated. The result can be seen in the log after executing the previous ruby on rails code:
 
-	SELECT * FROM "authors"
-	SELECT posts.* FROM "posts" WHERE (posts.author_id IN (1))
-	SELECT comments.* FROM "comments" WHERE (comments.author_id IN (1))
+        SELECT * FROM "authors"
+        SELECT posts.* FROM "posts" WHERE (posts.author_id IN (1))
+        SELECT comments.* FROM "comments" WHERE (comments.author_id IN (1))
 
 In **most cases** three simpler queries will run faster than a complex and long query.
 

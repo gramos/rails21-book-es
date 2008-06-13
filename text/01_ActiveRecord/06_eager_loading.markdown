@@ -1,35 +1,38 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ##Eager Loading
 
-To explain this new funcionality, let's look at the following code:
+Para explicar esta nueva funcionalidad, veamos el siguiente código:
 
-	Author.find(:all, :include => [:posts, :comments])
-	
-I'm searching through table **authors** and also including tables **posts** and **comments** in my query through the **author_id** column, which is the default column name according to Rails' convention for foreign_key names. 
-This search used to generate SQL queries like this:
+        Author.find(:all, :include => [:posts, :comments])
 
-	SELECT
-	  authors."id"          AS t0_r0,
-	  authors."created_at"  AS t0_r1,
-	  authors."updated_at"  AS t0_r2,
-	  posts."id"            AS t1_r0,
-	  posts."author_id"     AS t1_r1,
-	  posts."created_at"    AS t1_r2,
-	  posts."updated_at"    AS t1_r3,
-	  comments."id"         AS t2_r0,
-	  comments."author_id"  AS t2_r1,
-	  comments."created_at" AS t2_r2,
-	  comments."updated_at" AS t2_r3
-	FROM
-	  authors
-	  LEFT OUTER JOIN posts ON posts.author_id = authors.id
-	  LEFT OUTER JOIN comments ON comments.author_id = authors.id
+Estoy haciendo una búsqueda en la tabla **authors**  y también incluyendo las tablas **posts** y **comments** en mi consulta a través de la columna **author_id**, el cual es el nombre de columna por defecto de acuedo a la conveción que rails utiliza para las claves foráneas.
+Esta búsqueda genera una consulta como la siguiente:
 
-Exactly one long SQL query with **joins** between tables **authors**, **posts** and **comments**. We call this **cartesian product**.	
+        SELECT
+          authors."id"          AS t0_r0,
+          authors."created_at"  AS t0_r1,
+          authors."updated_at"  AS t0_r2,
+          posts."id"            AS t1_r0,
+          posts."author_id"     AS t1_r1,
+          posts."created_at"    AS t1_r2,
+          posts."updated_at"    AS t1_r3,
+          comments."id"         AS t2_r0,
+          comments."author_id"  AS t2_r1,
+          comments."created_at" AS t2_r2,
+          comments."updated_at" AS t2_r3
+        FROM
+          authors
+          LEFT OUTER JOIN posts ON posts.author_id = authors.id
+          LEFT OUTER JOIN comments ON comments.author_id = authors.id
 
-This type of query is not always good performance-wise, so it was changed for Rails 2.1. The same query for **Author** class now uses a different approach to retrieve information from all three tables. Instead of using one SQL query with all three tables, Rails now uses three different queries - one for each table - which are shorter queries than the former that used to be generated. The result can be seen in the log after executing the previous ruby on rails code:
+Un única consulta SQL con **joins** entre las tablas  **authors**, **posts** y **comments**. A esto lo llamamos **producto cartesiano**.
 
-	SELECT * FROM "authors"
-	SELECT posts.* FROM "posts" WHERE (posts.author_id IN (1))
-	SELECT comments.* FROM "comments" WHERE (comments.author_id IN (1))
+Este tipo de consultas no siempre tiene una buena performance, entonces esto se cambió en Rails 2.1. La misma consulta para la clase **Author** ahora se hace de una forma diferente para traer la información de las tres tablas. En vex de usar una única consulta SQL con las tres tablas, Rails ahora usa tres consultas diferentes - una por cada tabla - las cuales son más cortas que la anterior. El resultado se puede ver en los logs despues de ejecutar le codigo ruby on rails previo:
 
-In **most cases** three simpler queries will run faster than a complex and long query.
+        SELECT * FROM "authors"
+        SELECT posts.* FROM "posts" WHERE (posts.author_id IN (1))
+        SELECT comments.* FROM "comments" WHERE (comments.author_id IN (1))
+
+En la **mayoría de los casos** estas tres simples consultas se ejecutan más rápido que la larga y compleja.
+

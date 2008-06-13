@@ -154,7 +154,7 @@
 
 <h3> Has_one con :source_type</h3>
 
-<p>El método <strong>has_one :through</strong> que acabamos de ver, puede también tomar <strong>:source_type</strong>. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:</p>
+<p>El método <strong>has_one :through</strong> que acabamos de ver, puede también tomar <strong>:source_type</strong> como argumento. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:</p>
 
 <pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Client<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
       has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>
@@ -206,179 +206,190 @@
     <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">business_contacts</span>
 </pre>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h2> Named_scope</h2>
 
-<p>The <em>has_finder</em> gem has been added to Rails with a different name: <strong>named_scope</strong>.</p>
+<p>La gema  <em>has_finder</em>  ha sido incluida en Rails pero con un nombre diferente: <strong>named_scope</strong>.</p>
 
-<p>To fully understand what this adition brought to Rails let's look at the following examples:</p>
+<p>Para entender lo que significa este agregado en Rails vamos a ver los siguientes ejemplos:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Article<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>published</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>published</span> =&gt; <span class="BuiltInConstant">true</span>}
-  named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>containing_the_letter_a</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; <span class="String"><span class="String">&quot;</span>body LIKE '%a%’<span class="String">&quot;</span></span>
-<span class="Keyword">end</span> 
-
-<span class="LibraryObject">Article</span>.<span class="FunctionName">published</span>.<span class="FunctionName">paginate</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>page</span> =&gt; <span class="Number">1</span>)
-<span class="LibraryObject">Article</span>.<span class="FunctionName">published</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">count</span>
-<span class="LibraryObject">Article</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
-<span class="LibraryObject">Article</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; {…})
-</pre>
-
-<p>Instead of creating a new method named <strong>published</strong> to return all published posts, I'm using a <strong>named_scope</strong> to do it for me. But it can go even further than this. Let's look at another example of how it can be used:</p>
-
-<pre class="mac_classic">named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>written_before</span>, lambda { |<span class="Variable">time</span>|
-  { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [<span class="String"><span class="String">'</span>written_on &lt; ?<span class="String">'</span></span>, time] }
-}
-
-named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>anonymous_extension</span> <span class="Keyword">do</span>
-  <span class="Keyword">def</span> <span class="FunctionName">one</span>
-    <span class="Number">1</span>
-  <span class="Keyword">end</span>
-<span class="Keyword">end</span>
-
-named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>named_extension</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>extend</span> =&gt; <span class="Variable">NamedExtension</span> 
-
-named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>multiple_extensions</span>, 
-    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>extend</span> =&gt; [<span class="Variable">MultipleExtensionTwo</span>, <span class="Variable">MultipleExtensionOne</span>]
-</pre>
-
-<h2> Testing named_scope with proxy_options </h2>
-
-<p><strong>Named scopes</strong> is a very interesting new feature for Rails 2.1, but after using it awhile you might have a hard time creating tests for more complex situations.</p>
-
-<p>Let's look at an example:</p>
-
-<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Shirt<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-      named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span>, lambda { |<span class="Variable">color</span>|
-        { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>color</span> =&gt; color } }
-      }
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Article<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>published</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>published</span> =&gt; <span class="BuiltInConstant">true</span>}
+      named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>containing_the_letter_a</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; <span class="String"><span class="String">&quot;</span>body LIKE '%a%â€™<span class="String">&quot;</span></span>
     <span class="Keyword">end</span>
+
+    <span class="LibraryObject">Article</span>.<span class="FunctionName">published</span>.<span class="FunctionName">paginate</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>page</span> =&gt; <span class="Number">1</span>)
+    <span class="LibraryObject">Article</span>.<span class="FunctionName">published</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">count</span>
+    <span class="LibraryObject">Article</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
+    <span class="LibraryObject">Article</span>.<span class="FunctionName">containing_the_letter_a</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; {â€¦})
 </pre>
 
-<p>How to create a test that validates the generation of the scope ?</p>
+<p>En vez de crear un método nuevo llamado <strong>published</strong> para retornar todos los posts publicados, estoy usando un <strong>named_scope</strong> para que lo haga por mí. Pero puedo ir más allá que esto. Vamos a ver otro ejemplo para ver como se puede usar esto:</p>
 
-<p>To solve this issue, the method <strong>proxy_options</strong> was created. It allows us to examine the options used in <strong>named_scope</strong>. To test the code above we could write:</p>
+<pre class="mac_classic">    named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>written_before</span>, lambda { |<span class="Variable">time</span>|
+      { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [<span class="String"><span class="String">'</span>written_on &lt; ?<span class="String">'</span></span>, time] }
+    }
 
-<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">ShirtTest<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> Test::Unit</span></span>
-      <span class="Keyword">def</span> <span class="FunctionName">test_colored_scope</span>
-        red_scope <span class="Keyword">=</span> { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span> =&gt; <span class="String"><span class="String">'</span>red<span class="String">'</span></span> } }
-        blue_scope <span class="Keyword">=</span> { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span> =&gt; <span class="String"><span class="String">'</span>blue<span class="String">'</span></span> } }
-        assert_equal red_scope, <span class="LibraryObject">Shirt</span>.<span class="FunctionName">colored</span>(<span class="String"><span class="String">'</span>red<span class="String">'</span></span>).<span class="FunctionName">scope_options</span>
-        assert_equal blue_scope, <span class="LibraryObject">Shirt</span>.<span class="FunctionName">colored</span>(<span class="String"><span class="String">'</span>blue<span class="String">'</span></span>).<span class="FunctionName">scope_options</span>
+    named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>anonymous_extension</span> <span class="Keyword">do</span>
+      <span class="Keyword">def</span> <span class="FunctionName">one</span>
+        <span class="Number">1</span>
       <span class="Keyword">end</span>
     <span class="Keyword">end</span>
+
+    named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>named_extension</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>extend</span> =&gt; <span class="Variable">NamedExtension</span>
+
+    named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>multiple_extensions</span>,
+            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>extend</span> =&gt; [<span class="Variable">MultipleExtensionTwo</span>, <span class="Variable">MultipleExtensionOne</span>]
 </pre>
 
-<h2> Increment and decrement</h2>
+<h2> Testeando named_scope con proxy_options</h2>
 
-<p><strong>ActiveRecord</strong>'s methods <strong>increment</strong>, <strong>increment!</strong>, <strong>decrement</strong> and <strong>decrement!</strong> can now take a new optional parameter. On previous verions of Rails you could use these methods to add or subtract 1 (one) from a given column. In Rails 2.1 you can tell which value that is to be added or subtracted. Like this:</p>
+<p><strong>Named scopes</strong> es una nueva e interesante caraterística de Rails 2.1, pero después de usarlo durante un tiempo quizás sea díficil testear estas estructuras más complejas.</p>
 
-<pre class="mac_classic">player1.<span class="FunctionName">increment!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>points</span>, <span class="Number">5</span>)
-player2.<span class="FunctionName">decrement!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>points</span>, <span class="Number">2</span>)
+<p>Veamos un ejemplo:</p>
+
+<pre class="mac_classic">            <span class="Keyword">class</span> <span class="TypeName">Shirt<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+              named_scope <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span>, lambda { |<span class="Variable">color</span>|
+                { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>color</span> =&gt; color } }
+              }
+            <span class="Keyword">end</span>
 </pre>
 
-<p>In the above example I am adding 5 points to player1 and subtracting 2 points from player2. Since this is an optional parameter, legacy code is not affected.</p>
+<p>Como creamos un test que valide la generación de este scope ?</p>
+
+<p>Para solucionar esto, se creó el método <strong>proxy_options</strong>. El cual nos permite examinar las opciones usadas en in <strong>named_scope</strong>. Para testear el código de arriba podríamos escribir esto:</p>
+
+<pre class="mac_classic">            <span class="Keyword">class</span> <span class="TypeName">ShirtTest<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> Test::Unit</span></span>
+              <span class="Keyword">def</span> <span class="FunctionName">test_colored_scope</span>
+                red_scope <span class="Keyword">=</span> { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span> =&gt; <span class="String"><span class="String">'</span>red<span class="String">'</span></span> } }
+                blue_scope <span class="Keyword">=</span> { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>colored</span> =&gt; <span class="String"><span class="String">'</span>blue<span class="String">'</span></span> } }
+                assert_equal red_scope, <span class="LibraryObject">Shirt</span>.<span class="FunctionName">colored</span>(<span class="String"><span class="String">'</span>red<span class="String">'</span></span>).<span class="FunctionName">scope_options</span>
+                assert_equal blue_scope, <span class="LibraryObject">Shirt</span>.<span class="FunctionName">colored</span>(<span class="String"><span class="String">'</span>blue<span class="String">'</span></span>).<span class="FunctionName">scope_options</span>
+              <span class="Keyword">end</span>
+            <span class="Keyword">end</span>
+</pre>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
+<h2> Incremento y decremento</h2>
+
+<p>Los métodos de <strong>ActiveRecord</strong> <strong>increment</strong>, <strong>increment!</strong>, <strong>decrement</strong> y <strong>decrement!</strong> ahora toman un nuevo parámetro opcional. En las versiones previas de Rails se podían usar estos métodos para restar 1 a una columna dada.  En rails 2.1 podemos decir que valor restar o sumar. Así:</p>
+
+<pre class="mac_classic">    player1.<span class="FunctionName">increment!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>points</span>, <span class="Number">5</span>)
+    player2.<span class="FunctionName">decrement!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>points</span>, <span class="Number">2</span>)
+</pre>
+
+<p>En el ejemplo estoy sumando 5 puntos al jugador 1 y restando 2 puntos al jugador 2. Cómo este es un parámetro opcional, el código viejo no se ve afectado.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> Find</h2>
 
 <h3> Conditions</h3>
 
-<p>From now on, you can pass an object as a parameter to <strong>ActiveRecord</strong>'s <strong>find</strong> method. See this example:</p>
+<p>A partir de ahora, se va a poder pasar un objeto como parámetro al método  <strong>find</strong> de  <strong>ActiveRecord</strong>, Vea este caso como ejemplo:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Account<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  composed_of <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class_name</span> =&gt; <span class="String"><span class="String">&quot;</span>Money<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mapping</span> =&gt; <span class="String"><span class="String">%w(</span>balance amount<span class="String">)</span></span>
-<span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Account<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      composed_of <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class_name</span> =&gt; <span class="String"><span class="String">&quot;</span>Money<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mapping</span> =&gt; <span class="String"><span class="String">%w(</span>balance amount<span class="String">)</span></span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>In this case, you can pass an instance of <strong>Money</strong> as a parameter to the <strong>find</strong> method from the <strong>Account</strong> class, like this:</p>
+<p>En este caso, ud. puede pasar una instancia de <strong>Money</strong> cómo parámetro al método <strong>find</strong> de la clase  <strong>Account</strong>, de la siguiente manera:</p>
 
-<pre class="mac_classic">amount <span class="Keyword">=</span> <span class="Number">500</span>
-currency <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>USD<span class="String">&quot;</span></span>
-<span class="LibraryObject">Account</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span> =&gt; <span class="LibraryObject">Money</span>.<span class="FunctionName">new</span>(amount, currency) })
+<pre class="mac_classic">    amount <span class="Keyword">=</span> <span class="Number">500</span>
+    currency <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>USD<span class="String">&quot;</span></span>
+    <span class="LibraryObject">Account</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; { <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span> =&gt; <span class="LibraryObject">Money</span>.<span class="FunctionName">new</span>(amount, currency) })
 </pre>
 
 <h3> Last</h3>
 
-<p>Up to now we could only use three operators to look for data using <strong>ActiveRecord</strong>'s <strong>find</strong> method. These are: <strong>:first</strong>, <strong>:all</strong> and the object's own id (in this case whe don't pass any argument to <strong>find</strong> besides the id itself)</p>
+<p>Hasta ahora sólo podíamos usar tres operadores para buscar datos usando el método <strong>find</strong> de <strong>ActiveRecord</strong>: <strong>:first</strong>, <strong>:all</strong> o el propio id del objeto (en este caso no pasamos ningún operador específico más que el id en sí mismo)</p>
 
-<p>In Rails 2.1 there is a fourth operator named <strong>:last</strong>. A few examples:</p>
+<p>En Rails 2.1 hay un cuarto operador llamado  <strong>:last</strong>. Vea algunos ejemplos:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>)
-<span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [ <span class="String"><span class="String">&quot;</span>user_name = ?<span class="String">&quot;</span></span>, user_name])
-<span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; <span class="String"><span class="String">&quot;</span>created_on DESC<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>offset</span> =&gt; <span class="Number">5</span>)
+<pre class="mac_classic">    <span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>)
+    <span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [ <span class="String"><span class="String">&quot;</span>user_name = ?<span class="String">&quot;</span></span>, user_name])
+    <span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; <span class="String"><span class="String">&quot;</span>created_on DESC<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>offset</span> =&gt; <span class="Number">5</span>)
 </pre>
 
-<p>To fully understand how this new operator works, just look at the following test:</p>
+<p>Para entender como funciona este nuevo operador, veamos el siguiente test:</p>
 
-<pre class="mac_classic"><span class="Keyword">def</span> <span class="FunctionName">test_find_last</span>
-  last  <span class="Keyword">=</span> <span class="LibraryObject">Developer</span>.<span class="FunctionName">find</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>
-  assert_equal last, <span class="LibraryObject">Developer</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; <span class="String"><span class="String">'</span>id desc<span class="String">'</span></span>)
-<span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">def</span> <span class="FunctionName">test_find_last</span>
+      last  <span class="Keyword">=</span> <span class="LibraryObject">Developer</span>.<span class="FunctionName">find</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>
+      assert_equal last, <span class="LibraryObject">Developer</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; <span class="String"><span class="String">'</span>id desc<span class="String">'</span></span>)
+    <span class="Keyword">end</span>
 </pre>
 
 <h3> All</h3>
 
-<p>The static method <strong>all</strong> is an alias to the also static <strong>find(:all)</strong>. Example:</p>
+<p>El método estático <strong>all</strong> es un alias al método estático <strong>find(:all)</strong>. Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Topic</span>.<span class="FunctionName">all</span> is the same as <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>)
+<pre class="mac_classic">    <span class="LibraryObject">Topic</span>.<span class="FunctionName">all</span> es lo mismo que <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>)
 </pre>
 
 <h3> First</h3>
 
-<p>The static method <strong>first</strong> is an alias to the also static <strong>find(:first)</strong>. Example:</p>
+<p>El método estático <strong>first</strong> es un alias al método estático <strong>find(:first)</strong>. Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Topic</span>.<span class="FunctionName">first</span> is the same as <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
+<pre class="mac_classic">    <span class="LibraryObject">Topic</span>.<span class="FunctionName">first</span> es lo mismo que <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
 </pre>
 
 <h3> Last</h3>
 
-<p>The static method <strong>last</strong> is an alias to the also static <strong>find(:last)</strong>. Example:</p>
+<p>El método estático <strong>last</strong> es un alias al método estático <strong>find(:last)</strong>. Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Topic</span>.<span class="FunctionName">last</span> is the same as <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>)
+<pre class="mac_classic">    <span class="LibraryObject">Topic</span>.<span class="FunctionName">last</span> es lo mismo que <span class="LibraryObject">Topic</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>last</span>)
 </pre>
 
-<h2> Using <strong>first</strong> and <strong>last</strong> methods in named_scope</h2>
+<h2> Usando <strong>first</strong> y <strong>last</strong> con named_scope</h2>
 
-<p>All the methods mentioned above also work in <strong>named_scope</strong>. Suppose we create a <strong>named_scope</strong> named <strong>recent</strong>. The following is legal:</p>
+<p>Todo los métodos mencionados anteriormente funcionan con <strong>named_scope</strong>. Supongamos que creamos un <strong>named_scope</strong> llamado <strong>recent</strong>. Entonces podríamos hacer esto:</p>
 
-<pre class="mac_classic">    post.<span class="FunctionName">comments</span>.<span class="FunctionName">recent</span>.<span class="FunctionName">last</span>
+<pre class="mac_classic">            post.<span class="FunctionName">comments</span>.<span class="FunctionName">recent</span>.<span class="FunctionName">last</span>
 </pre>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2>Eager Loading</h2>
 
-<p>To explain this new funcionality, let's look at the following code:</p>
+<p>Para explicar esta nueva funcionalidad, veamos el siguiente código:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Author</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include</span> =&gt; [<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>posts</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>comments</span>])
+<pre class="mac_classic">    <span class="LibraryObject">Author</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include</span> =&gt; [<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>posts</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>comments</span>])
 </pre>
 
-<p>I'm searching through table <strong>authors</strong> and also including tables <strong>posts</strong> and <strong>comments</strong> in my query through the <strong>author_id</strong> column, which is the default column name according to Rails' convention for foreign_key names. 
+<p>I'm searching through table <strong>authors</strong> and also including tables <strong>posts</strong> and <strong>comments</strong> in my query through the <strong>author_id</strong> column, which is the default column name according to Rails' convention for foreign_key names.
 This search used to generate SQL queries like this:</p>
 
-<pre class="mac_classic"><span class="Variable">SELECT</span>
-  authors.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>          <span class="Variable">AS</span> t0_r0,
-  authors.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t0_r1,
-  authors.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t0_r2,
-  posts.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>            <span class="Variable">AS</span> t1_r0,
-  posts.<span class="String"><span class="String">&quot;</span>author_id<span class="String">&quot;</span></span>     <span class="Variable">AS</span> t1_r1,
-  posts.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span>    <span class="Variable">AS</span> t1_r2,
-  posts.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span>    <span class="Variable">AS</span> t1_r3,
-  comments.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>         <span class="Variable">AS</span> t2_r0,
-  comments.<span class="String"><span class="String">&quot;</span>author_id<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t2_r1,
-  comments.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span> <span class="Variable">AS</span> t2_r2,
-  comments.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span> <span class="Variable">AS</span> t2_r3
-<span class="Variable">FROM</span>
-  authors
-  <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> posts <span class="Variable">ON</span> posts.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
-  <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> comments <span class="Variable">ON</span> comments.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
+<pre class="mac_classic">    <span class="Variable">SELECT</span>
+      authors.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>          <span class="Variable">AS</span> t0_r0,
+      authors.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t0_r1,
+      authors.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t0_r2,
+      posts.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>            <span class="Variable">AS</span> t1_r0,
+      posts.<span class="String"><span class="String">&quot;</span>author_id<span class="String">&quot;</span></span>     <span class="Variable">AS</span> t1_r1,
+      posts.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span>    <span class="Variable">AS</span> t1_r2,
+      posts.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span>    <span class="Variable">AS</span> t1_r3,
+      comments.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>         <span class="Variable">AS</span> t2_r0,
+      comments.<span class="String"><span class="String">&quot;</span>author_id<span class="String">&quot;</span></span>  <span class="Variable">AS</span> t2_r1,
+      comments.<span class="String"><span class="String">&quot;</span>created_at<span class="String">&quot;</span></span> <span class="Variable">AS</span> t2_r2,
+      comments.<span class="String"><span class="String">&quot;</span>updated_at<span class="String">&quot;</span></span> <span class="Variable">AS</span> t2_r3
+    <span class="Variable">FROM</span>
+      authors
+      <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> posts <span class="Variable">ON</span> posts.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
+      <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> comments <span class="Variable">ON</span> comments.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
 </pre>
 
-<p>Exactly one long SQL query with <strong>joins</strong> between tables <strong>authors</strong>, <strong>posts</strong> and <strong>comments</strong>. We call this <strong>cartesian product</strong>. <br/>
-</p>
+<p>Exactly one long SQL query with <strong>joins</strong> between tables <strong>authors</strong>, <strong>posts</strong> and <strong>comments</strong>. We call this <strong>cartesian product</strong>.</p>
 
 <p>This type of query is not always good performance-wise, so it was changed for Rails 2.1. The same query for <strong>Author</strong> class now uses a different approach to retrieve information from all three tables. Instead of using one SQL query with all three tables, Rails now uses three different queries - one for each table - which are shorter queries than the former that used to be generated. The result can be seen in the log after executing the previous ruby on rails code:</p>
 
-<pre class="mac_classic"><span class="Variable">SELECT</span> <span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>authors<span class="String">&quot;</span></span>
-<span class="Variable">SELECT</span> posts.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>posts<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (posts.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
-<span class="Variable">SELECT</span> comments.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>comments<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (comments.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
+<pre class="mac_classic">    <span class="Variable">SELECT</span> <span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>authors<span class="String">&quot;</span></span>
+    <span class="Variable">SELECT</span> posts.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>posts<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (posts.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
+    <span class="Variable">SELECT</span> comments.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>comments<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (comments.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
 </pre>
 
 <p>In <strong>most cases</strong> three simpler queries will run faster than a complex and long query.</p>

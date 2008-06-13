@@ -1,4 +1,4 @@
-<!-- -*- coding: utf-8; -*- -->
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## Named_scope
 
@@ -16,7 +16,7 @@ Para entender lo que significa este agregado en Rails vamos a ver los siguientes
         Article.containing_the_letter_a.find(:first)
         Article.containing_the_letter_a.find(:all, :conditions => {â€¦})
 
-Instead of creating a new method named **published** to return all published posts, I'm using a **named\_scope** to do it for me. But it can go even further than this. Let's look at another example of how it can be used:
+En vez de crear un método nuevo llamado **published** para retornar todos los posts publicados, estoy usando un **named\_scope** para que lo haga por mí. Pero puedo ir más allá que esto. Vamos a ver otro ejemplo para ver como se puede usar esto:
 
         named_scope :written_before, lambda { |time|
           { :conditions => ['written_on < ?', time] }
@@ -33,11 +33,12 @@ Instead of creating a new method named **published** to return all published pos
         named_scope :multiple_extensions,
                 :extend => [MultipleExtensionTwo, MultipleExtensionOne]
 
-## Testing named\_scope with proxy\_options
+## Testeando named\_scope con proxy\_options
 
-**Named scopes** is a very interesting new feature for Rails 2.1, but after using it awhile you might have a hard time creating tests for more complex situations.
 
-Let's look at an example:
+**Named scopes** es una nueva e interesante caraterística de Rails 2.1, pero después de usarlo durante un tiempo quizás sea díficil testear estas estructuras más complejas.
+
+Veamos un ejemplo:
 
                 class Shirt < ActiveRecord::Base
                   named_scope :colored, lambda { |color|
@@ -45,9 +46,10 @@ Let's look at an example:
                   }
                 end
 
-How to create a test that validates the generation of the scope ?
 
-To solve this issue, the method **proxy\_options** was created. It allows us to examine the options used in **named_scope**. To test the code above we could write:
+Como creamos un test que valide la generación de este scope ?
+
+Para solucionar esto, se creó el método **proxy\_options**. El cual nos permite examinar las opciones usadas en in **named_scope**. Para testear el código de arriba podríamos escribir esto:
 
                 class ShirtTest < Test::Unit
                   def test_colored_scope
