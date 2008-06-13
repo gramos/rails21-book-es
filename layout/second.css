@@ -1,37 +1,39 @@
+/* -*- coding: utf-8; -*- */
+
 /* Sample style sheet for boom!, the book microformat              */
 /* written  by Hakon Wium Lie and Bert Bos, November 2005          */
 /* You may reuse this style sheet for any purpose without any fees */
 
-html { 
+html {
   margin: 0;
   font: 10pt/1.26 "Gill Sans", sans-serif;
 }
 
-body { 
+body {
   margin: 0 0 0 13%;
 }
 
-h1, h2, h3, h4, h5, h6 { 
+h1, h2, h3, h4, h5, h6 {
   font-family: "Gill Sans", sans-serif;
   margin: 2em 0 0.5em 0;
   page-break-after: avoid;
-} 
+}
 
-h1 { 
-	page-break-before: always;
+h1 {
+        page-break-before: always;
   padding: 2em 0 2em 0;
   margin: 0;
   font-size: 2.4em;
   font-weight: 900;
 }
 
-h2 { 
+h2 {
   font-size: 1.2em;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-h3 { 
+h3 {
   font-size: 1em;
   font-weight: bold;
 }
@@ -162,7 +164,7 @@ table.lined td, table.lined th {
 @page :left {
   @top-left {
     font: 11pt "Gill Sans", serif;
-    content: "Ruby on Rails 2.1 - What's New";
+    content: "Ruby on Rails 2.1 - ¿Qué Hay de Nuevo?";
     vertical-align: bottom;
     padding-bottom: 2em;
   }
@@ -178,9 +180,9 @@ table.lined td, table.lined th {
 @page :right {
   @top-right {
     font: 11pt "Gill Sans", serif;
-    content: string(header, first); 
+    content: string(header, first);
     vertical-align: bottom;
-    padding-bottom: 2em; 
+    padding-bottom: 2em;
   }
 
   @bottom-right {
@@ -213,9 +215,9 @@ table.lined td, table.lined th {
 @page frontmatter :right {
   @top-right {
     font: 11pt "Gill Sans", serif;
-    content: string(header, first); 
+    content: string(header, first);
     vertical-align: bottom;
-    padding-bottom: 2em; 
+    padding-bottom: 2em;
   }
 
   @bottom-right {
@@ -278,7 +280,7 @@ table.lined td, table.lined th {
     preface: preface, including acknowledgements
     chapter: each chapter is given its own DIV element
     references: contains list of references
-    appendix: each appendix is given its own 
+    appendix: each appendix is given its own
     bibliography
     glossary
     index
@@ -299,35 +301,35 @@ div.foreword, div.toc, div.preface { page: frontmatter }
 
 div.frontcover, div.halftitlepage, div.titlepage { page-break-before: right }
 div.imprint { page-break-before: always }
-div.dedication, div.foreword, div.toc, div.preface, div.chapter, div.reference, 
-div.appendix, div.bibliography, div.glossary, div.index, div.colophon { 
-  page-break-before: always 
+div.dedication, div.foreword, div.toc, div.preface, div.chapter, div.reference,
+div.appendix, div.bibliography, div.glossary, div.index, div.colophon {
+  page-break-before: always
 }
 
-div.backcover { 
-	page-break-before: left;
-	page: cover; 
-	background-image: url(../images/b_cover.jpg);
-	position: absolute;
-	width: 9.25in; height: 7in;
+div.backcover {
+        page-break-before: left;
+        page: cover;
+        background-image: url(../images/b_cover.jpg);
+        position: absolute;
+        width: 9.25in; height: 7in;
   left: 0; top: 0;
   z-index: -1;
 }
 
 /* the front cover; this code is probably not very reusable by other books */
 
-div.frontcover { 
-	page: cover; 
-	background-image: url(../images/cover.jpg);
-	position: absolute;
-	width: 9.25in; height: 7in;
+div.frontcover {
+        page: cover;
+        background-image: url(../images/cover.jpg);
+        position: absolute;
+        width: 9.25in; height: 7in;
   left: 0; top: 0;
   z-index: -1;
 }
 
 div.frontcover img {
   position: absolute;
-	width: 9.25in; height: 7in;
+        width: 9.25in; height: 7in;
 /*  width: 7in; height: 9.25in;*/
   left: 0; top: 0;
   z-index: -1;
@@ -375,7 +377,7 @@ div.frontcover p {
 div.titlepage h1, div.halftitlepage h1 { margin-bottom: 2em; }
 div.titlepage h2, div.halftitlepage h2 { font-size: 1.2em; margin-bottom: 3em; }
 div.titlepage h3, div.halftitlepage h3 { font-size: 1em; margin-bottom: 3em; }
-div.titlepage p, div.halftitlepage p { 
+div.titlepage p, div.halftitlepage p {
   font-size: 1.4em;
   font-weight: bold;
   margin: 0; padding: 0;
@@ -384,7 +386,7 @@ div.titlepage p, div.halftitlepage p {
 
 /* TOC */
 
-ul.toc, ul.toc ul { 
+ul.toc, ul.toc ul {
   list-style-type: none;
   margin: 0; padding: 0;
 }
@@ -392,7 +394,7 @@ ul.toc ul {
   margin-left: 1em;
   font-weight: normal;
 }
-ul.toc > li { 
+ul.toc > li {
   font-weight: bold;
   margin-bottom: 0.5em;
 }
@@ -439,7 +441,7 @@ div.chapter h1 { string-set: header "Chapter " counter(chapter) ": " content(); 
 
 /* index */
 
-ul.index { 
+ul.index {
   list-style-type: none;
   margin: 0; padding: 0;
   column-count: 2;
@@ -465,7 +467,7 @@ code, pre, span.css, span.value, span.declaration {
 @media screen, handheld {
   html { margin: 1em; font: 14px "Gill Sans", sans-serif; }
   h1 { margin-bottom: 0.5em }
-  div.frontcover, div.halftitlepage, div.titlepage, div.imprint, 
+  div.frontcover, div.halftitlepage, div.titlepage, div.imprint,
   div.dedication, div.foreword, div.toc, div.index { display: none }
 }
 

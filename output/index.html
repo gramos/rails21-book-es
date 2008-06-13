@@ -1,46 +1,49 @@
+<!-- -*- coding: utf-8; -*- -->
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
+        "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 <head>
-	<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="../layout/second.css"/>
-	<link rel="stylesheet" type="text/css" href="../layout/mac_classic.css"/>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" href="../layout/second.css"/>
+        <link rel="stylesheet" type="text/css" href="../layout/mac_classic.css"/>
 </head>
 <body>
-	<div class="frontcover"></div>
+        <div class="frontcover"></div>
 
-	<div class="halftitlepage">
-		<h1 class="no-toc">Ruby on Rails 2.1</h1>
-		<h2 class="no-toc">What's New</h2>
-		<h3 class="no-toc">First Edition</h3>
-	</div>
+        <div class="halftitlepage">
+                <h1 class="no-toc">Ruby on Rails 2.1</h1>
+                <h2 class="no-toc">¿Qué Hay de Nuevo?</h2>
+                <h3 class="no-toc">Primer Edición</h3>
+        </div>
 
-	<div class="titlepage">
-	<h1 class="no-toc">Ruby on Rails 2.1</h1>
+        <div class="titlepage">
+        <h1 class="no-toc">Ruby on Rails 2.1</h1>
 
-	<h2 class="no-toc">What's New</h2>
-	<h3 class="no-toc">First Edition</h3>
+        <h2 class="no-toc">¿Qué Hay de Nuevo?</h2>
+        <h3 class="no-toc">Primer Edición</h3>
 
-	<p class="no-toc">Carlos Brando<br/>Marcos Tapajós</p>
-	<!-- also, the publisher's name would typically be printed here -->
-	</div>
-	
-	<div class="imprint">
-		<p>&copy; Copyright 2008 Carlos Brando. All Rights Reserved.</p>
-		<br/>
-		<p>First edition: June 2008</p>
-		<br/>
-		<p>Carlos Brando<br/>Website: www.nomedojogo.com</p>
-		<p>Marcos Tapajós<br/>Website: www.improveit.com.br/en/company/tapajos</p>
-	</div>
-	
-	<!-- <div class="toc">
-		<h1>Sumário</h1>
-		#toc
-	</div> -->
-	
-	<div class="chapter">
-		<!-- -*- coding: utf-8; -*- -->
+        <p class="no-toc">Carlos Brando<br/>Marcos Tapajós</p>
+        <!-- also, the publisher's name would typically be printed here -->
+        </div>
+
+        <div class="imprint">
+                <p>&copy; Copyright 2008 Carlos Brando. All Rights Reserved.</p>
+                <br/>
+                <p>Primer Edición: Junio 2008</p>
+                <br/>
+                <p>Carlos Brando<br/>Website: www.nomedojogo.com</p>
+                <p>Marcos Tapajós<br/>Website: www.improveit.com.br/en/company/tapajos</p>
+        </div>
+
+        <!-- <div class="toc">
+                <h1>Sumário</h1>
+                #toc
+        </div> -->
+
+        <div class="chapter">
+                <!-- -*- coding: utf-8; -*- -->
 
 
 <h1>Introducción</h1>
@@ -96,29 +99,32 @@
 
 <p><strong>AbraÃ£o Coelho</strong> - <a href="http://abrcoelho.net/">http://abrcoelho.net</a></p>
 
-<p>Capítulo 9</p>
+<p>Capítulo 9
+<!-- -*- coding: utf-8; -*- --></p>
 
 <h1> ActiveRecord</h1>
 
-<p>ActiveRecord is an object-relational mapping layer responsible for the interoperability among application
-and database and also responsible for data abstraction. (wikipedia)</p>
+<p>ActiveRecord es una capa de mapeo objeto-relacional (object-relational mapping layer) responsable tanto de la interoperabiliadad entre la aplicación y la base de datos como de la abstracción de los datos. (wikipedia)</p>
 
-<h2> The <strong>sum</strong> method</h2>
+<!-- -*- coding: utf-8; -*- -->
 
-<h3> Expressions in the <strong>sum</strong> method</h3>
 
-<p>Now we can use expressions in <strong>ActiveRecord</strong> methods that deal with calculation, like <strong>sum</strong>, for example:</p>
+<h2> El método <strong>sum</strong></h2>
 
-<pre class="mac_classic"><span class="LibraryObject">Person</span>.<span class="FunctionName">sum</span>(<span class="String"><span class="String">&quot;</span>2 * age<span class="String">&quot;</span></span>)
+<h3> Expresiones en el método <strong>sum</strong></h3>
+
+<p>Ahora podemos usar expresiones en los métodos de cálculo de <strong>ActiveRecord</strong>, <strong>sum</strong>, por ejemplo:</p>
+
+<pre class="mac_classic">    <span class="LibraryObject">Person</span>.<span class="FunctionName">sum</span>(<span class="String"><span class="String">&quot;</span>2 * age<span class="String">&quot;</span></span>)
 </pre>
 
-<h3> Change in the default return value of the sum method</h3>
+<h3> Cambiando el valor de retorno por defecto del método sum</h3>
 
-<p>On previous versions, when we used <strong>ActiveRecord</strong>'s <strong>sum</strong> method to calculate the addition of all rows in a table and no row matched the conditions expressed during the method invocation, then the default return value would be <strong>nil</strong>.</p>
+<p>En las versiones previas, cuando usábamos el método <strong>sum</strong> de <strong>ActiveRecord</strong> para calcular la suma de una determinada columna para todos los registros de una tabla, si ningun registro correspondía con las condiciones expresadas en el método de invocación, entonces el valor de retorno por defecto era <strong>nil</strong>.</p>
 
-<p>In Rails 2.1 the default return value (that is when no row is found) is 0. See the example:</p>
+<p>En Rails 2.1 el valor de retorno por defecto (cuando no se encuentra ningún registro) es 0. Vea el ejemplo:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Account</span>.<span class="FunctionName">sum</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; <span class="String"><span class="String">'</span>1 = 2<span class="String">'</span></span>) <span class="Comment"><span class="Comment">#</span>=&gt; 0</span>
+<pre class="mac_classic">    <span class="LibraryObject">Account</span>.<span class="FunctionName">sum</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; <span class="String"><span class="String">'</span>1 = 2<span class="String">'</span></span>) <span class="Comment"><span class="Comment">#</span>=&gt; 0</span>
 </pre>
 
 <h2> Has_one</h2>
@@ -2844,11 +2850,11 @@ plugin.<span class="FunctionName">about</span>[<span class="String"><span class=
 
 <p>* Ruby 1.9 compatibility.  #1689, #10546 [Cheah Chu Yeow, frederico]</p>
 
-	</div>
+        </div>
 
-	<div class="white_page"></div>
-	<div class="white_page"></div>
-	
-	<div class="backcover"></div>
+        <div class="white_page"></div>
+        <div class="white_page"></div>
+
+        <div class="backcover"></div>
 </body>
 </html>
