@@ -6,7 +6,7 @@ Alrededor de julio de 2004 David Heinemeier Hansson lanzó la versión pública 
 
 Seis meses después, y durante este todo este tiempo han contribuido más de **1400 desarrolladores** alrededor de todo el mundo con **1600 parches** para elframework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.
 
-Major new features according to David:
+Según David las principales novedades de esta versión son:
 
 * Timezones
 * Dirty tracking
@@ -15,41 +15,41 @@ Major new features according to David:
 * UTC-based migrations
 * Better caching
 
-As always, to update or install the new version:
+Como siempre, para actualizar o instalar la nueva versión:
 
         gem install rails
 
-##Acknowledgment
+##Agradecimientos
 
-To Marcos Tapajós, co-author of this book. If it wasn't for him, you probably you wouldn't be reading this right now.
+A Marcos Tapajós, co-autor de este libro. De no ser por él, no podrías estar leyendo este libro.
 
-To Daniel Lopes who made the beautiful cover for this edition.
+A Daniel Lopes quien hizo la hermosa tapa de esta edición.
 
-To all of the Ruby on Rails Brazilian community that helped directly or indirectly with this book, commenting on blog posts and giving suggestions. It's like I always say, the best of Rails is its community! Keep creating, inventing, and specially sharing.
+A toda la comunidad Brazilera de Ruby on Rails que nos ayudó directa o indirectamente con este libro, comentando los artículos del blog o aconsejándonos. Como me gusta decir siempre, lo mejor de Rails es su comunidad! se mantiene creando, inventando, y especialmente compartiendo.
 
-## Translators
+## Traductores
 
-This book was proudly translated to english by these Brazilian guys:
+Este libro fue orgullosamente traducido al inglés por estos chicos Brazileros:
 
 **Pedro Pimentel** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
 
-Chapters 3-8 and 10-13
+Capítulos 3-8 y 10-13
 
 **Rafael Barbosa** - [http://www.act-as-newbie.com](http://www.act-as-newbie.com/)
 
-Introduction and chapter 1
+Introducción y capítulo 1
 
 **Ricardo S Yasuda** - [http://blog.shadowmaru.org](http://blog.shadowmaru.org/)
 
-Chapter 14
+Capítulo 14
 
 **Caike Souza** - [http://tech-death.blogspot.com](http://tech-death.blogspot.com/)
 
-Chapter 2
+Capítulo 2
 
 **AbraÃ£o Coelho** - [http://abrcoelho.net](http://abrcoelho.net/)
 
-Chapter 9
+Capítulo 9
 # ActiveRecord
               
 ActiveRecord is an object-relational mapping layer responsible for the interoperability among application
