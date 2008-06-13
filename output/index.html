@@ -120,87 +120,90 @@
 
 <h3> Cambiando el valor de retorno por defecto del método sum</h3>
 
-<p>En las versiones previas, cuando usábamos el método <strong>sum</strong> de <strong>ActiveRecord</strong> para calcular la suma de una determinada columna para todos los registros de una tabla, si ningun registro correspondía con las condiciones expresadas en el método de invocación, entonces el valor de retorno por defecto era <strong>nil</strong>.</p>
+<p>En las versiones previas, cuando usábamos el método <strong>sum</strong> de <strong>ActiveRecord</strong> para calcular la suma de una determinada columna para todos los registros de una tabla, si ningún registro correspondía con las condiciones expresadas en el método de invocación, entonces el valor de retorno por defecto era <strong>nil</strong>.</p>
 
 <p>En Rails 2.1 el valor de retorno por defecto (cuando no se encuentra ningún registro) es 0. Vea el ejemplo:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Account</span>.<span class="FunctionName">sum</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>balance</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; <span class="String"><span class="String">'</span>1 = 2<span class="String">'</span></span>) <span class="Comment"><span class="Comment">#</span>=&gt; 0</span>
 </pre>
 
+<!-- -*- coding: utf-8; -*- -->
+
+
 <h2> Has_one</h2>
 
-<h3> Support for the option through   </h3>
+<h3> Soporte para la opción through</h3>
 
-<p>The <strong>has_one</strong> method now has the option <strong>through</strong>. It works just like <strong>has_many :through</strong>, but it represents the association to a single <strong>ActiveRecord</strong> object.</p>
+<p>El método <strong>has_one</strong> ahora tiene la opción <strong>through</strong>. Esta funciona como <strong>has_many :through</strong>, pero en este caso representa la asociación a un objeto simple <strong>ActiveRecord</strong>. Ejemplo:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Magazine<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>subscriptions</span>
-<span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Magazine<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>subscriptions</span>
+    <span class="Keyword">end</span>
 
-<span class="Keyword">class</span> <span class="TypeName">Subscription<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>magazine</span>
-  belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>user</span>
-<span class="Keyword">end</span>
+    <span class="Keyword">class</span> <span class="TypeName">Subscription<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>magazine</span>
+      belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>user</span>
+    <span class="Keyword">end</span>
 
-<span class="Keyword">class</span> <span class="TypeName">User<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>subscriptions</span>
-  has_one <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>magazine</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; : subscriptions, 
-            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [<span class="String"><span class="String">'</span>subscriptions.active = ?<span class="String">'</span></span>, <span class="BuiltInConstant">true</span>]
-<span class="Keyword">end</span>
+    <span class="Keyword">class</span> <span class="TypeName">User<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>subscriptions</span>
+      has_one <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>magazine</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; : subscriptions,
+                    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>conditions</span> =&gt; [<span class="String"><span class="String">'</span>subscriptions.active = ?<span class="String">'</span></span>, <span class="BuiltInConstant">true</span>]
+    <span class="Keyword">end</span>
 </pre>
 
-<h3> Has_one with :source_type             </h3>
+<h3> Has_one con :source_type</h3>
 
-<p>The <strong>has_one :through</strong> method, just mentioned above, can also take <strong>:source_type</strong>. I will try to explain this through some examples. Let's start with these two classes:</p>
+<p>El método <strong>has_one :through</strong> que acabamos de ver, puede también tomar <strong>:source_type</strong>. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Client<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span> 
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Client<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>
 
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>
-<span class="Keyword">end</span> 
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>What we are looking at here is a <strong>Client</strong> class which <strong>has_many</strong> kinds of contacts, since the <strong>ContactCard</strong> class has a polymorphic relationship.</p>
+<p>Lo que estamos viendo hasta aquí es una clase <strong>Client</strong> la cual tiene muchos (<strong>has_many</strong>) tipos de contactos (<strong>contacts</strong>), ya que la clase <strong>ContactCard</strong> tiene una relación polimórfica.</p>
 
-<p>Next step in our example, let's create two classes to represent a <strong>ContactCard</strong>:</p>
+<p>Para seguir con nuestro ejemplo, vamos a crear dos clases que van a representar a <strong>ContactCard</strong>:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Person<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact</span>
-<span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Person<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact</span>
+    <span class="Keyword">end</span>
 
-<span class="Keyword">class</span> <span class="TypeName">Business<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact</span>
-<span class="Keyword">end</span>
+    <span class="Keyword">class</span> <span class="TypeName">Business<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p><strong>Person</strong> and <strong>Business</strong> relate to my <strong>Client</strong> class through the <strong>ContactCard</strong> table. In other words, I have two kinds of contacts, personal and business. </p>
+<p><strong>Person</strong> y <strong>Business</strong> están relacionadas con mi clase  <strong>Client</strong> a través de la tabla  <strong>ContactCard</strong>. En otras palabras, tengo dos tipos de contactos, personal y de negocios.</p>
 
-<p>This is not going to work, however. Watch what happens when I try to retrieve a contact:</p>
+<p>Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">contacts</span>
-<span class="Comment"><span class="Comment">#</span> ArgumentError: /…/active_support/core_ext/hash/keys.rb:48:</span>
-<span class="Comment"><span class="Comment">#</span> in `assert_valid_keys’: Unknown key(s): polymorphic </span>
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">contacts</span>
+<span class="Comment">    <span class="Comment">#</span> ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:</span>
+<span class="Comment">    <span class="Comment">#</span> in `assert_valid_keys': Unknown key(s): polymorphic</span>
 </pre>
 
-<p>To make this work we have to use <strong>:source_type</strong>. Let's change our <strong>Client</strong> class:</p>
+<p>Para que esto funcione tenemos que usar <strong>:source_type</strong>. Vamos cambiar nuestra clase  <strong>Client</strong>:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">Client<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>people_contacts</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source_type</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>person</span> 
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Client<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>people_contacts</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source_type</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>person</span>
 
-  has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>business_contacts</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>,
-           <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source_type</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>business</span>
-<span class="Keyword">end</span>
+      has_many <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>business_contacts</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>through</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contact_cards</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>contacts</span>,
+               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>source_type</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>business</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>Notice how we now have two different ways of retrieving our contacts and we can say what contact <strong>:source_type</strong> we are expecting.</p>
+<p>Note que ahora tenemos dos maneras diferentes de recuperar nuestros contactos y podemos indicar que tipo de contacto <strong>:source_type</strong> esperamos.</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">people_contacts</span>
-<span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">business_contacts</span>
+<pre class="mac_classic">    <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">people_contacts</span>
+    <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">business_contacts</span>
 </pre>
 
 <h2> Named_scope</h2>

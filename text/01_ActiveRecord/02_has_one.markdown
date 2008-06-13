@@ -2,9 +2,9 @@
 
 ## Has\_one
 
-### Support for the option through
+### Soporte para la opción through
 
-The **has\_one** method now has the option **through**. It works just like **has_many :through**, but it represents the association to a single **ActiveRecord** object.
+El método **has\_one** ahora tiene la opción **through**. Esta funciona como **has_many :through**, pero en este caso representa la asociación a un objeto simple **ActiveRecord**. Ejemplo:
 
         class Magazine < ActiveRecord::Base
           has_many :subscriptions
@@ -21,9 +21,9 @@ The **has\_one** method now has the option **through**. It works just like **has
                         :conditions => ['subscriptions.active = ?', true]
         end
 
-### Has\_one with :source\_type
+### Has\_one con :source\_type
 
-The **has\_one :through** method, just mentioned above, can also take **:source\_type**. I will try to explain this through some examples. Let's start with these two classes:
+El método **has\_one :through** que acabamos de ver, puede también tomar **:source\_type** como argumento. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:
 
         class Client < ActiveRecord::Base
           has_many :contact_cards
@@ -31,9 +31,9 @@ The **has\_one :through** method, just mentioned above, can also take **:source\
           has_many :contacts, :through => :contact_cards
         end
 
-What we are looking at here is a **Client** class which **has_many** kinds of contacts, since the **ContactCard** class has a polymorphic relationship.
+Lo que estamos viendo hasta aquí es una clase **Client** la cual tiene muchos (**has_many**) tipos de contactos (**contacts**), ya que la clase **ContactCard** tiene una relación polimórfica.
 
-Next step in our example, let's create two classes to represent a **ContactCard**:
+Para seguir con nuestro ejemplo, vamos a crear dos clases que van a representar a **ContactCard**:
 
         class Person < ActiveRecord::Base
           has_many :contact_cards, :as => :contact
@@ -43,15 +43,16 @@ Next step in our example, let's create two classes to represent a **ContactCard*
           has_many :contact_cards, :as => :contact
         end
 
-**Person** and **Business** relate to my **Client** class through the **ContactCard** table. In other words, I have two kinds of contacts, personal and business.
 
-This is not going to work, however. Watch what happens when I try to retrieve a contact:
+**Person** y **Business** están relacionadas con mi clase  **Client** a través de la tabla  **ContactCard**. En otras palabras, tengo dos tipos de contactos, personal y de negocios.
+
+Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:
 
         >> Client.find(:first).contacts
-        # ArgumentError: /â€¦/active_support/core_ext/hash/keys.rb:48:
-        # in `assert_valid_keysâ€™: Unknown key(s): polymorphic
+        # ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:
+        # in `assert_valid_keys': Unknown key(s): polymorphic
 
-To make this work we have to use **:source_type**. Let's change our **Client** class:
+Para que esto funcione tenemos que usar **:source_type**. Vamos cambiar nuestra clase  **Client**:
 
         class Client < ActiveRecord::Base
           has_many :people_contacts,
@@ -65,7 +66,8 @@ To make this work we have to use **:source_type**. Let's change our **Client** c
                    :source_type => :business
         end
 
-Notice how we now have two different ways of retrieving our contacts and we can say what contact **:source_type** we are expecting.
+Note que ahora tenemos dos maneras diferentes de recuperar nuestros contactos y podemos indicar que tipo de contacto **:source_type** esperamos.
+
 
         Client.find(:first).people_contacts
         Client.find(:first).business_contacts

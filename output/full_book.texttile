@@ -68,81 +68,85 @@ Ahora podemos usar expresiones en los métodos de cálculo de **ActiveRecord**, 
 
 ### Cambiando el valor de retorno por defecto del método sum
 
-En las versiones previas, cuando usábamos el método **sum** de **ActiveRecord** para calcular la suma de una determinada columna para todos los registros de una tabla, si ningun registro correspondía con las condiciones expresadas en el método de invocación, entonces el valor de retorno por defecto era **nil**.
+En las versiones previas, cuando usábamos el método **sum** de **ActiveRecord** para calcular la suma de una determinada columna para todos los registros de una tabla, si ningún registro correspondía con las condiciones expresadas en el método de invocación, entonces el valor de retorno por defecto era **nil**.
 
 En Rails 2.1 el valor de retorno por defecto (cuando no se encuentra ningún registro) es 0. Vea el ejemplo:
 
         Account.sum(:balance, :conditions => '1 = 2') #=> 0
 
+<!-- -*- coding: utf-8; -*- -->
+
 ## Has\_one
 
-### Support for the option through   
+### Soporte para la opción through
 
-The **has\_one** method now has the option **through**. It works just like **has_many :through**, but it represents the association to a single **ActiveRecord** object.
+El método **has\_one** ahora tiene la opción **through**. Esta funciona como **has_many :through**, pero en este caso representa la asociación a un objeto simple **ActiveRecord**. Ejemplo:
 
-	class Magazine < ActiveRecord::Base
-	  has_many :subscriptions
-	end
+        class Magazine < ActiveRecord::Base
+          has_many :subscriptions
+        end
 
-	class Subscription < ActiveRecord::Base
-	  belongs_to :magazine
-	  belongs_to :user
-	end
+        class Subscription < ActiveRecord::Base
+          belongs_to :magazine
+          belongs_to :user
+        end
 
-	class User < ActiveRecord::Base
-	  has_many :subscriptions
-	  has_one :magazine, :through => : subscriptions, 
-		        :conditions => ['subscriptions.active = ?', true]
-	end
-	
-### Has\_one with :source\_type             
-                               
-The **has\_one :through** method, just mentioned above, can also take **:source\_type**. I will try to explain this through some examples. Let's start with these two classes:
+        class User < ActiveRecord::Base
+          has_many :subscriptions
+          has_one :magazine, :through => : subscriptions,
+                        :conditions => ['subscriptions.active = ?', true]
+        end
 
-	class Client < ActiveRecord::Base
-	  has_many :contact_cards 
+### Has\_one con :source\_type
 
-	  has_many :contacts, :through => :contact_cards
-	end 
-         
-What we are looking at here is a **Client** class which **has_many** kinds of contacts, since the **ContactCard** class has a polymorphic relationship.
+El método **has\_one :through** que acabamos de ver, puede también tomar **:source\_type**. Voy a intentar explicar esto a través de algunos ejemplos. Vamos comenzar con estas dos clases:
 
-Next step in our example, let's create two classes to represent a **ContactCard**:
+        class Client < ActiveRecord::Base
+          has_many :contact_cards
 
-	class Person < ActiveRecord::Base
-	  has_many :contact_cards, :as => :contact
-	end
+          has_many :contacts, :through => :contact_cards
+        end
 
-	class Business < ActiveRecord::Base
-	  has_many :contact_cards, :as => :contact
-	end
-          
-**Person** and **Business** relate to my **Client** class through the **ContactCard** table. In other words, I have two kinds of contacts, personal and business. 
+Lo que estamos viendo hasta aquí es una clase **Client** la cual tiene muchos (**has_many**) tipos de contactos (**contacts**), ya que la clase **ContactCard** tiene una relación polimórfica.
 
-This is not going to work, however. Watch what happens when I try to retrieve a contact:
+Para seguir con nuestro ejemplo, vamos a crear dos clases que van a representar a **ContactCard**:
 
-	>> Client.find(:first).contacts
-	# ArgumentError: /…/active_support/core_ext/hash/keys.rb:48:
-	# in `assert_valid_keys’: Unknown key(s): polymorphic 
-                       
-To make this work we have to use **:source_type**. Let's change our **Client** class:
+        class Person < ActiveRecord::Base
+          has_many :contact_cards, :as => :contact
+        end
 
-	class Client < ActiveRecord::Base
-	  has_many :people_contacts,
-	           :through => :contact_cards,
-	           :source => :contacts,
-	           :source_type => :person 
+        class Business < ActiveRecord::Base
+          has_many :contact_cards, :as => :contact
+        end
 
-	  has_many :business_contacts,
-	           :through => :contact_cards,
-	           :source => :contacts,
-	           :source_type => :business
-	end
-	                       
-Notice how we now have two different ways of retrieving our contacts and we can say what contact **:source_type** we are expecting.
 
-	Client.find(:first).people_contacts
-	Client.find(:first).business_contacts
+**Person** y **Business** están relacionadas con mi clase  **Client** a través de la tabla  **ContactCard**. En otras palabras, tengo dos tipos de contactos, personal y de negocios.
+
+Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:
+
+        >> Client.find(:first).contacts
+        # ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:
+        # in `assert_valid_keys': Unknown key(s): polymorphic
+
+Para que esto funcione tenemos que usar **:source_type**. Vamos cambiar nuestra clase  **Client**:
+
+        class Client < ActiveRecord::Base
+          has_many :people_contacts,
+                   :through => :contact_cards,
+                   :source => :contacts,
+                   :source_type => :person
+
+          has_many :business_contacts,
+                   :through => :contact_cards,
+                   :source => :contacts,
+                   :source_type => :business
+        end
+
+Note que ahora tenemos dos maneras diferentes de recuperar nuestros contactos y podemos indicar que tipo de contacto **:source_type** esperamos.
+
+
+        Client.find(:first).people_contacts
+        Client.find(:first).business_contacts
 
 ## Named_scope
               
