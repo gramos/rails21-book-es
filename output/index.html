@@ -362,8 +362,8 @@
 <pre class="mac_classic">    <span class="LibraryObject">Author</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include</span> =&gt; [<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>posts</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>comments</span>])
 </pre>
 
-<p>I'm searching through table <strong>authors</strong> and also including tables <strong>posts</strong> and <strong>comments</strong> in my query through the <strong>author_id</strong> column, which is the default column name according to Rails' convention for foreign_key names.
-This search used to generate SQL queries like this:</p>
+<p>Estoy haciendo una búsqueda en la tabla <strong>authors</strong>  y también incluyendo las tablas <strong>posts</strong> y <strong>comments</strong> en mi consulta a través de la columna <strong>author_id</strong>, el cual es el nombre de columna por defecto de acuerdo a la conveción que rails utiliza para las claves foráneas.
+Esta búsqueda genera una consulta como la siguiente:</p>
 
 <pre class="mac_classic">    <span class="Variable">SELECT</span>
       authors.<span class="String"><span class="String">&quot;</span>id<span class="String">&quot;</span></span>          <span class="Variable">AS</span> t0_r0,
@@ -383,26 +383,31 @@ This search used to generate SQL queries like this:</p>
       <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> comments <span class="Variable">ON</span> comments.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
 </pre>
 
-<p>Exactly one long SQL query with <strong>joins</strong> between tables <strong>authors</strong>, <strong>posts</strong> and <strong>comments</strong>. We call this <strong>cartesian product</strong>.</p>
+<p>Un única consulta SQL con <strong>joins</strong> entre las tablas  <strong>authors</strong>, <strong>posts</strong> y <strong>comments</strong>. A esto lo llamamos <strong>producto cartesiano</strong>.</p>
 
-<p>This type of query is not always good performance-wise, so it was changed for Rails 2.1. The same query for <strong>Author</strong> class now uses a different approach to retrieve information from all three tables. Instead of using one SQL query with all three tables, Rails now uses three different queries - one for each table - which are shorter queries than the former that used to be generated. The result can be seen in the log after executing the previous ruby on rails code:</p>
+<p>Este tipo de consultas no siempre tiene una buena performance, entonces esto se cambió en Rails 2.1. La misma consulta para la clase <strong>Author</strong> ahora se hace de una forma diferente para traer la información de las tres tablas. En vez de usar una única consulta SQL con las tres tablas, Rails ahora usa tres consultas diferentes - una por cada tabla - las cuales son más cortas que la anterior. El resultado se puede ver en los logs despues de ejecutar el codigo ruby on rails previo:</p>
 
 <pre class="mac_classic">    <span class="Variable">SELECT</span> <span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>authors<span class="String">&quot;</span></span>
     <span class="Variable">SELECT</span> posts.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>posts<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (posts.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
     <span class="Variable">SELECT</span> comments.<span class="Keyword">*</span> <span class="Variable">FROM</span> <span class="String"><span class="String">&quot;</span>comments<span class="String">&quot;</span></span> <span class="Variable">WHERE</span> (comments.<span class="FunctionName">author_id</span> <span class="Variable">IN</span> (<span class="Number">1</span>))
 </pre>
 
-<p>In <strong>most cases</strong> three simpler queries will run faster than a complex and long query.</p>
+<p>En la <strong>mayoría de los casos</strong> estas tres simples consultas se ejecutan más rápido que la consulta larga y compleja.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> Belongs_to</h2>
 
-<p>The <strong>belongs_to</strong> method was changed in order to allow the use of <strong>:dependent => :destroy</strong> and <strong>:delete</strong> in associations.
-For example:</p>
+<p>El método <strong>belongs_to</strong> se cambió en pro de permitir el uso de <strong>:dependent => :destroy</strong> y <strong>:delete</strong>
+en las asociaciones.</p>
 
-<pre class="mac_classic">belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address</span>
-belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>dependent</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>destroy</span>
-belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address_extra</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>dependent</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>delete</span>, 
-    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class_name</span> =&gt; <span class="String"><span class="String">&quot;</span>AuthorAddress<span class="String">&quot;</span></span>
+<p>Por ejemplo:</p>
+
+<pre class="mac_classic">    belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address</span>
+    belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>dependent</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>destroy</span>
+    belongs_to <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>author_address_extra</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>dependent</span> =&gt; <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>delete</span>,
+            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class_name</span> =&gt; <span class="String"><span class="String">&quot;</span>AuthorAddress<span class="String">&quot;</span></span>
 </pre>
 
 <h2> Polymorphic url</h2>

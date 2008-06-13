@@ -1,31 +1,33 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Polymorphic url
 
-Helper methods for polymorphic URL are used as a more elegant solution to renamed routes when you're working with **ActiveRecord**.
-                                    
-These methods come in handy when you want to generate the URL for a **RESTful** resource without specifying the type it is going to be associated with.
-                                      
-It is very simple to work with them. Take a look at a few examples (commented out is how the same thing is done in versions of Rails prior to 2.1):                             
+Los métodos helper para las URL polimórficas son usados para resolver de una forma más elegante una ruta nombrada cuando cuando tenemos una modelo de  **ActiveRecord**.
 
-	record = Article.find(:first) 
-	polymorphic_url(record) #-> article_url(record)
+Estos métodos son útiles caundo queremos generar la URL para un recurso **RESTful** sin especificar el tipo de registro en cuestión.
 
-	record = Comment.find(:first)
-	polymorphic_url(record)  #->  comment_url(record)
+Es muy fácil de usar. Veamos algunos ejemplos (los comentarios explican las llamdas equivalentes para las versiones anteriores a Rails 2.1)
 
-	# it can also identify recently created elements
-	record = Comment.new
-	polymorphic_url(record)  #->  comments_url()
-	                  
-Notice how the **polymorphic_url** method is able to identify the type that is given to him and generates the correct routes. **Nested resources** and **namespaces** are also supported:
+        record = Article.find(:first)
+        polymorphic_url(record) #-> article_url(record)
 
-	polymorphic_url([:admin, @article, @comment])
-	#-> this will return:
-	admin_article_comment_url(@article, @comment)
-	           
-You can also use prefixes such as **new**, **edit** and **formatted**. Take a look at a few examples:
+        record = Comment.find(:first)
+        polymorphic_url(record)  #->  comment_url(record)
 
-	edit_polymorphic_path(@post)
-	#=> /posts/1/edit
+        # it can also identify recently created elements
+        record = Comment.new
+        polymorphic_url(record)  #->  comments_url()
 
-	formatted_polymorphic_path([@post, :pdf])
-	#=> /posts/1.pdf
+Note como el método **polymorphic_url** es capáz de indetificar el tipo del objeto dado y generar la ruta correcta. También soporta **Recursos anidados** y **espacios de nombres**:
+
+        polymorphic_url([:admin, @article, @comment])
+        #-> this will return:
+        admin_article_comment_url(@article, @comment)
+
+También se puede usar **new**, **edit** y **formatted** como prefijos:
+
+        edit_polymorphic_path(@post)
+        #=> /posts/1/edit
+
+        formatted_polymorphic_path([@post, :pdf])
+        #=> /posts/1.pdf
