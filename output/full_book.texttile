@@ -1,10 +1,10 @@
-<!-- -*- coding: utf-8; -*- -->
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 #Introducción
 
 Alrededor de julio de 2004 David Heinemeier Hansson lanzó la versión pública del framework Ruby on Rails, el cual surgió como consecuencia del desarrollo de una aplicación llamada Basecamp. Después de tres años, el 7 de Diciembre de 2007 se publicó Ruby on Rails 2.0 con una cantidad importante de cambios.
 
-Seis meses después, y durante este todo este tiempo han contribuido más de **1400 desarrolladores** alrededor de todo el mundo con **1600 parches** para el framework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.
+Seis meses después, y durante todo este tiempo han contribuido más de **1400 desarrolladores** alrededor de todo el mundo con **1600 parches** para el framework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.
 
 Según David las principales novedades de esta versión son:
 
@@ -385,26 +385,30 @@ Se agregó una nueva caraterística a las relaciones entre modelos. Con el fin d
 
 De esta manera los registros protegidos no podrán ser alterados desde este modelo. Si intentamos editar algunos de los registros de este modelos entonces obtendríamos la siguiente excepción: **ActiveRecord::ReadOnlyRecord**
 
-## Methods add\_timestamps and remove\_timestamps       
-  
-We now have two new methods: **add\_timestamps** and **remove\_timestamps**. They add and remove, respectively, **timestamp** columns. Let's take a look at an example:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	def self.up
-	  add_timestamps :feeds
-	  add_timestamps :urls
-	end
+## Métodos add\_timestamps y remove\_timestamps
 
-	def self.down
-	  remove_timestamps :urls
-	  remove_timestamps :feeds
-	end
+Ahora tenemos 2 métodos nuevos: **add\_timestamps** y **remove\_timestamps**. Los cuales agregan y eliminan, respectivamente, las columnas de **timestamp**. Veamos un ejemplo:
 
-## Calculations 
-                         
-**ActiveRecord::Calculations** has changed a bit to support table names. This comes in handy when we have relationships among different tables with the same column name. You have these two options now:
+        def self.up
+          add_timestamps :feeds
+          add_timestamps :urls
+        end
 
-	authors.categories.maximum(:id)
-	authors.categories.maximum("categories.id")
+        def self.down
+          remove_timestamps :urls
+          remove_timestamps :feeds
+        end
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+## Cálculos
+
+**ActiveRecord::Calculations** ha cambiado un poco para aceptar no sólo el nombre de la columna sino también el nombre de la tabla. Esto es muy útil cuando tenemos una relación entre dos tablas que tienen una columna con el mismo nombre. Los métodos afectados son: **sum** o **maximum** de **ActiveRecord** (entre otros). Para resumir ahora podemos hacer esto de estas dos formas:
+
+        authors.categories.maximum(:id)
+        authors.categories.maximum("categories.id")
 
 ## ActiveRecord::Base.create accepts blocks
 

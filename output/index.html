@@ -43,14 +43,14 @@
         </div> -->
 
         <div class="chapter">
-                <!-- -*- coding: utf-8; -*- -->
+                <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 
 <h1>Introducción</h1>
 
 <p>Alrededor de julio de 2004 David Heinemeier Hansson lanzó la versión pública del framework Ruby on Rails, el cual surgió como consecuencia del desarrollo de una aplicación llamada Basecamp. Después de tres años, el 7 de Diciembre de 2007 se publicó Ruby on Rails 2.0 con una cantidad importante de cambios.</p>
 
-<p>Seis meses después, y durante este todo este tiempo han contribuido más de <strong>1400 desarrolladores</strong> alrededor de todo el mundo con <strong>1600 parches</strong> para el framework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.</p>
+<p>Seis meses después, y durante todo este tiempo han contribuido más de <strong>1400 desarrolladores</strong> alrededor de todo el mundo con <strong>1600 parches</strong> para el framework. Hoy, 1ero. Junio de 2008, se ha publicado la versión 2.1 del framework Ruby on Rails.</p>
 
 <p>Según David las principales novedades de esta versión son:</p>
 
@@ -466,27 +466,33 @@ en las asociaciones.</p>
 
 <p>De esta manera los registros protegidos no podrán ser alterados desde este modelo. Si intentamos editar algunos de los registros de este modelos entonces obtendríamos la siguiente excepción: <strong>ActiveRecord::ReadOnlyRecord</strong></p>
 
-<h2> Methods add_timestamps and remove_timestamps       </h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>We now have two new methods: <strong>add_timestamps</strong> and <strong>remove_timestamps</strong>. They add and remove, respectively, <strong>timestamp</strong> columns. Let's take a look at an example:</p>
 
-<pre class="mac_classic"><span class="Keyword">def</span> <span class="FunctionName">self.up</span>
-  add_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>feeds</span>
-  add_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>urls</span>
-<span class="Keyword">end</span>
+<h2> Métodos add_timestamps y remove_timestamps</h2>
 
-<span class="Keyword">def</span> <span class="FunctionName">self.down</span>
-  remove_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>urls</span>
-  remove_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>feeds</span>
-<span class="Keyword">end</span>
+<p>Ahora tenemos 2 métodos nuevos: <strong>add_timestamps</strong> y <strong>remove_timestamps</strong>. Los cuales agregan y eliminan, respectivamente, las columnas de <strong>timestamp</strong>. Veamos un ejemplo:</p>
+
+<pre class="mac_classic">    <span class="Keyword">def</span> <span class="FunctionName">self.up</span>
+      add_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>feeds</span>
+      add_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>urls</span>
+    <span class="Keyword">end</span>
+
+    <span class="Keyword">def</span> <span class="FunctionName">self.down</span>
+      remove_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>urls</span>
+      remove_timestamps <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>feeds</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<h2> Calculations </h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p><strong>ActiveRecord::Calculations</strong> has changed a bit to support table names. This comes in handy when we have relationships among different tables with the same column name. You have these two options now:</p>
 
-<pre class="mac_classic">authors.<span class="FunctionName">categories</span>.<span class="FunctionName">maximum</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>id</span>)
-authors.<span class="FunctionName">categories</span>.<span class="FunctionName">maximum</span>(<span class="String"><span class="String">&quot;</span>categories.id<span class="String">&quot;</span></span>)
+<h2> Cálculos</h2>
+
+<p><strong>ActiveRecord::Calculations</strong> ha cambiado un poco para aceptar no sólo el nombre de la columna sino también el nombre de la tabla. Esto es muy útil cuando tenemos una relación entre dos tablas que tienen una columna con el mismo nombre. Los métodos afectados son: <strong>sum</strong> o <strong>maximum</strong> de <strong>ActiveRecord</strong> (entre otros). Para resumir ahora podemos hacer esto de estas dos formas:</p>
+
+<pre class="mac_classic">    authors.<span class="FunctionName">categories</span>.<span class="FunctionName">maximum</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>id</span>)
+    authors.<span class="FunctionName">categories</span>.<span class="FunctionName">maximum</span>(<span class="String"><span class="String">&quot;</span>categories.id<span class="String">&quot;</span></span>)
 </pre>
 
 <h2> ActiveRecord::Base.create accepts blocks</h2>
