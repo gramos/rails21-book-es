@@ -2,9 +2,9 @@
 
 ## Polymorphic url
 
-Los métodos helper para las URL polimórficas son usados para resolver de una forma más elegante una ruta nombrada cuando cuando tenemos una modelo de  **ActiveRecord**.
+Los métodos helper para las URL polimórficas son usados para resolver de una forma más elegante una ruta nombrada cuando cuando tenemos un modelo de  **ActiveRecord**.
 
-Estos métodos son útiles caundo queremos generar la URL para un recurso **RESTful** sin especificar el tipo de registro en cuestión.
+Estos métodos son útiles cuando queremos generar la URL para un recurso **RESTful** sin especificar el tipo de registro en cuestión.
 
 Es muy fácil de usar. Veamos algunos ejemplos (los comentarios explican las llamdas equivalentes para las versiones anteriores a Rails 2.1)
 

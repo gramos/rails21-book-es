@@ -47,9 +47,9 @@ Veamos un ejemplo:
                 end
 
 
-Como creamos un test que valide la generación de este scope ?
+¿Como creamos un test que valide la generación de este scope ?
 
-Para solucionar esto, se creó el método **proxy\_options**. El cual nos permite examinar las opciones usadas en in **named_scope**. Para testear el código de arriba podríamos escribir esto:
+Para solucionar esto, se creó el método **proxy\_options**. El cual nos permite examinar las opciones usadas en **named_scope**. Para testear el código de arriba podríamos escribir esto:
 
                 class ShirtTest < Test::Unit
                   def test_colored_scope
