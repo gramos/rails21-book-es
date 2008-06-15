@@ -495,34 +495,37 @@ en las asociaciones.</p>
     authors.<span class="FunctionName">categories</span>.<span class="FunctionName">maximum</span>(<span class="String"><span class="String">&quot;</span>categories.id<span class="String">&quot;</span></span>)
 </pre>
 
-<h2> ActiveRecord::Base.create accepts blocks</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>We are already used to <strong>ActiveRecord::Base.new</strong> accepting blocks. Now we can do the same thing in the <strong>create</strong> method:</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Creating an object and passing it a block describing its attributes</span>
-<span class="LibraryObject">User</span>.<span class="FunctionName">create</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jamie<span class="String">'</span></span>) <span class="Keyword">do </span>|<span class="Variable">u</span>|
-  u.<span class="FunctionName">is_admin</span> <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>
-<span class="Keyword">end</span>
+<h2> ActiveRecord::Base.create acepta bloques</h2>
+
+<p>Estamos acostumbrados al método <strong>ActiveRecord::Base.new</strong> que acepta el uso de bloques. Ahora podemos hacer lo mismo con el método  <strong>create</strong>:</p>
+
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Creación de un nuevo objeto pasándole un bloque con la descripción de sus atributos</span>
+    <span class="LibraryObject">User</span>.<span class="FunctionName">create</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jamie<span class="String">'</span></span>) <span class="Keyword">do </span>|<span class="Variable">u</span>|
+      u.<span class="FunctionName">is_admin</span> <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>We can also use the same method to create many objects at once:</p>
+<p>Podemos usar este mismo método para crear muchos objetos de una sola vez:</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Creating an array of new objects using a block.</span>
-<span class="Comment"><span class="Comment">#</span> The block is executed once for each of object that is created.</span>
-<span class="LibraryObject">User</span>.<span class="FunctionName">create</span>([{<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jamie<span class="String">'</span></span>}, {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jeremy<span class="String">'</span></span>}]) <span class="Keyword">do </span>|<span class="Variable">u</span>|
-  u.<span class="FunctionName">is_admin</span> <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>
-<span class="Keyword">end</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Creación de un array de objetos nuevos usando un bloque.</span>
+<span class="Comment">    <span class="Comment">#</span> El bloque se ejecuta una vez por cada nuevo objeto creado.</span>
+    <span class="LibraryObject">User</span>.<span class="FunctionName">create</span>([{<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jamie<span class="String">'</span></span>}, {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first_name</span> =&gt; <span class="String"><span class="String">'</span>Jeremy<span class="String">'</span></span>}]) <span class="Keyword">do </span>|<span class="Variable">u</span>|
+      u.<span class="FunctionName">is_admin</span> <span class="Keyword">=</span> <span class="BuiltInConstant">false</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>And it also works with associations:</p>
+<p>Esto también funciona para las asociaciones:</p>
 
-<pre class="mac_classic">author.<span class="FunctionName">posts</span>.<span class="FunctionName">create!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> =&gt; <span class="String"><span class="String">&quot;</span>New on Edge<span class="String">&quot;</span></span>) {|<span class="Variable">p</span>| p.<span class="FunctionName">body</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>More cool stuff!<span class="String">&quot;</span></span>}
+<pre class="mac_classic">    author.<span class="FunctionName">posts</span>.<span class="FunctionName">create!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> =&gt; <span class="String"><span class="String">&quot;</span>New on Edge<span class="String">&quot;</span></span>) {|<span class="Variable">p</span>| p.<span class="FunctionName">body</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>More cool stuff!<span class="String">&quot;</span></span>}
 
-<span class="Comment"><span class="Comment">#</span> ou</span>
+<span class="Comment">    <span class="Comment">#</span> o</span>
 
-author.<span class="FunctionName">posts</span>.<span class="FunctionName">create!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> =&gt; <span class="String"><span class="String">&quot;</span>New on Edge<span class="String">&quot;</span></span>) <span class="Keyword">do </span>|<span class="Variable">p</span>|
-  p.<span class="FunctionName">body</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>More cool stuff!<span class="String">&quot;</span></span>
-<span class="Keyword">end</span>
+    author.<span class="FunctionName">posts</span>.<span class="FunctionName">create!</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> =&gt; <span class="String"><span class="String">&quot;</span>New on Edge<span class="String">&quot;</span></span>) <span class="Keyword">do </span>|<span class="Variable">p</span>|
+      p.<span class="FunctionName">body</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>More cool stuff!<span class="String">&quot;</span></span>
+    <span class="Keyword">end</span>
 </pre>
 
 <h2> change_table</h2>

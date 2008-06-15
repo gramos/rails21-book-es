@@ -1,26 +1,28 @@
-## ActiveRecord::Base.create accepts blocks
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-We are already used to **ActiveRecord::Base.new** accepting blocks. Now we can do the same thing in the **create** method:
+## ActiveRecord::Base.create acepta bloques
 
-	# Creating an object and passing it a block describing its attributes
-	User.create(:first_name => 'Jamie') do |u|
-	  u.is_admin = false
-	end
+Estamos acostumbrados al método **ActiveRecord::Base.new** que acepta el uso de bloques. Ahora podemos hacer lo mismo con el método  **create**:
 
-We can also use the same method to create many objects at once:
+        # Creación de un nuevo objeto pasándole un bloque con la descripción de sus atributos
+        User.create(:first_name => 'Jamie') do |u|
+          u.is_admin = false
+        end
 
-	# Creating an array of new objects using a block.
-	# The block is executed once for each of object that is created.
-	User.create([{:first_name => 'Jamie'}, {:first_name => 'Jeremy'}]) do |u|
-	  u.is_admin = false
-	end
+Podemos usar este mismo método para crear muchos objetos de una sola vez:
 
-And it also works with associations:
+        # Creación de un array de objetos nuevos usando un bloque.
+        # El bloque se ejecuta una vez por cada nuevo objeto creado.
+        User.create([{:first_name => 'Jamie'}, {:first_name => 'Jeremy'}]) do |u|
+          u.is_admin = false
+        end
 
-	author.posts.create!(:title => "New on Edge") {|p| p.body = "More cool stuff!"}
+Esto también funciona para las asociaciones:
 
-	# ou
+        author.posts.create!(:title => "New on Edge") {|p| p.body = "More cool stuff!"}
 
-	author.posts.create!(:title => "New on Edge") do |p|
-	  p.body = "More cool stuff!"
-	end
+        # o
+
+        author.posts.create!(:title => "New on Edge") do |p|
+          p.body = "More cool stuff!"
+        end
