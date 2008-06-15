@@ -1,38 +1,40 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Dirty Objects
-                  
-Now in Rails we are able to keep track of changes made to **ActiveRecord**. It is possible to know if an object has been changed or not. In case it has been changed, we can track down its latest changes. Let's take look at a few examples:
 
-  article = Article.find(:first)
-	article.changed?  #=> false
+Ahora en Rails podemos ratrear los cambios hechos por **ActiveRecord**.. Se puede saber si un objeto ha sido modificado o no. En caso de que haya cambiado, podemos ver que fue lo que cambió exactamente como así también comparar su estado anterior con el actual. Veamos algunos ejemplos:
 
-	article.title  #=> "Title"
-	article.title = "New Title"
-	article.title_changed? #=> true
+        article = Article.find(:first)
+        article.changed?  #=> false
 
-	# shows title before change
-	article.title_was  #=> "Title"
+        article.title  #=> "Title"
+        article.title = "New Title"
+        article.title_changed? #=> true
 
-	# before and after the change
-	article.title_change  #=> ["Title", "New Title"]
+        # muestra title antes del cambio
+        article.title_was  #=> "Title"
 
-As you can see it is very simple. You can also list all changes made to the object in one of two ways:
+        # antes y despues del cambio
+        article.title_change  #=> ["Title", "New Title"]
 
-	# returns a list with all of the attributes that were changed
-	article.changed  #=> ['title']
+Como ud. puede ver es muy simple. Puede listar todos los cambios hechos al objeto de una esta dos formas:
 
-	# returns a hash with attributes that were changed 
-	# along with its values before and after
-	article.changes  #=> { 'title’ => ["Title", "New Title"] }
-             
-Notice that when an object is saved, its status changes:
+        # retorna una lista con todos los atributos que cambiaron
+        article.changed  #=> ['title']
 
-	article.changed?  #=> true
-	article.save  #=> true
-	article.changed?  #=> false
-   
-In case you want to change an object's state without using **attr=**, you will need to explicitly inform that the attribute was changed by using the method **attr\_name\_will\_change!** (replace **attr** with an object's real attribute). Let's look at one last example:
-    
-	article = Article.find(:first)
-	article.title_will_change!
-	article.title.upcase!
-	article.title_change  #=> ['Title', 'TITLE']
+        # retorna un hash con los atributos que cambiaron
+        # con sus valores antes y después
+        article.changes  #=> { 'title' => ["Title", "New Title"] }
+
+Note que cuando el objeto se guarda su estado de alterado cambia:
+
+        article.changed?  #=> true
+        article.save  #=> true
+        article.changed?  #=> false
+
+En caso de ud. quiera cambiar el estado de un objeto sin usar **attr=**, va a necesitar informar explícitamente que se ha modificado el atributo mediante el método **attr\_name\_will\_change!** (reemplace **attr** con el nombre real del atributo del objeto). Veamos un ejemplo más:
+
+        article = Article.find(:first)
+        article.title_will_change!
+        article.title.upcase!
+        article.title_change  #=> ['Title', 'TITLE']
