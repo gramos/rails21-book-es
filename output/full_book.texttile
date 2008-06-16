@@ -488,90 +488,96 @@ El nuevo método **change\_table** funciona como **create\_table** pero en vez d
 
 ## Dirty Objects
 
-Now in Rails we are able to keep track of changes made to **ActiveRecord**. It is possible to know if an object has been changed or not. In case it has been changed, we can track down its latest changes. Let's take look at a few examples:
+Ahora en Rails podemos rastrear los cambios hechos por **ActiveRecord**. Se puede saber si un objeto ha sido modificado o no. En caso de que haya cambiado, podemos ver que fue lo que cambió exactamente como así también comparar su estado anterior con el actual. Veamos algunos ejemplos:
 
-  article = Article.find(:first)
+        article = Article.find(:first)
         article.changed?  #=> false
 
         article.title  #=> "Title"
         article.title = "New Title"
         article.title_changed? #=> true
 
-        # shows title before change
+        # muestra title antes del cambio
         article.title_was  #=> "Title"
 
-        # before and after the change
+        # antes y despues del cambio
         article.title_change  #=> ["Title", "New Title"]
 
-As you can see it is very simple. You can also list all changes made to the object in one of two ways:
+Como ud. puede ver es muy simple. Puede listar todos los cambios hechos al objeto de una esta dos formas:
 
-        # returns a list with all of the attributes that were changed
+        # retorna una lista con todos los atributos que cambiaron
         article.changed  #=> ['title']
 
-        # returns a hash with attributes that were changed
-        # along with its values before and after
-        article.changes  #=> { 'titleâ€™ => ["Title", "New Title"] }
+        # retorna un hash con los atributos que cambiaron
+        # con sus valores antes y después
+        article.changes  #=> { 'title' => ["Title", "New Title"] }
 
-Notice that when an object is saved, its status changes:
+Note que cuando el objeto se guarda su estado de alterado cambia:
 
         article.changed?  #=> true
         article.save  #=> true
         article.changed?  #=> false
 
-In case you want to change an object's state without using **attr=**, you will need to explicitly inform that the attribute was changed by using the method **attr\_name\_will\_change!** (replace **attr** with an object's real attribute). Let's look at one last example:
+En caso de ud. quiera cambiar el estado de un objeto sin usar **attr=**, va a necesitar informar explícitamente que se ha modificado el atributo mediante el método **attr\_name\_will\_change!** (reemplace **attr** con el nombre real del atributo del objeto). Veamos un ejemplo más:
 
         article = Article.find(:first)
         article.title_will_change!
         article.title.upcase!
         article.title_change  #=> ['Title', 'TITLE']
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Partial Updates
 
-The implementation of **Dirty Objects** was the starting point for another very interesting feature.
-                                                                                                         
-Since we can now track down what has changed in an object's state, why not use it to avoid unnecessary updates to the database ?
-  
-On previous versions of Rails when we called **save** from an already existing **ActiveRecord** object, all of its fields would be updated in the database. Even the ones that had not suffered any change.
+La implementación de **Dirty Objects** dió punto de partida a otra característica muy interesante.
 
-This action could be greatly enhanced with the use of **Dirty Objects** and it is exactly what happened. Take a look at the SQL query generated in Rails 2.1 when trying to save an object that suffered a slight change: 
+Dado que ahora podemos rastrear los cambios de los atributos de un objeto, ¿por qué no usar esto para evitar actualizaciones innecesarias en la base de datos?
 
-	article = Article.find(:first)
-	article.title  #=> "Title"
-	article.subject  #=> "Edge Rails"
 
-	# Let's change the title
-	article.title = "New Title"
+En las versiones previas de Rails cuando ejecutábamos el método **save** de un objeto **ActiveRecord**, se actualizaban todos los campos en la base de datos. Por más que los mismos no hayan sufrido ningún cambio.
 
-	# it creates the following SQL
-	article.save
-	#=>  "UPDATE articles SET title = 'New Title' WHERE id = 1"
-	
-Notice how only the fields that were changed in the application were updated in the database. If no field had been updated in the application, then **ActiveRecord** would not execute any update.
-                                
-To enable/disable this new feature you change the **partial\_updates** property related to your model.
+Con **Dirty Objects** esta acción podría mejorarse, y esto es exactamente lo que pasó. Miremos un poco la consulta SQL generada en Rails 2.1 cuando intentamos guardar un objeto que a sufrido un pequeño cambio:
 
-	# To enable it
-	MyClass.partial_updates = true
-         
-If you wish to enable/disable this feature to all of your models, then you must edit the file *config/initializers/new\_rails\_defaults.rb*:
+        article = Article.find(:first)
+        article.title  #=> "Title"
+        article.subject  #=> "Edge Rails"
 
-	# Enable it to all models
-	ActiveRecord::Base.partial_updates = true
-      
-Don't forget to also inform Rails through *config/initializers/new\_rails\_defaults.rb* if you plan to edit a field without using the method **attr=**, like this:
+        # Cambiamos el título (title)
+        article.title = "New Title"
 
-	# If you use **attr=**, 
-	# then it's ok not informing
-	person.name = 'bobby'
-	person.name_change    # => ['bob', 'bobby']
-	
-	
-	# But you must inform that the field will be changed
-	# if you plan not to use **attr=** 
-	person.name_will_change!
-	person.name << 'by'
-	person.name_change    # => ['bob', 'bobby']
-         
+        # esto crea el siguiente SQL para persistir el objeto
+        article.save
+        #=>  "UPDATE articles SET title = 'New Title' WHERE id = 1"
+
+Note como sólo se actualizaron en la base de datos los campos que fueron cambiados en la aplicación. Si ningún campo ha sido actualizado en la aplicación, entonces **ActiveRecord** no ejecutará ninguna actualización.
+
+Para habilitar/deshabilitar esta nueva característica debe cambiar la propiedad **partial\_updates** de sus modelos.
+
+        # Para habilitarla
+        MyClass.partial_updates = true
+
+
+Si desea habilitar/deshabilitar esta característica para todos sus modelos debe editar el archivo *config/initializers/new\_rails\_defaults.rb*:
+
+        # Habilitando para todos los modelos
+        ActiveRecord::Base.partial_updates = true
+
+No olvide informarle a Rails a través *config/initializers/new\_rails\_defaults.rb* que va a actualizar un atributo sin usar el método **attr=**, así:
+
+        # Si usa **attr=**,
+        # entocnes está bien no informar nada.
+        person.name = 'bobby'
+        person.name_change    # => ['bob', 'bobby']
+
+
+        # Pero debe informar que el campo se va actualizar
+        # si no va a usar **attr=**
+        person.name_will_change!
+        person.name << 'by'
+        person.name_change    # => ['bob', 'bobby']
+
+Si ud. no informa
+
 If you don't inform changes like these will be occurring, then they won't be able to be tracked down and your database table won't be correctly updated.
 
 ## Smallint, int or bigint in MySQL?

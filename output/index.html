@@ -580,41 +580,40 @@ en las asociaciones.</p>
 
 <h2> Dirty Objects</h2>
 
-<p>Now in Rails we are able to keep track of changes made to <strong>ActiveRecord</strong>. It is possible to know if an object has been changed or not. In case it has been changed, we can track down its latest changes. Let's take look at a few examples:</p>
+<p>Ahora en Rails podemos rastrear los cambios hechos por <strong>ActiveRecord</strong>. Se puede saber si un objeto ha sido modificado o no. En caso de que haya cambiado, podemos ver que fue lo que cambió exactamente como así también comparar su estado anterior con el actual. Veamos algunos ejemplos:</p>
 
-<p>  article = Article.find(:first)</p>
-
-<pre class="mac_classic">    article.<span class="FunctionName">changed?</span>  <span class="Comment"><span class="Comment">#</span>=&gt; false</span>
+<pre class="mac_classic">    article <span class="Keyword">=</span> <span class="LibraryObject">Article</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
+    article.<span class="FunctionName">changed?</span>  <span class="Comment"><span class="Comment">#</span>=&gt; false</span>
 
     article.<span class="FunctionName">title</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Title&quot;</span>
     article.<span class="FunctionName">title</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>New Title<span class="String">&quot;</span></span>
     article.<span class="FunctionName">title_changed?</span> <span class="Comment"><span class="Comment">#</span>=&gt; true</span>
 
-<span class="Comment">    <span class="Comment">#</span> shows title before change</span>
+<span class="Comment">    <span class="Comment">#</span> muestra title antes del cambio</span>
     article.<span class="FunctionName">title_was</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Title&quot;</span>
 
-<span class="Comment">    <span class="Comment">#</span> before and after the change</span>
+<span class="Comment">    <span class="Comment">#</span> antes y despues del cambio</span>
     article.<span class="FunctionName">title_change</span>  <span class="Comment"><span class="Comment">#</span>=&gt; [&quot;Title&quot;, &quot;New Title&quot;]</span>
 </pre>
 
-<p>As you can see it is very simple. You can also list all changes made to the object in one of two ways:</p>
+<p>Como ud. puede ver es muy simple. Puede listar todos los cambios hechos al objeto de una esta dos formas:</p>
 
-<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> returns a list with all of the attributes that were changed</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> retorna una lista con todos los atributos que cambiaron</span>
     article.<span class="FunctionName">changed</span>  <span class="Comment"><span class="Comment">#</span>=&gt; ['title']</span>
 
-<span class="Comment">    <span class="Comment">#</span> returns a hash with attributes that were changed</span>
-<span class="Comment">    <span class="Comment">#</span> along with its values before and after</span>
-    article.<span class="FunctionName">changes</span>  <span class="Comment"><span class="Comment">#</span>=&gt; { 'titleâ€™ =&gt; [&quot;Title&quot;, &quot;New Title&quot;] }</span>
+<span class="Comment">    <span class="Comment">#</span> retorna un hash con los atributos que cambiaron</span>
+<span class="Comment">    <span class="Comment">#</span> con sus valores antes y después</span>
+    article.<span class="FunctionName">changes</span>  <span class="Comment"><span class="Comment">#</span>=&gt; { 'title' =&gt; [&quot;Title&quot;, &quot;New Title&quot;] }</span>
 </pre>
 
-<p>Notice that when an object is saved, its status changes:</p>
+<p>Note que cuando el objeto se guarda su estado de alterado cambia:</p>
 
 <pre class="mac_classic">    article.<span class="FunctionName">changed?</span>  <span class="Comment"><span class="Comment">#</span>=&gt; true</span>
     article.<span class="FunctionName">save</span>  <span class="Comment"><span class="Comment">#</span>=&gt; true</span>
     article.<span class="FunctionName">changed?</span>  <span class="Comment"><span class="Comment">#</span>=&gt; false</span>
 </pre>
 
-<p>In case you want to change an object's state without using <strong>attr=</strong>, you will need to explicitly inform that the attribute was changed by using the method <strong>attr_name_will_change!</strong> (replace <strong>attr</strong> with an object's real attribute). Let's look at one last example:</p>
+<p>En caso de ud. quiera cambiar el estado de un objeto sin usar <strong>attr=</strong>, va a necesitar informar explícitamente que se ha modificado el atributo mediante el método <strong>attr_name_will_change!</strong> (reemplace <strong>attr</strong> con el nombre real del atributo del objeto). Veamos un ejemplo más:</p>
 
 <pre class="mac_classic">    article <span class="Keyword">=</span> <span class="LibraryObject">Article</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
     article.<span class="FunctionName">title_will_change!</span>
@@ -622,56 +621,61 @@ en las asociaciones.</p>
     article.<span class="FunctionName">title_change</span>  <span class="Comment"><span class="Comment">#</span>=&gt; ['Title', 'TITLE']</span>
 </pre>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h2> Partial Updates</h2>
 
-<p>The implementation of <strong>Dirty Objects</strong> was the starting point for another very interesting feature.</p>
+<p>La implementación de <strong>Dirty Objects</strong> dió punto de partida a otra característica muy interesante.</p>
 
-<p>Since we can now track down what has changed in an object's state, why not use it to avoid unnecessary updates to the database ?</p>
+<p>Dado que ahora podemos rastrear los cambios de los atributos de un objeto, ¿por qué no usar esto para evitar actualizaciones innecesarias en la base de datos?</p>
 
-<p>On previous versions of Rails when we called <strong>save</strong> from an already existing <strong>ActiveRecord</strong> object, all of its fields would be updated in the database. Even the ones that had not suffered any change.</p>
+<p>En las versiones previas de Rails cuando ejecutábamos el método <strong>save</strong> de un objeto <strong>ActiveRecord</strong>, se actualizaban todos los campos en la base de datos. Por más que los mismos no hayan sufrido ningún cambio.</p>
 
-<p>This action could be greatly enhanced with the use of <strong>Dirty Objects</strong> and it is exactly what happened. Take a look at the SQL query generated in Rails 2.1 when trying to save an object that suffered a slight change: </p>
+<p>Con <strong>Dirty Objects</strong> esta acción podría mejorarse, y esto es exactamente lo que pasó. Miremos un poco la consulta SQL generada en Rails 2.1 cuando intentamos guardar un objeto que a sufrido un pequeño cambio:</p>
 
-<pre class="mac_classic">article <span class="Keyword">=</span> <span class="LibraryObject">Article</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
-article.<span class="FunctionName">title</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Title&quot;</span>
-article.<span class="FunctionName">subject</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Edge Rails&quot;</span>
+<pre class="mac_classic">    article <span class="Keyword">=</span> <span class="LibraryObject">Article</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>)
+    article.<span class="FunctionName">title</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Title&quot;</span>
+    article.<span class="FunctionName">subject</span>  <span class="Comment"><span class="Comment">#</span>=&gt; &quot;Edge Rails&quot;</span>
 
-<span class="Comment"><span class="Comment">#</span> Let's change the title</span>
-article.<span class="FunctionName">title</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>New Title<span class="String">&quot;</span></span>
+<span class="Comment">    <span class="Comment">#</span> Cambiamos el título (title)</span>
+    article.<span class="FunctionName">title</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>New Title<span class="String">&quot;</span></span>
 
-<span class="Comment"><span class="Comment">#</span> it creates the following SQL</span>
-article.<span class="FunctionName">save</span>
-<span class="Comment"><span class="Comment">#</span>=&gt;  &quot;UPDATE articles SET title = 'New Title' WHERE id = 1&quot;</span>
+<span class="Comment">    <span class="Comment">#</span> esto crea el siguiente SQL para persistir el objeto</span>
+    article.<span class="FunctionName">save</span>
+<span class="Comment">    <span class="Comment">#</span>=&gt;  &quot;UPDATE articles SET title = 'New Title' WHERE id = 1&quot;</span>
 </pre>
 
-<p>Notice how only the fields that were changed in the application were updated in the database. If no field had been updated in the application, then <strong>ActiveRecord</strong> would not execute any update.</p>
+<p>Note como sólo se actualizaron en la base de datos los campos que fueron cambiados en la aplicación. Si ningún campo ha sido actualizado en la aplicación, entonces <strong>ActiveRecord</strong> no ejecutará ninguna actualización.</p>
 
-<p>To enable/disable this new feature you change the <strong>partial_updates</strong> property related to your model.</p>
+<p>Para habilitar/deshabilitar esta nueva característica debe cambiar la propiedad <strong>partial_updates</strong> de sus modelos.</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> To enable it</span>
-<span class="LibraryObject">MyClass</span>.<span class="FunctionName">partial_updates</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Para habilitarla</span>
+    <span class="LibraryObject">MyClass</span>.<span class="FunctionName">partial_updates</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
 </pre>
 
-<p>If you wish to enable/disable this feature to all of your models, then you must edit the file <em>config/initializers/new_rails_defaults.rb</em>:</p>
+<p>Si desea habilitar/deshabilitar esta característica para todos sus modelos debe editar el archivo <em>config/initializers/new_rails_defaults.rb</em>:</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Enable it to all models</span>
-<span class="LibraryObject">ActiveRecord</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">partial_updates</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Habilitando para todos los modelos</span>
+    <span class="LibraryObject">ActiveRecord</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">partial_updates</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
 </pre>
 
-<p>Don't forget to also inform Rails through <em>config/initializers/new_rails_defaults.rb</em> if you plan to edit a field without using the method <strong>attr=</strong>, like this:</p>
+<p>No olvide informarle a Rails a través <em>config/initializers/new_rails_defaults.rb</em> que va a actualizar un atributo sin usar el método <strong>attr=</strong>, así:</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> If you use **attr=**,</span>
-<span class="Comment"><span class="Comment">#</span> then it's ok not informing</span>
-person.<span class="FunctionName">name</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>bobby<span class="String">'</span></span>
-person.<span class="FunctionName">name_change</span>    <span class="Comment"><span class="Comment">#</span> =&gt; ['bob', 'bobby']</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Si usa **attr=**,</span>
+<span class="Comment">    <span class="Comment">#</span> entocnes está bien no informar nada.</span>
+    person.<span class="FunctionName">name</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>bobby<span class="String">'</span></span>
+    person.<span class="FunctionName">name_change</span>    <span class="Comment"><span class="Comment">#</span> =&gt; ['bob', 'bobby']</span>
 
 
-<span class="Comment"><span class="Comment">#</span> But you must inform that the field will be changed</span>
-<span class="Comment"><span class="Comment">#</span> if you plan not to use **attr=** </span>
-person.<span class="FunctionName">name_will_change!</span>
-person.<span class="FunctionName">name</span> <span class="Keyword">&lt;&lt;</span> <span class="String"><span class="String">'</span>by<span class="String">'</span></span>
-person.<span class="FunctionName">name_change</span>    <span class="Comment"><span class="Comment">#</span> =&gt; ['bob', 'bobby']</span>
+<span class="Comment">    <span class="Comment">#</span> Pero debe informar que el campo se va actualizar</span>
+<span class="Comment">    <span class="Comment">#</span> si no va a usar **attr=**</span>
+    person.<span class="FunctionName">name_will_change!</span>
+    person.<span class="FunctionName">name</span> <span class="Keyword">&lt;&lt;</span> <span class="String"><span class="String">'</span>by<span class="String">'</span></span>
+    person.<span class="FunctionName">name_change</span>    <span class="Comment"><span class="Comment">#</span> =&gt; ['bob', 'bobby']</span>
 </pre>
+
+<p>Si ud. no informa</p>
 
 <p>If you don't inform changes like these will be occurring, then they won't be able to be tracked down and your database table won't be correctly updated.</p>
 

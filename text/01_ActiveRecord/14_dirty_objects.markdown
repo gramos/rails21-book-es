@@ -2,7 +2,7 @@
 
 ## Dirty Objects
 
-Ahora en Rails podemos ratrear los cambios hechos por **ActiveRecord**.. Se puede saber si un objeto ha sido modificado o no. En caso de que haya cambiado, podemos ver que fue lo que cambió exactamente como así también comparar su estado anterior con el actual. Veamos algunos ejemplos:
+Ahora en Rails podemos rastrear los cambios hechos por **ActiveRecord**. Se puede saber si un objeto ha sido modificado o no. En caso de que haya cambiado, podemos ver que fue lo que cambió exactamente como así también comparar su estado anterior con el actual. Veamos algunos ejemplos:
 
         article = Article.find(:first)
         article.changed?  #=> false
