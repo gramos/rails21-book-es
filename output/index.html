@@ -735,29 +735,27 @@ era muy útil.</p>
 
 <h2> Almacenando el nombre completo de una clase cuando usamos STI</h2>
 
-<p>Siempre que usemos <strong>models</strong> con <strong>namespace</strong> y <strong>STI</strong>, <strong>ActiveRecord</strong> sólo almacena el nombre de la clase, sin el nombre del <strong>namespace</strong> (<em>demodulized</em>). Esto sólo</p>
-
-<p>Whenever we use <strong>models</strong> with <strong>namespace</strong> and <strong>STI</strong>, <strong>ActiveRecord</strong> stores just the name of the class, without its <strong>namespace</strong> (<em>demodulized</em>). This will only work when all of the classes in the <strong>STI</strong> are in the same <strong>namespace</strong>. Let's look at an example:</p>
+<p>Siempre que usemos <strong>models</strong> con <strong>namespace</strong> y <strong>STI</strong>, <strong>ActiveRecord</strong> sólo almacena el nombre de la clase, sin el nombre del <strong>namespace</strong> (<em>demodulized</em>). Esto sólo funcionará si todas las clses en el <strong>STI</strong> estan en el mismo <strong>namespace</strong>. Veamos un ejemplo:</p>
 
 <pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">CollectionItem<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>; <span class="Keyword">end</span>
     <span class="Keyword">class</span> <span class="TypeName">ComicCollection::Item<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> CollectionItem</span></span>; <span class="Keyword">end</span>
 
     item <span class="Keyword">=</span> <span class="LibraryObject">ComicCollection</span>::<span class="FunctionName">Item</span>.<span class="FunctionName">new</span>
-    item.<span class="FunctionName">type</span> <span class="Comment"><span class="Comment">#</span> =&gt; 'Itemâ€™</span>
+    item.<span class="FunctionName">type</span> <span class="Comment"><span class="Comment">#</span> =&gt; 'Item'</span>
 
     item2 <span class="Keyword">=</span> <span class="LibraryObject">CollectionItem</span>.<span class="FunctionName">find</span>(item.<span class="FunctionName">id</span>)
-<span class="Comment">    <span class="Comment">#</span> returns an error, because it can't find</span>
-<span class="Comment">    <span class="Comment">#</span> the class Item</span>
+<span class="Comment">    <span class="Comment">#</span> retorna un error, por que no puede encontrar</span>
+<span class="Comment">    <span class="Comment">#</span> la clase Item</span>
 </pre>
 
-<p>This change adds a new option that makes <strong>ActiveRecord</strong> store the whole name of the class</p>
+<p>Este cambio agrega una nueva opción que hace que <strong>ActiveRecord</strong> almacene el nombre completo de la clase.</p>
 
-<p>To enable/disable this feature, you should include or edit the following in your <strong>environment.rb</strong>.</p>
+<p>Para habilitar/deshabilita esta característica, ud. debe incluir o editar lo siguiente en su <strong>environment.rb</strong>.</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">ActiveRecord</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">store_full_sti_class</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
 </pre>
 
-<p>Its default value is true.</p>
+<p>El valor por defecto es true.</p>
 
 <h2> Method table_exists?</h2>
 
