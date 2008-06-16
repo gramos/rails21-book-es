@@ -675,45 +675,46 @@ en las asociaciones.</p>
     person.<span class="FunctionName">name_change</span>    <span class="Comment"><span class="Comment">#</span> =&gt; ['bob', 'bobby']</span>
 </pre>
 
-<p>Si ud. no informa</p>
+<p>Si ud. no informa cambios como estos, no se podrán rastrear los cambios de los atributos del modelo y la tabla no se actualizará correctamente.</p>
 
-<p>If you don't inform changes like these will be occurring, then they won't be able to be tracked down and your database table won't be correctly updated.</p>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<h2> Smallint, int or bigint in MySQL?</h2>
 
-<p>The <strong>MySQL</strong> adapter for <strong>ActiveRecord</strong> is now smarter when creating or altering columns in the database using integer types. According to the option <strong>:limit</strong>, it will now tell if the column will be a <strong>smallint</strong>, <strong>int</strong> or <strong>bigint</strong>. Let's take a look at an example that does just that:</p>
+<h2> ¿Smallint, int o bigint en MySQL?</h2>
 
-<pre class="mac_classic"><span class="Keyword">case</span> limit
-<span class="Keyword">when</span> <span class="Number">0</span>..<span class="Number">3</span>
-  <span class="String"><span class="String">&quot;</span>smallint(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
-<span class="Keyword">when</span> <span class="Number">4</span>..<span class="Number">8</span>
-  <span class="String"><span class="String">&quot;</span>int(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
-<span class="Keyword">when</span> <span class="Number">9</span>..<span class="Number">20</span>
-  <span class="String"><span class="String">&quot;</span>bigint(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
-<span class="Keyword">else</span>
-  <span class="String"><span class="String">'</span>int(11)<span class="String">'</span></span>
-<span class="Keyword">end</span>
+<p>El adapatador para <strong>MySQL</strong> de <strong>ActiveRecord</strong> es un poco más inteligente en el uso tipos de datos enteros a la hora de crear o alterar columnas en la base de datos. Con la opción <strong>:limit</strong>, podemos definir si la columna va a ser <strong>smallint</strong>, <strong>int</strong> or <strong>bigint</strong>. Veamos el código que hace este trabajo:</p>
+
+<pre class="mac_classic">    <span class="Keyword">case</span> limit
+    <span class="Keyword">when</span> <span class="Number">0</span>..<span class="Number">3</span>
+      <span class="String"><span class="String">&quot;</span>smallint(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
+    <span class="Keyword">when</span> <span class="Number">4</span>..<span class="Number">8</span>
+      <span class="String"><span class="String">&quot;</span>int(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
+    <span class="Keyword">when</span> <span class="Number">9</span>..<span class="Number">20</span>
+      <span class="String"><span class="String">&quot;</span>bigint(<span class="StringInterpolation"><span class="StringInterpolation">#{</span>limit<span class="StringInterpolation">}</span></span>)<span class="String">&quot;</span></span>
+    <span class="Keyword">else</span>
+      <span class="String"><span class="String">'</span>int(11)<span class="String">'</span></span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>Now let's map it in a <strong>migration</strong> file and see what column type will be created for each column:</p>
+<p>Para dejar esto más claro vamos a mapear esto en un archivo de migración y ver que tipo de dato se usa para cada columna:</p>
 
-<pre class="mac_classic">create_table <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>table_name</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>force</span> =&gt; <span class="BuiltInConstant">true</span> <span class="Keyword">do </span>|<span class="Variable">t</span>|
+<pre class="mac_classic">    create_table <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>table_name</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>force</span> =&gt; <span class="BuiltInConstant">true</span> <span class="Keyword">do </span>|<span class="Variable">t</span>|
 
-<span class="Comment">  <span class="Comment">#</span> 0 - 3: smallint</span>
-  t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_one</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">2</span> <span class="Comment"><span class="Comment">#</span> smallint(2)</span>
+<span class="Comment">      <span class="Comment">#</span> 0 - 3: smallint</span>
+      t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_one</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">2</span> <span class="Comment"><span class="Comment">#</span> smallint(2)</span>
 
-<span class="Comment">  <span class="Comment">#</span> 4 - 8: int</span>
-  t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_two</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">6</span> <span class="Comment"><span class="Comment">#</span> int(6)</span>
+<span class="Comment">      <span class="Comment">#</span> 4 - 8: int</span>
+      t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_two</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">6</span> <span class="Comment"><span class="Comment">#</span> int(6)</span>
 
-<span class="Comment">  <span class="Comment">#</span> 9 - 20: bigint</span>
-  t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_three</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">15</span> <span class="Comment"><span class="Comment">#</span> bigint(15)</span>
+<span class="Comment">      <span class="Comment">#</span> 9 - 20: bigint</span>
+      t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_three</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>limit</span> =&gt; <span class="Number">15</span> <span class="Comment"><span class="Comment">#</span> bigint(15)</span>
 
-<span class="Comment">  <span class="Comment">#</span> if :limit is not informed: int(11)</span>
-  t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_four</span> <span class="Comment"><span class="Comment">#</span> int(11)</span>
-<span class="Keyword">end</span>
+<span class="Comment">      <span class="Comment">#</span> si no usamos :limit int(11)</span>
+      t.<span class="FunctionName">integer</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>column_four</span> <span class="Comment"><span class="Comment">#</span> int(11)</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>The <strong>PostgreSQL</strong> adapter had this feature already and <strong>MySQL</strong> just caught up.</p>
+<p>El adaptador de <strong>PostgreSQL</strong> tenía esta caraterística y <strong>MySQL</strong> sólo siguió esta tendencia.</p>
 
 <h2> Option :select in has_one and belongs_to</h2>
 

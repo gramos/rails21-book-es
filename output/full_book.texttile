@@ -576,43 +576,45 @@ No olvide informarle a Rails a través *config/initializers/new\_rails\_defaults
         person.name << 'by'
         person.name_change    # => ['bob', 'bobby']
 
-Si ud. no informa
+Si ud. no informa cambios como estos, no se podrán rastrear los cambios de los atributos del modelo y la tabla no se actualizará correctamente.
 
-If you don't inform changes like these will be occurring, then they won't be able to be tracked down and your database table won't be correctly updated.
 
-## Smallint, int or bigint in MySQL?
-                       
-The **MySQL** adapter for **ActiveRecord** is now smarter when creating or altering columns in the database using integer types. According to the option **:limit**, it will now tell if the column will be a **smallint**, **int** or **bigint**. Let's take a look at an example that does just that:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	case limit
-	when 0..3
-	  "smallint(#{limit})"
-	when 4..8
-	  "int(#{limit})"
-	when 9..20
-	  "bigint(#{limit})"
-	else
-	  'int(11)'
-	end
+## ¿Smallint, int o bigint en MySQL?
 
-Now let's map it in a **migration** file and see what column type will be created for each column:
+El adapatador para **MySQL** de **ActiveRecord** es un poco más inteligente en el uso tipos de datos enteros a la hora de crear o alterar columnas en la base de datos. Con la opción **:limit**, podemos definir si la columna va a ser **smallint**, **int** or **bigint**. Veamos el código que hace este trabajo:
 
-	create_table :table_name, :force => true do |t|
+        case limit
+        when 0..3
+          "smallint(#{limit})"
+        when 4..8
+          "int(#{limit})"
+        when 9..20
+          "bigint(#{limit})"
+        else
+          'int(11)'
+        end
 
-	  # 0 - 3: smallint
-	  t.integer :column_one, :limit => 2 # smallint(2)
+Para dejar esto más claro vamos a mapear esto en un archivo de migración y ver que tipo de dato se usa para cada columna:
 
-	  # 4 - 8: int
-	  t.integer :column_two, :limit => 6 # int(6)
+        create_table :table_name, :force => true do |t|
 
-	  # 9 - 20: bigint
-	  t.integer :column_three, :limit => 15 # bigint(15)
+          # 0 - 3: smallint
+          t.integer :column_one, :limit => 2 # smallint(2)
 
-	  # if :limit is not informed: int(11)
-	  t.integer :column_four # int(11)
-	end
-      
-The **PostgreSQL** adapter had this feature already and **MySQL** just caught up.
+          # 4 - 8: int
+          t.integer :column_two, :limit => 6 # int(6)
+
+          # 9 - 20: bigint
+          t.integer :column_three, :limit => 15 # bigint(15)
+
+          # si no usamos :limit int(11)
+          t.integer :column_four # int(11)
+        end
+
+El adaptador de **PostgreSQL** tenía esta caraterística y **MySQL** sólo siguió esta tendencia.
+
 
 ## Option :select in has\_one and belongs\_to
 

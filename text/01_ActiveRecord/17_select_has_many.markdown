@@ -1,9 +1,14 @@
-## Option :select in has\_one and belongs\_to
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-The already known methods **has\_one** and **belongs\_to** just got a now option: **:select**.
+## Opcional :select en has\_one y belongs\_to
 
-Its default value is "*" (as in "SELECT * FROM table"), but you can edit it to retrieve only the columns you are going to be using.
-     
-Don't forget to include the **primary** and **foreign keys**, otherwise you will get an error.
+Los ya conocidos métodos **has\_one** y **belongs\_to** ahora tienen la opción: **:select**.
 
-The **belongs_to** method does not have the option **:order** anymore. But don't worry, because it didn't really have a use.
+El valor por defecto es "*" (como en "SELECT * FROM table"), pero se puede editar para recuperar sólo las columnas que vamos a usar.
+
+No olvide incluir las **claves promarias** y las **claves foráneas**, de lo contrario obtendrá un error.
+
+El método **belongs_to** ya no tiene la opción **:order**. Pero no se preocupe por que realmente no
+era muy útil.
+
+
