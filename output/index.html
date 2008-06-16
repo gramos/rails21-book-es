@@ -716,36 +716,45 @@ en las asociaciones.</p>
 
 <p>El adaptador de <strong>PostgreSQL</strong> tenía esta caraterística y <strong>MySQL</strong> sólo siguió esta tendencia.</p>
 
-<h2> Option :select in has_one and belongs_to</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>The already known methods <strong>has_one</strong> and <strong>belongs_to</strong> just got a now option: <strong>:select</strong>.</p>
 
-<p>Its default value is "<em>" (as in "SELECT </em> FROM table"), but you can edit it to retrieve only the columns you are going to be using.</p>
+<h2> Opcional :select en has_one y belongs_to</h2>
 
-<p>Don't forget to include the <strong>primary</strong> and <strong>foreign keys</strong>, otherwise you will get an error.</p>
+<p>Los ya conocidos métodos <strong>has_one</strong> y <strong>belongs_to</strong> ahora tienen la opción: <strong>:select</strong>.</p>
 
-<p>The <strong>belongs_to</strong> method does not have the option <strong>:order</strong> anymore. But don't worry, because it didn't really have a use.</p>
+<p>El valor por defecto es "<em>" (como en "SELECT </em> FROM table"), pero se puede editar para recuperar sólo las columnas que vamos a usar.</p>
 
-<h2> Storing the complete name of a class when using STI</h2>
+<p>No olvide incluir las <strong>claves promarias</strong> y las <strong>claves foráneas</strong>, de lo contrario obtendrá un error.</p>
+
+<p>El método <strong>belongs_to</strong> ya no tiene la opción <strong>:order</strong>. Pero no se preocupe por que realmente no
+era muy útil.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
+<h2> Almacenando el nombre completo de una clase cuando usamos STI</h2>
+
+<p>Siempre que usemos <strong>models</strong> con <strong>namespace</strong> y <strong>STI</strong>, <strong>ActiveRecord</strong> sólo almacena el nombre de la clase, sin el nombre del <strong>namespace</strong> (<em>demodulized</em>). Esto sólo</p>
 
 <p>Whenever we use <strong>models</strong> with <strong>namespace</strong> and <strong>STI</strong>, <strong>ActiveRecord</strong> stores just the name of the class, without its <strong>namespace</strong> (<em>demodulized</em>). This will only work when all of the classes in the <strong>STI</strong> are in the same <strong>namespace</strong>. Let's look at an example:</p>
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">CollectionItem<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>; <span class="Keyword">end</span>
-<span class="Keyword">class</span> <span class="TypeName">ComicCollection::Item<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> CollectionItem</span></span>; <span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">CollectionItem<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Base</span></span>; <span class="Keyword">end</span>
+    <span class="Keyword">class</span> <span class="TypeName">ComicCollection::Item<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> CollectionItem</span></span>; <span class="Keyword">end</span>
 
-item <span class="Keyword">=</span> <span class="LibraryObject">ComicCollection</span>::<span class="FunctionName">Item</span>.<span class="FunctionName">new</span>
-item.<span class="FunctionName">type</span> <span class="Comment"><span class="Comment">#</span> =&gt; 'Item’</span>
+    item <span class="Keyword">=</span> <span class="LibraryObject">ComicCollection</span>::<span class="FunctionName">Item</span>.<span class="FunctionName">new</span>
+    item.<span class="FunctionName">type</span> <span class="Comment"><span class="Comment">#</span> =&gt; 'Itemâ€™</span>
 
-item2 <span class="Keyword">=</span> <span class="LibraryObject">CollectionItem</span>.<span class="FunctionName">find</span>(item.<span class="FunctionName">id</span>)
-<span class="Comment"><span class="Comment">#</span> returns an error, because it can't find</span>
-<span class="Comment"><span class="Comment">#</span> the class Item</span>
+    item2 <span class="Keyword">=</span> <span class="LibraryObject">CollectionItem</span>.<span class="FunctionName">find</span>(item.<span class="FunctionName">id</span>)
+<span class="Comment">    <span class="Comment">#</span> returns an error, because it can't find</span>
+<span class="Comment">    <span class="Comment">#</span> the class Item</span>
 </pre>
 
-<p>This change adds a new option that makes <strong>ActiveRecord</strong> store the whole name of the class </p>
+<p>This change adds a new option that makes <strong>ActiveRecord</strong> store the whole name of the class</p>
 
 <p>To enable/disable this feature, you should include or edit the following in your <strong>environment.rb</strong>.</p>
 
-<pre class="mac_classic"><span class="LibraryObject">ActiveRecord</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">store_full_sti_class</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
+<pre class="mac_classic">    <span class="LibraryObject">ActiveRecord</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">store_full_sti_class</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
 </pre>
 
 <p>Its default value is true.</p>

@@ -1,21 +1,24 @@
-## Storing the complete name of a class when using STI
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-Whenever we use **models** with **namespace** and **STI**, **ActiveRecord** stores just the name of the class, without its **namespace** (*demodulized*). This will only work when all of the classes in the **STI** are in the same **namespace**. Let's look at an example:
+## Almacenando el nombre completo de una clase cuando usamos STI
 
-	class CollectionItem < ActiveRecord::Base; end
-	class ComicCollection::Item < CollectionItem; end
+Siempre que usemos **models** con **namespace** y **STI**, **ActiveRecord** sólo almacena el nombre de la clase, sin el nombre del **namespace** (*demodulized*). Esto sólo funcionará si todas las clses en el **STI** estan en el mismo **namespace**. Veamos un ejemplo:
 
-	item = ComicCollection::Item.new
-	item.type # => 'Item’
+        class CollectionItem < ActiveRecord::Base; end
+        class ComicCollection::Item < CollectionItem; end
 
-	item2 = CollectionItem.find(item.id)
-	# returns an error, because it can't find
-	# the class Item
-      
-This change adds a new option that makes **ActiveRecord** store the whole name of the class 
+        item = ComicCollection::Item.new
+        item.type # => 'Item'
 
-To enable/disable this feature, you should include or edit the following in your **environment.rb**.
+        item2 = CollectionItem.find(item.id)
+        # retorna un error, por que no puede encontrar
+        # la clase Item
 
-	ActiveRecord::Base.store_full_sti_class = true
-                             
-Its default value is true.
+Este cambio agrega una nueva opción que hace que **ActiveRecord** almacene el nombre completo de la clase.
+
+Para habilitar/deshabilita esta característica, ud. debe incluir o editar lo siguiente en su **environment.rb**.
+
+        ActiveRecord::Base.store_full_sti_class = true
+
+El valor por defecto es true.
+
