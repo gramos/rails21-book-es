@@ -1,13 +1,15 @@
-## Using email as username.
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-Some services use the e-mail as username, which forces us to use an URL like the following:
+## Usando el email como nombre de usuario.
 
-	http://ernesto.jimenez@negonation.com:pass@tractis.com
+Algunos servicioes usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:
 
-But this was causing a problem. Because we have two (@), the interpreter got lost when reading this. For this reason, **ActiveResource** was extended a little bit more, envisioning to make easier to use e-emails for authentication. Now you can do the following:
+        http://ernesto.jimenez@negonation.com:pass@tractis.com
 
-	class Person < ActiveResource::Base
-	  self.site = "http://tractis.com"
-	  self.user = "ernesto.jimenez@negonation.com"
-	  self.password = "pass"
-	end
+Pero nos genera un problema. Por que tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió **ActiveResource** un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:
+
+        class Person < ActiveResource::Base
+          self.site = "http://tractis.com"
+          self.user = "ernesto.jimenez@negonation.com"
+          self.password = "pass"
+        end

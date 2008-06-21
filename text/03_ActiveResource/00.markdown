@@ -1,3 +1,6 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 # ActiveResource
 
-ActiveResource is a layer responsible by the client side implementation of RESTful systems. Through ActiveResource is possible to consume RESTful services by using objects that work like a proxy for remote services.
+ActiveResource es la capa responsable de la implementación de sistemas RESTful del lado del cliente. A través de ActiveResource es posible consumir servicios RESTful mediante el uso de objetos que actúan como un proxy para los servicios remotos.
+

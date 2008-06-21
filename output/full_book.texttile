@@ -840,7 +840,7 @@ Los métodos **datetime\_select**, **select\_datetime** y **select\_time** se ac
 
 Se agregaron dos métodos al objeto **String**, **squish** y **squish!**.
 
-Estos métodos hacen lo mismo que el método **strip**. Elimina los espacios en blanco del principio y del fina de un texto. También elimina los espacios en blanco no utilizados (espacios en blanco consecutivos) en el medio de un texto.
+Estos métodos hacen lo mismo que el método **strip**. Elimina los espacios en blanco del principio y del final de un texto. También elimina los espacios en blanco no utilizados (espacios en blanco consecutivos) en el medio de un texto.
 Veamos un ejemplo:
 
 
@@ -850,56 +850,66 @@ Veamos un ejemplo:
         “    A    text    full    of     spaces    “.squish
         #=> “A text full of spaces”
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 # ActiveResource
 
-ActiveResource is a layer responsible by the client side implementation of RESTful systems. Through ActiveResource is possible to consume RESTful services by using objects that work like a proxy for remote services.
-## Using email as username.
+ActiveResource es la capa responsable de la implementación de sistemas RESTful del lado del cliente. A través de ActiveResource es posible consumir servicios RESTful mediante el uso de objetos que actúan como un proxy para los servicios remotos.
 
-Some services use the e-mail as username, which forces us to use an URL like the following:
 
-	http://ernesto.jimenez@negonation.com:pass@tractis.com
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-But this was causing a problem. Because we have two (@), the interpreter got lost when reading this. For this reason, **ActiveResource** was extended a little bit more, envisioning to make easier to use e-emails for authentication. Now you can do the following:
+## Usando el email como nombre de usuario.
 
-	class Person < ActiveResource::Base
-	  self.site = "http://tractis.com"
-	  self.user = "ernesto.jimenez@negonation.com"
-	  self.password = "pass"
-	end
+Algunos servicioes usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:
 
-## The clone method
+        http://ernesto.jimenez@negonation.com:pass@tractis.com
 
-Now we can clone an existing resource:
+Pero nos genera un problema. Por que tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió **ActiveResource** un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:
 
-	ryan = Person.find(1)
-	not_ryan = ryan.clone
-	not_ryan.new?  # => true
+        class Person < ActiveResource::Base
+          self.site = "http://tractis.com"
+          self.user = "ernesto.jimenez@negonation.com"
+          self.password = "pass"
+        end
 
-Please note the copied object doesn't clone any of the class attributes, just the resource attributes.
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	ryan = Person.find(1)
-	ryan.address = StreetAddress.find(1, :person_id => ryan.id)
-	ryan.hash = {:not => "an ARes instance"} 
+## El método clone
 
-	not_ryan = ryan.clone
-	not_ryan.new?            # => true
-	not_ryan.address         # => NoMethodError
-	not_ryan.hash            # => {:not => "an ARes instance"}
+Ahora podemos clonar un recurso existente:
+
+        ryan = Person.find(1)
+        not_ryan = ryan.clone
+        not_ryan.new?  # => true
+
+Note que el objeto copiado no ha clonado ningún atributo de la clase, apenas los atributos del recurso.
+
+        ryan = Person.find(1)
+        ryan.address = StreetAddress.find(1, :person_id => ryan.id)
+        ryan.hash = {:not => "an ARes instance"}
+
+        not_ryan = ryan.clone
+        not_ryan.new?            # => true
+        not_ryan.address         # => NoMethodError
+        not_ryan.hash            # => {:not => "an ARes instance"}
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Timeouts
 
-ActiveResource uses **HTTP** to access RESTful API's and because of that it is susceptible to problems with slow server responses or non-reachable servers. In some cases, calls to ActiveResource can expire (timeout). Now you can control the expiration time with the timeout property.
+ActiveResource usa **HTTP** para acceder a la API de RESTful y por esto es suceptible a problemas con servidores lentos o servidores no alcanzables. En algunos casos, las llamadas a  ActiveResource pueden expirar (timeout). Ahora ud. puede controlar el tiempo de expiración con la propiedad timeout.
 
-	class Person < ActiveResource::Base
-	  self.site = "http://api.people.com:3000/"
-	  self.timeout = 5 # waits 5 seconds before expire
-	end
+        class Person < ActiveResource::Base
+          self.site = "http://api.people.com:3000/"
+          self.timeout = 5 # waits 5 seconds before expire
+        end
 
-In this example above a timeout of 5 seconds was configured. A low value is recommended to allow your system to fail-fast, 
-preventing cascading fails which could incapacitate your server.
+En el ejemplo de arriba configuramos un timeout de 5 segundos. Se recomienda un valor pequeño para permitirle a su sistema una falla rápida, previeniendo que una casacada de fallas deje su servidor fuera de servicio.
 
-Internally, ActiveResource shares resource from the Net:HTTP library to make HTTP requests. When you define a value for the timeout property, the same value is defined for the **read\_timeout** of the Net:HTTP object instance which is being used.
+Internamente, ActiveResource se basa la biblioteca Net:HTTP para hacer las peticiones HTTP. Cuando ud. define un valor por defecto para la propiedad timeout, el mismo valor es definido para la propiedad **read\_timeout** de la instancia del objeto Net:HTTP que está usando en ese momento.
 
-The default value is 60 seconds.
+El valor por defecto es 60 segundos.
+
 
 # ActionPack
 
