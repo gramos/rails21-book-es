@@ -869,12 +869,12 @@ era muy útil.</p>
 
 <p>Se agregaron dos nuevos métodos a  <strong>cache_store</strong>: <strong>fragment_exist?</strong> y <strong>exist?</strong>.</p>
 
-<p>El método <strong>fragment_exist?</strong> hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básciamente sustituyendo al famoso:</p>
+<p>El método <strong>fragment_exist?</strong> hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:</p>
 
 <pre class="mac_classic">    <span class="FunctionName">read_fragment</span>(path).<span class="FunctionName">nil?</span>
 </pre>
 
-<p>El método <strong>exist?</strong>se agregó a <strong>cache_store</strong>, mientras que <strong>fragment_exist?</strong> es un helper el cual ud podría usar dentro de su controlador.</p>
+<p>El método <strong>exist?</strong> se agregó a <strong>cache_store</strong>, mientras que <strong>fragment_exist?</strong> es un helper el cual ud. podría usar dentro de su controlador.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
@@ -883,7 +883,7 @@ era muy útil.</p>
 
 <p>Una pregunta simple, pero interesante. Hasta ahora Rails estuvo usando mucho la sigla UTC, pero cuando se ejecuta el método <strong>to_s</strong> de <strong>TimeZone</strong>, este muestra GMT, no UTC. Esto es debido al hecho de que el acrónimo GMT es más común entre los usuarios finales.</p>
 
-<p>Si ud. mira en el panel de control de Windows, dónde se puede seleccioar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.</p>
+<p>Si ud. mira en el panel de control de Windows, dónde se puede seleccionar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">TimeZone</span>[<span class="String"><span class="String">'</span>Moscow<span class="String">'</span></span>].<span class="FunctionName">to_s</span> <span class="Comment"><span class="Comment">#</span>=&gt; &quot;(GMT+03:00) Moscow&quot;</span>
 </pre>
@@ -914,7 +914,7 @@ era muy útil.</p>
 
 <h2> Mem_cache_store ahora acepta opciones</h2>
 
-<p>La inclusión de <strong>Memcache-Client</strong> dentro de <strong>ActiveSupport::Cache</strong> facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de <strong>memcached</strong>.</p>
+<p>La inclusión de <strong>Memcache-Client</strong> dentro de <strong>ActiveSupport::Cache</strong> facilitó mucho las cosas, pero también eliminó la flexibilidad permitiendo configurar nada más que el número de IP del servidor de <strong>memcached</strong>.</p>
 
 <p><strong>Jonathan Weiss</strong> hizo un parche que fue incluido en Rails, que permite opciones extras como estas:</p>
 
@@ -930,32 +930,38 @@ era muy útil.</p>
             {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>compression</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>debug</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>namespace</span> =&gt;<span class="String"><span class="String">'</span>foo<span class="String">'</span></span>}
 </pre>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h2> Time.current</h2>
 
-<p>A new method for <strong>Time</strong> class. The <strong>current</strong> method's return depends on <strong>config.time_zone</strong>, if it was specified before, the method will return a <strong>Time.zone.now</strong>, otherwise will be a <strong>Time.now</strong>.</p>
+<p>Un nuevo método para la clase <strong>Time</strong>. El método <strong>current</strong> retorna dependiendo de si fue especificado antes <strong>config.time_zone</strong>, <strong>Time.zone.now</strong>, de otra manera retorna <strong>Time.now</strong>.</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> return value depends on config.time_zone</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">current</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> retorna un valor que depende de config.time_zone</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">current</span>
 </pre>
 
-<p><strong>since</strong> and <strong>ago</strong> methods also had their returning values changed, returning a <strong>TimeWithZone</strong> in case <strong>config.time_zone</strong> as specified.</p>
+<p>los métodos <strong>since</strong> y <strong>ago</strong> también cambiaron sus valores de retorno, retornando un <strong>TimeWithZone</strong> en caso de que se especifique <strong>config.time_zone</strong>.</p>
 
-<p>It makes the <strong>Time.current</strong> method as new default method to get the actual time, replacing the <strong>Time.now</strong> (which keeps existing, but it doesn't consider the specified timezone).</p>
+<p>Esto convierte al método <strong>Time.current</strong> en el nuevo método por defecto para obtener la hora actual, reemplazando a <strong>Time.now</strong> (el cual sigue existiendo, pero no tiene en cuenta el timezone especificado).</p>
 
-<p>The <strong>datetime_select</strong> methods, <strong>select_datetime</strong> and <strong>select_time</strong> also have been updated to have their default returning as <strong>Time.current</strong>.</p>
+<p>Los métodos <strong>datetime_select</strong>, <strong>select_datetime</strong> y <strong>select_time</strong> se actualizaron para que tengan como valor de retorno <strong>Time.current</strong>.</p>
 
-<h2>Removing whitespaces with squish method</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>Two new methods added to the <strong>String</strong> object, <strong>squish</strong> and <strong>squish!</strong>.</p>
 
-<p>These methods do the same as <strong>strip</strong> method. It removes white spaces from the beginning and the end of the text. It also removes unused white-spaces (multiple white-spaces) from the middle of the text
-Look the example:</p>
+<h2>Eliminando los espacios en blanco con el método squish</h2>
 
-<pre class="mac_classic">“    <span class="Variable">A</span>    text    full    of     spaces    “.<span class="FunctionName">strip</span>
-<span class="Comment"><span class="Comment">#</span>=&gt; “A    text    full    of     spaces”</span>
+<p>Se agregaron dos métodos al objeto <strong>String</strong>, <strong>squish</strong> y <strong>squish!</strong>.</p>
 
-“    <span class="Variable">A</span>    text    full    of     spaces    “.<span class="FunctionName">squish</span>
-<span class="Comment"><span class="Comment">#</span>=&gt; “A text full of spaces”</span>
+<p>Estos métodos hacen lo mismo que el método <strong>strip</strong>. Elimina los espacios en blanco del principio y del fina de un texto. También elimina los espacios en blanco no utilizados (espacios en blanco consecutivos) en el medio de un texto.
+Veamos un ejemplo:</p>
+
+<pre class="mac_classic">    “    <span class="Variable">A</span>    text    full    of     spaces    “.<span class="FunctionName">strip</span>
+<span class="Comment">    <span class="Comment">#</span>=&gt; “A    text    full    of     spaces”</span>
+
+    “    <span class="Variable">A</span>    text    full    of     spaces    “.<span class="FunctionName">squish</span>
+<span class="Comment">    <span class="Comment">#</span>=&gt; “A text full of spaces”</span>
 </pre>
 
 <h1> ActiveResource</h1>

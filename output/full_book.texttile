@@ -703,6 +703,8 @@ Active Support es una colección de varias clases y extensiones de bibliotecas q
 (wikipedia)
 
 
+
+
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## ActiveSupport::CoreExtensions::Date::Calculations
@@ -763,11 +765,11 @@ La clase **Date** tiene un nuevo método llamado **current** el cual se usa en v
 
 Se agregaron dos nuevos métodos a  **cache\_store**: **fragment\_exist?** y **exist?**.
 
-El método **fragment\_exist?** hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básciamente sustituyendo al famoso:
+El método **fragment\_exist?** hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:
 
         read_fragment(path).nil?
 
-El método **exist?**se agregó a **cache\_store**, mientras que **fragment\_exist?** es un helper el cual ud podría usar dentro de su controlador.
+El método **exist?** se agregó a **cache\_store**, mientras que **fragment\_exist?** es un helper el cual ud. podría usar dentro de su controlador.
 
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
@@ -776,7 +778,7 @@ El método **exist?**se agregó a **cache\_store**, mientras que **fragment\_exi
 
 Una pregunta simple, pero interesante. Hasta ahora Rails estuvo usando mucho la sigla UTC, pero cuando se ejecuta el método **to\_s** de **TimeZone**, este muestra GMT, no UTC. Esto es debido al hecho de que el acrónimo GMT es más común entre los usuarios finales.
 
-Si ud. mira en el panel de control de Windows, dónde se puede seleccioar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.
+Si ud. mira en el panel de control de Windows, dónde se puede seleccionar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.
 
         TimeZone['Moscow'].to_s #=> "(GMT+03:00) Moscow"
 
@@ -801,7 +803,7 @@ Si ud. desea escapar todo el código **JSON** por defecto, incluya la línea sig
 
 ## Mem\_cache\_store ahora acepta opciones
 
-La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de **memcached**.
+La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad permitiendo configurar nada más que el número de IP del servidor de **memcached**.
 
 **Jonathan Weiss** hizo un parche que fue incluido en Rails, que permite opciones extras como estas:
 
@@ -815,31 +817,38 @@ o
         config.action_controller.fragment_cache_store = :mem_cache_store, 'localhost',
                 {:compression => true, :debug => true, :namespace =>'foo'}
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Time.current
 
-A new method for **Time** class. The **current** method's return depends on **config.time\_zone**, if it was specified before, the method will return a **Time.zone.now**, otherwise will be a **Time.now**.
+Un nuevo método para la clase **Time**. El método **current** retorna dependiendo de si fue especificado antes **config.time\_zone**, **Time.zone.now**, de otra manera retorna **Time.now**.
 
-	# return value depends on config.time_zone
-	Time.current
+        # retorna un valor que depende de config.time_zone
+        Time.current
 
-**since** and **ago** methods also had their returning values changed, returning a **TimeWithZone** in case **config.time\_zone** as specified.
 
-It makes the **Time.current** method as new default method to get the actual time, replacing the **Time.now** (which keeps existing, but it doesn't consider the specified timezone).
+los métodos **since** y **ago** también cambiaron sus valores de retorno, retornando un **TimeWithZone** en caso de que se especifique **config.time\_zone**.
 
-The **datetime\_select** methods, **select\_datetime** and **select\_time** also have been updated to have their default returning as **Time.current**.
+Esto convierte al método **Time.current** en el nuevo método por defecto para obtener la hora actual, reemplazando a **Time.now** (el cual sigue existiendo, pero no tiene en cuenta el timezone especificado).
 
-##Removing whitespaces with squish method
+Los métodos **datetime\_select**, **select\_datetime** y **select\_time** se actualizaron para que tengan como valor de retorno **Time.current**.
 
-Two new methods added to the **String** object, **squish** and **squish!**.
 
-These methods do the same as **strip** method. It removes white spaces from the beginning and the end of the text. It also removes unused white-spaces (multiple white-spaces) from the middle of the text
-Look the example:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	“    A    text    full    of     spaces    “.strip
-	#=> “A    text    full    of     spaces”
+##Eliminando los espacios en blanco con el método squish
 
-	“    A    text    full    of     spaces    “.squish
-	#=> “A text full of spaces”
+Se agregaron dos métodos al objeto **String**, **squish** y **squish!**.
+
+Estos métodos hacen lo mismo que el método **strip**. Elimina los espacios en blanco del principio y del fina de un texto. También elimina los espacios en blanco no utilizados (espacios en blanco consecutivos) en el medio de un texto.
+Veamos un ejemplo:
+
+
+        “    A    text    full    of     spaces    “.strip
+        #=> “A    text    full    of     spaces”
+
+        “    A    text    full    of     spaces    “.squish
+        #=> “A text full of spaces”
 
 # ActiveResource
 
