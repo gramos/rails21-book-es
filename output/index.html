@@ -257,7 +257,7 @@
             <span class="Keyword">end</span>
 </pre>
 
-<p>¿Como creamos un test que valide la generación de este scope ?</p>
+<p>¿Cómo creamos un test que valide la generación de este scope ?</p>
 
 <p>Para solucionar esto, se creó el método <strong>proxy_options</strong>. El cual nos permite examinar las opciones usadas en <strong>named_scope</strong>. Para testear el código de arriba podríamos escribir esto:</p>
 
@@ -798,63 +798,69 @@ era muy útil.</p>
     rake db<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>migrate</span><span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>down</span>
 </pre>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h1> ActiveSupport</h1>
 
-<p>Active Support is a collection of useful classes and default libraries extensions which were considered useful for Ruby on Rails Applications.
+<p>Active Support es una colección de varias clases y extensiones de bibliotecas que fueron consideradas muy útiles para las aplicaciones Ruby on Rails.
 (wikipedia)</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> ActiveSupport::CoreExtensions::Date::Calculations</h2>
 
 <h3> Time#end_of_day</h3>
 
-<p>Returns the current date with the time set to 11:59:59 PM.</p>
+<p>Retorna la fecha actual con la hora fijada en 11:59:59 PM.</p>
 
 <h3> Time#end_of_week</h3>
 
-<p>Returns the end of the week (Sunday 11:59:59 PM).</p>
+<p>Retorna el fin de semana (Sunday 11:59:59 PM).</p>
 
 <h3> Time#end_of_quarter</h3>
 
-<p>Returns a Date object representing the end of the trimester. In other words, it returns the last day of either march, june, september or december, depending on the current date.</p>
+<p>Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el última día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.</p>
 
 <h3> Time#end_of_year</h3>
 
-<p>Returns December 31 at 11:59:59 PM</p>
+<p>Retorna 31 de Diciembre a las 11:59:59 PM.</p>
 
 <h3> Time#in_time_zone</h3>
 
-<p>This method is similar to <strong>Time#localtime</strong>, except by the fact that it uses <strong>Time.zone</strong> instead of the underlying operating system's timezone. You can pass either <strong>TimeZone</strong> or <strong>String</strong> as a parameter. Look at some examples:</p>
+<p>Este método es similar a  <strong>Time#localtime</strong>, excepto por el hecho de que usa <strong>Time.zone</strong> en vez de basarse en el timezone del sistema operativo. Se le puede pasar como parámetro tanto un objeto <strong>TimeZone</strong> como un <strong>String</strong>. Veamos algunos ejemplos:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>Hawaii<span class="String">'</span></span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">in_time_zone</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>Hawaii<span class="String">'</span></span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">in_time_zone</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">in_time_zone</span>(<span class="String"><span class="String">'</span>Alaska<span class="String">'</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 15:00:00 AKST -09:00</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">in_time_zone</span>(<span class="String"><span class="String">'</span>Alaska<span class="String">'</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 15:00:00 AKST -09:00</span>
 </pre>
 
 <h3> Time#days_in_month</h3>
 
-<p>A bug in the method <strong>days_in_month</strong> was fixed, which returned the wrong number of days in february when the year was was not specified. </p>
+<p>Se arregló un bug en el método <strong>days_in_month</strong>, el cual retornaba un número incorrecto de días en febrero cuando no se le especificaba el año.</p>
 
-<p>Changes comprise in using the current year as the default value when not specifying the year in method call. Suppose you were in a leap year. Look the following example:</p>
+<p>El cambio consiste en usar el año actual como valor por defecto cuando no se le especifica el año en la llamada al método. Supongamos que estamos en un año bisiesto, veamos:</p>
 
-<pre class="mac_classic"><span class="Variable">Loading</span> development environment (<span class="Variable">Rails</span> <span class="Number">2.0</span>.<span class="Number">2</span>)
-<span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">days_in_month</span>(<span class="Number">2</span>)
-=&gt; <span class="Number">28</span>
+<pre class="mac_classic">    <span class="Variable">Loading</span> development environment (<span class="Variable">Rails</span> <span class="Number">2.0</span>.<span class="Number">2</span>)
+    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">days_in_month</span>(<span class="Number">2</span>)
+    =&gt; <span class="Number">28</span>
 
-<span class="Variable">Loading</span> development environment (<span class="Variable">Rails</span> <span class="Number">2.1</span>.<span class="Number">0</span>)
-<span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">days_in_month</span>(<span class="Number">2</span>)
-=&gt; <span class="Number">29</span>
+    <span class="Variable">Loading</span> development environment (<span class="Variable">Rails</span> <span class="Number">2.1</span>.<span class="Number">0</span>)
+    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">days_in_month</span>(<span class="Number">2</span>)
+    =&gt; <span class="Number">29</span>
 </pre>
 
 <h3> DateTime#to_f</h3>
 
-<p><strong>DateTime</strong> class received a new method called <strong>to_f</strong> which returns the date as a type float number representing the number of seconds since the Unix epoch (number of seconds since january 1st, 1970, midnight).</p>
+<p>La clase <strong>DateTime</strong> tiene un nuevo método llamado <strong>to_f</strong> que retorna la fecha como un flotante representando el número de segundos desde  el Unix epoch (época unix, número de segundos desde el 1 de Enero de 1970 a la medianoche).</p>
 
 <h3> Date.current</h3>
 
-<p><strong>Date</strong> class received a new method called <strong>current</strong> which must now be used instead of <strong>Date.today</strong>, because it considers the timezone set in <strong>config.time_zone</strong> in case it is set, returning a <strong>Time.zone.today</strong>. If it is not set, then it returns a <strong>Date.today</strong>.</p>
+<p>La clase <strong>Date</strong> tiene un nuevo método llamado <strong>current</strong> el cual se usa en vez de <strong>Date.today</strong>, por que este considera el timezone especificado en <strong>config.time_zone</strong>, que en caso de que estar especificado retorna  <strong>Time.zone.today</strong>, de no ser así, entonces retorna <strong>Date.today</strong>.</p>
 
 <h2> Fragment_exist?</h2>
 

@@ -1,50 +1,53 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## ActiveSupport::CoreExtensions::Date::Calculations
 
 ### Time#end\_of\_day
 
-Returns the current date with the time set to 11:59:59 PM.
+Retorna la fecha actual con la hora fijada en 11:59:59 PM.
 
 ### Time#end\_of\_week
 
-Returns the end of the week (Sunday 11:59:59 PM).
+Retorna el fin de semana (Sunday 11:59:59 PM).
 
 ### Time#end\_of\_quarter
 
-Returns a Date object representing the end of the trimester. In other words, it returns the last day of either march, june, september or december, depending on the current date.
+Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el último día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.
 
 ### Time#end\_of\_year
 
-Returns December 31 at 11:59:59 PM
+Retorna 31 de Diciembre a las 11:59:59 PM.
 
 ### Time#in\_time\_zone
 
-This method is similar to **Time#localtime**, except by the fact that it uses **Time.zone** instead of the underlying operating system's timezone. You can pass either **TimeZone** or **String** as a parameter. Look at some examples:
+Este método es similar a  **Time#localtime**, excepto por el hecho de que usa **Time.zone** en vez de basarse en el timezone del sistema operativo. Se le puede pasar como parámetro tanto un objeto **TimeZone** como un **String**. Veamos algunos ejemplos:
 
-	Time.zone = 'Hawaii'
-	Time.utc(2000).in_time_zone
-	# => Fri, 31 Dec 1999 14:00:00 HST -10:00
+        Time.zone = 'Hawaii'
+        Time.utc(2000).in_time_zone
+        # => Fri, 31 Dec 1999 14:00:00 HST -10:00
 
-	Time.utc(2000).in_time_zone('Alaska')
-	# => Fri, 31 Dec 1999 15:00:00 AKST -09:00
+        Time.utc(2000).in_time_zone('Alaska')
+        # => Fri, 31 Dec 1999 15:00:00 AKST -09:00
 
 ### Time#days\_in\_month
 
-A bug in the method **days\_in\_month** was fixed, which returned the wrong number of days in february when the year was was not specified. 
+Se arregló un bug en el método **days\_in\_month**, el cual retornaba un número incorrecto de días en febrero cuando no se le especificaba el año.
 
-Changes comprise in using the current year as the default value when not specifying the year in method call. Suppose you were in a leap year. Look the following example:
+El cambio consiste en usar el año actual como valor por defecto cuando no se le especifica el año en la llamada al método. Supongamos que estamos en un año bisiesto, veamos:
 
-	Loading development environment (Rails 2.0.2)
-	>> Time.days_in_month(2)
-	=> 28
+        Loading development environment (Rails 2.0.2)
+        >> Time.days_in_month(2)
+        => 28
 
-	Loading development environment (Rails 2.1.0)
-	>> Time.days_in_month(2)
-	=> 29
+        Loading development environment (Rails 2.1.0)
+        >> Time.days_in_month(2)
+        => 29
 
 ### DateTime#to_f
 
-**DateTime** class received a new method called **to_f** which returns the date as a type float number representing the number of seconds since the Unix epoch (number of seconds since january 1st, 1970, midnight).
+La clase **DateTime** tiene un nuevo método llamado **to_f** que retorna la fecha como un flotante representando el número de segundos desde  el Unix epoch (época unix, número de segundos desde el 1 de Enero de 1970 a la medianoche).
 
 ### Date.current
 
-**Date** class received a new method called **current** which must now be used instead of **Date.today**, because it considers the timezone set in **config.time\_zone** in case it is set, returning a **Time.zone.today**. If it is not set, then it returns a **Date.today**.
+La clase **Date** tiene un nuevo método llamado **current** el cual se usa en vez de **Date.today**, por que este considera el timezone especificado en **config.time\_zone**, que en caso de que estar especificado retorna  **Time.zone.today**, de no ser así, entonces retorna **Date.today**.
+
