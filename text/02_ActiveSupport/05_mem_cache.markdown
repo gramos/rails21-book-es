@@ -1,15 +1,17 @@
-## Mem\_cache\_store now accepts options
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-The inclusion of **Memcache-Client** inside **ActiveSupport::Cache** made things easier than ever, but it also took away its flexibility in not allowing us to customize nothing more than the IP of the **memcached** server.
+## Mem\_cache\_store ahora acepta opciones
 
-**Jonathan Weiss** made a patch which was included in Rails allowing extra options like these:
+La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de **memcached**.
 
-	ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost"
+**Jonathan Weiss** hizo un parche que fue incluido en Rails, que permite opciones extras como estas:
 
-	ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost", '192.168.1.1', 
-		:namespace => 'foo'
+        ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost"
 
-or
+        ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost", '192.168.1.1',
+                :namespace => 'foo'
 
-	config.action_controller.fragment_cache_store = :mem_cache_store, 'localhost', 
-		{:compression => true, :debug => true, :namespace =>'foo'}
+o
+
+        config.action_controller.fragment_cache_store = :mem_cache_store, 'localhost',
+                {:compression => true, :debug => true, :namespace =>'foo'}
