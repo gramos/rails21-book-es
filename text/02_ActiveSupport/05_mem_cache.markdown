@@ -2,7 +2,7 @@
 
 ## Mem\_cache\_store ahora acepta opciones
 
-La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de **memcached**.
+La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad permitiendo configurar nada más que el número de IP del servidor de **memcached**.
 
 **Jonathan Weiss** hizo un parche que fue incluido en Rails, que permite opciones extras como estas:
 

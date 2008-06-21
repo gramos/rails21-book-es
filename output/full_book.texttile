@@ -717,7 +717,7 @@ Retorna el fin de semana (Sunday 11:59:59 PM).
 
 ### Time#end\_of\_quarter
 
-Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el última día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.
+Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el último día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.
 
 ### Time#end\_of\_year
 
@@ -757,54 +757,63 @@ La clase **DateTime** tiene un nuevo método llamado **to_f** que retorna la fec
 La clase **Date** tiene un nuevo método llamado **current** el cual se usa en vez de **Date.today**, por que este considera el timezone especificado en **config.time\_zone**, que en caso de que estar especificado retorna  **Time.zone.today**, de no ser así, entonces retorna **Date.today**.
 
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Fragment\_exist?
 
-Two new methods were added to **cache\_store**: **fragment\_exist?** and **exist?**.
+Se agregaron dos nuevos métodos a  **cache\_store**: **fragment\_exist?** y **exist?**.
 
-The method **fragment\_exist?** does exactly what you would expect, it verifies if a cached fragment informed by one key exists.  Basically replacing the famous:
+El método **fragment\_exist?** hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básciamente sustituyendo al famoso:
 
-	read_fragment(path).nil?
+        read_fragment(path).nil?
 
-**exist?** method was added to **cache\_store**, while **fragment\_exist?**  is a helper which you could use inside your controller.
+El método **exist?**se agregó a **cache\_store**, mientras que **fragment\_exist?** es un helper el cual ud podría usar dentro de su controlador.
 
-## UTC or GMT?
 
-An amendment, but interesting. Until now Rails has been using the UTC acronym a lot, but when the method **to\_s** from **TimeZone** is called, it will print GMT, not UTC. This is due to the fact that the GMT acronym is the most common among end users.
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-If you take a look in Windows control panel, where you can choose timezone, you'll notice the acronym used is GMT. Google and Yahoo also have been using GMT within their products.
+## ¿UTC o GMT?
 
-	TimeZone['Moscow'].to_s #=> "(GMT+03:00) Moscow"
+Una pregunta simple, pero interesante. Hasta ahora Rails estuvo usando mucho la sigla UTC, pero cuando se ejecuta el método **to\_s** de **TimeZone**, este muestra GMT, no UTC. Esto es debido al hecho de que el acrónimo GMT es más común entre los usuarios finales.
+
+Si ud. mira en el panel de control de Windows, dónde se puede seleccioar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.
+
+        TimeZone['Moscow'].to_s #=> "(GMT+03:00) Moscow"
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## JSON escape
 
-**json\_escape** method works like **html\_escape**. It's very useful when we need to show **JSON** strings in a **HTML** page, for example, in a documentation process.
+El método **json\_escape** funciona como **html\_escape**. Es muy útil cuando necesitamos mostrar strings **JSON** en una página **HTML** , por ejemplo, en un proceso de documentación.
 
-	puts json_escape("is a > 0 & a < 10?")
-	# => is a \u003E 0 \u0026 a \u003C 10?
+        puts json_escape("is a > 0 & a < 10?")
+        # => is a \u003E 0 \u0026 a \u003C 10?
 
-We can also use the shortcut **j** when in ERB:
+Podemos usar el atajo **j** en ERB:
 
-	<%= j @person.to_json %>
+        <%= j @person.to_json %>
 
-If you want all **JSON** code to be 'escaped' by default, include the following line in your *environment.rb* file:
+Si ud. desea escapar todo el código **JSON** por defecto, incluya la línea siguiente en su *environment.rb*:
 
-	ActiveSupport.escape_html_entities_in_json = true
+        ActiveSupport.escape_html_entities_in_json = true
 
-## Mem\_cache\_store now accepts options
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-The inclusion of **Memcache-Client** inside **ActiveSupport::Cache** made things easier than ever, but it also took away its flexibility in not allowing us to customize nothing more than the IP of the **memcached** server.
+## Mem\_cache\_store ahora acepta opciones
 
-**Jonathan Weiss** made a patch which was included in Rails allowing extra options like these:
+La inclusión de **Memcache-Client** dentro de **ActiveSupport::Cache** facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de **memcached**.
 
-	ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost"
+**Jonathan Weiss** hizo un parche que fue incluido en Rails, que permite opciones extras como estas:
 
-	ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost", '192.168.1.1', 
-		:namespace => 'foo'
+        ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost"
 
-or
+        ActiveSupport::Cache.lookup_store :mem_cache_store, "localhost", '192.168.1.1',
+                :namespace => 'foo'
 
-	config.action_controller.fragment_cache_store = :mem_cache_store, 'localhost', 
-		{:compression => true, :debug => true, :namespace =>'foo'}
+o
+
+        config.action_controller.fragment_cache_store = :mem_cache_store, 'localhost',
+                {:compression => true, :debug => true, :namespace =>'foo'}
 
 ## Time.current
 

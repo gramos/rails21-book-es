@@ -821,7 +821,7 @@ era muy útil.</p>
 
 <h3> Time#end_of_quarter</h3>
 
-<p>Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el última día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.</p>
+<p>Retorna un objeto date representando el fin del trimestre. En otras palabras, retorna el último día de algunos de los siguientes meses: marzo, junio, septiembre o diciembre, dependiendo de la fecha actual.</p>
 
 <h3> Time#end_of_year</h3>
 
@@ -862,60 +862,72 @@ era muy útil.</p>
 
 <p>La clase <strong>Date</strong> tiene un nuevo método llamado <strong>current</strong> el cual se usa en vez de <strong>Date.today</strong>, por que este considera el timezone especificado en <strong>config.time_zone</strong>, que en caso de que estar especificado retorna  <strong>Time.zone.today</strong>, de no ser así, entonces retorna <strong>Date.today</strong>.</p>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h2> Fragment_exist?</h2>
 
-<p>Two new methods were added to <strong>cache_store</strong>: <strong>fragment_exist?</strong> and <strong>exist?</strong>.</p>
+<p>Se agregaron dos nuevos métodos a  <strong>cache_store</strong>: <strong>fragment_exist?</strong> y <strong>exist?</strong>.</p>
 
-<p>The method <strong>fragment_exist?</strong> does exactly what you would expect, it verifies if a cached fragment informed by one key exists.  Basically replacing the famous:</p>
+<p>El método <strong>fragment_exist?</strong> hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básciamente sustituyendo al famoso:</p>
 
-<pre class="mac_classic"><span class="FunctionName">read_fragment</span>(path).<span class="FunctionName">nil?</span>
+<pre class="mac_classic">    <span class="FunctionName">read_fragment</span>(path).<span class="FunctionName">nil?</span>
 </pre>
 
-<p><strong>exist?</strong> method was added to <strong>cache_store</strong>, while <strong>fragment_exist?</strong>  is a helper which you could use inside your controller.</p>
+<p>El método <strong>exist?</strong>se agregó a <strong>cache_store</strong>, mientras que <strong>fragment_exist?</strong> es un helper el cual ud podría usar dentro de su controlador.</p>
 
-<h2> UTC or GMT?</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>An amendment, but interesting. Until now Rails has been using the UTC acronym a lot, but when the method <strong>to_s</strong> from <strong>TimeZone</strong> is called, it will print GMT, not UTC. This is due to the fact that the GMT acronym is the most common among end users.</p>
 
-<p>If you take a look in Windows control panel, where you can choose timezone, you'll notice the acronym used is GMT. Google and Yahoo also have been using GMT within their products.</p>
+<h2> ¿UTC o GMT?</h2>
 
-<pre class="mac_classic"><span class="LibraryObject">TimeZone</span>[<span class="String"><span class="String">'</span>Moscow<span class="String">'</span></span>].<span class="FunctionName">to_s</span> <span class="Comment"><span class="Comment">#</span>=&gt; &quot;(GMT+03:00) Moscow&quot;</span>
+<p>Una pregunta simple, pero interesante. Hasta ahora Rails estuvo usando mucho la sigla UTC, pero cuando se ejecuta el método <strong>to_s</strong> de <strong>TimeZone</strong>, este muestra GMT, no UTC. Esto es debido al hecho de que el acrónimo GMT es más común entre los usuarios finales.</p>
+
+<p>Si ud. mira en el panel de control de Windows, dónde se puede seleccioar el timezone, verá el que el acrónimo utilizado es GMT. Google y Yahoo también están usando GMT dentro de sus productos.</p>
+
+<pre class="mac_classic">    <span class="LibraryObject">TimeZone</span>[<span class="String"><span class="String">'</span>Moscow<span class="String">'</span></span>].<span class="FunctionName">to_s</span> <span class="Comment"><span class="Comment">#</span>=&gt; &quot;(GMT+03:00) Moscow&quot;</span>
 </pre>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> JSON escape</h2>
 
-<p><strong>json_escape</strong> method works like <strong>html_escape</strong>. It's very useful when we need to show <strong>JSON</strong> strings in a <strong>HTML</strong> page, for example, in a documentation process.</p>
+<p>El método <strong>json_escape</strong> funciona como <strong>html_escape</strong>. Es muy útil cuando necesitamos mostrar strings <strong>JSON</strong> en una página <strong>HTML</strong> , por ejemplo, en un proceso de documentación.</p>
 
-<pre class="mac_classic">puts <span class="FunctionName">json_escape</span>(<span class="String"><span class="String">&quot;</span>is a &gt; 0 &amp; a &lt; 10?<span class="String">&quot;</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; is a \u003E 0 \u0026 a \u003C 10?</span>
+<pre class="mac_classic">    puts <span class="FunctionName">json_escape</span>(<span class="String"><span class="String">&quot;</span>is a &gt; 0 &amp; a &lt; 10?<span class="String">&quot;</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; is a \u003E 0 \u0026 a \u003C 10?</span>
 </pre>
 
-<p>We can also use the shortcut <strong>j</strong> when in ERB:</p>
+<p>Podemos usar el atajo <strong>j</strong> en ERB:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%=</span> j <span class="Variable"><span class="Variable">@</span>person</span>.<span class="FunctionName">to_json</span> <span class="String"><span class="String">%&gt;</span></span>
+<pre class="mac_classic">    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> j <span class="Variable"><span class="Variable">@</span>person</span>.<span class="FunctionName">to_json</span> <span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
-<p>If you want all <strong>JSON</strong> code to be 'escaped' by default, include the following line in your <em>environment.rb</em> file:</p>
+<p>Si ud. desea escapar todo el código <strong>JSON</strong> por defecto, incluya la línea siguiente en su <em>environment.rb</em>:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">ActiveSupport</span>.<span class="FunctionName">escape_html_entities_in_json</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
+<pre class="mac_classic">    <span class="LibraryObject">ActiveSupport</span>.<span class="FunctionName">escape_html_entities_in_json</span> <span class="Keyword">=</span> <span class="BuiltInConstant">true</span>
 </pre>
 
-<h2> Mem_cache_store now accepts options</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>The inclusion of <strong>Memcache-Client</strong> inside <strong>ActiveSupport::Cache</strong> made things easier than ever, but it also took away its flexibility in not allowing us to customize nothing more than the IP of the <strong>memcached</strong> server.</p>
 
-<p><strong>Jonathan Weiss</strong> made a patch which was included in Rails allowing extra options like these:</p>
+<h2> Mem_cache_store ahora acepta opciones</h2>
 
-<pre class="mac_classic"><span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">Cache</span>.<span class="FunctionName">lookup_store</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>
+<p>La inclusión de <strong>Memcache-Client</strong> dentro de <strong>ActiveSupport::Cache</strong> facilitó mucho las cosas, pero también eliminó la flexibilidad no permitiendo configurar nada más que el número de IP del servidor de <strong>memcached</strong>.</p>
 
-<span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">Cache</span>.<span class="FunctionName">lookup_store</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>, <span class="String"><span class="String">'</span>192.168.1.1<span class="String">'</span></span>, 
-    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>namespace</span> =&gt; <span class="String"><span class="String">'</span>foo<span class="String">'</span></span>
+<p><strong>Jonathan Weiss</strong> hizo un parche que fue incluido en Rails, que permite opciones extras como estas:</p>
+
+<pre class="mac_classic">    <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">Cache</span>.<span class="FunctionName">lookup_store</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>
+
+    <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">Cache</span>.<span class="FunctionName">lookup_store</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>, <span class="String"><span class="String">'</span>192.168.1.1<span class="String">'</span></span>,
+            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>namespace</span> =&gt; <span class="String"><span class="String">'</span>foo<span class="String">'</span></span>
 </pre>
 
-<p>or</p>
+<p>o</p>
 
-<pre class="mac_classic">config.<span class="FunctionName">action_controller</span>.<span class="FunctionName">fragment_cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">'</span>localhost<span class="String">'</span></span>,
-    {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>compression</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>debug</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>namespace</span> =&gt;<span class="String"><span class="String">'</span>foo<span class="String">'</span></span>}
+<pre class="mac_classic">    config.<span class="FunctionName">action_controller</span>.<span class="FunctionName">fragment_cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">'</span>localhost<span class="String">'</span></span>,
+            {<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>compression</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>debug</span> =&gt; <span class="BuiltInConstant">true</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>namespace</span> =&gt;<span class="String"><span class="String">'</span>foo<span class="String">'</span></span>}
 </pre>
 
 <h2> Time.current</h2>
