@@ -1,21 +1,23 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Auto Link
 
-The **auto\_link** method receives any text given as parameter, and if the texts has some e-mail address or an website, it returns the same text, but with hyperlinks.
+El método  **auto\_link** recibe cualquier texto como parámetro, y si el texto contiene alguna dirección de email o website, retorna el mismo texto, pero con hyperlinks.
 
-For example:
+Por ejemplo:
 
-	auto_link("Go to this website now: http://www.rubyonrails.com")
-	# => Go to this website now: http://www.rubyonrails.com
+        auto_link("Go to this website now: http://www.rubyonrails.com")
+        # => Go to this website now: http://www.rubyonrails.com
 
-Some sites, like Amazon, use the "=" symbol in their URL's. This method doesn't recognize that symbol. Look how the method behaves in such case:
+Algunos sites, como Amazon, usan el símbolo "=" en sus URL. Este método no reconoce este símbolo. Veamos como se comporta este método en tal caso:
 
-	auto_link("http://www.amazon.com/Testing/ref=pd_bbs_sr_1")
-	# => http://www.amazon.com/Testing/ref
+        auto_link("http://www.amazon.com/Testing/ref=pd_bbs_sr_1")
+        # => http://www.amazon.com/Testing/ref
 
-Note the method finished the hyperlink exactly before the "=" symbol, before Rails 2.1 that symbol was not supported. 
+Note que el método corta el hyperlink exactamente antes del símbolo "=", antes de Rails 2.1 este símbolo estaba soportado.
 
-The same method was updated later to also allow the use of URL's with parenthesis.
+El mismo método se actualizó para permitir el uso de URL con paréntesis.
 
-An URL example using parenthesis:
+Un ejemplo de URL coc paréntesis:
 
-	http://en.wikipedia.org/wiki/Sprite_(computer_graphics)
+        http://en.wikipedia.org/wiki/Sprite_(computer_graphics)

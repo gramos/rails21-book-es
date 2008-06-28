@@ -1033,135 +1033,143 @@ Veamos un ejemplo:</p>
 
 <p>El valor por defecto es 60 segundos.</p>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h1> ActionPack</h1>
 
-<p>Comprises ActionView (visualization generation for end user, like HTML, XML, JavaScript, and etc) and ActionController (business flow control)
-(adapted from wikipedia)</p>
+<p>Está compuesto por ActionView (generación de visualización para el usuario, por ej: HTML, XML, JavaScript, etc.) y ActionController (controla el flujo de la aplicación)
+(wikipedia)</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> TimeZone</h2>
 
-<h3> Defining a default timezone</h3>
+<h3>  Definiendo un timezone por defecto</h3>
 
-<p>One new option was added to <strong>time_zone_select</strong> method, you can now present a default value in cases which your user didn't select any <strong>TimeZone</strong>, or when the database column is null. To achieve this, a <strong>:default</strong> option was created and can be used as such:</p>
+<p>Se agregó una nueva opción al método <strong>time_zone_select</strong>, ahora ud. puede poner un valor por defecto en caso de el usuario no haya seleccionado ningún <strong>TimeZone</strong>, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción <strong>:default</strong> que se puede usar de la siguiente manera:</p>
 
-<pre class="mac_classic"><span class="FunctionName">time_zone_select</span>(<span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>time_zone<span class="String">&quot;</span></span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include_blank</span> =&gt; <span class="BuiltInConstant">true</span>)
+<pre class="mac_classic">    <span class="FunctionName">time_zone_select</span>(<span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>time_zone<span class="String">&quot;</span></span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include_blank</span> =&gt; <span class="BuiltInConstant">true</span>)
 
-<span class="FunctionName">time_zone_select</span>(<span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>time_zone<span class="String">&quot;</span></span>, <span class="BuiltInConstant">nil</span>, 
-    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>default</span> =&gt; <span class="String"><span class="String">&quot;</span>Pacific Time (US &amp; Canada)<span class="String">&quot;</span></span> )
+    <span class="FunctionName">time_zone_select</span>(<span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>time_zone<span class="String">&quot;</span></span>, <span class="BuiltInConstant">nil</span>,
+            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>default</span> =&gt; <span class="String"><span class="String">&quot;</span>Pacific Time (US &amp; Canada)<span class="String">&quot;</span></span> )
 
-<span class="FunctionName">time_zone_select</span>( <span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">'</span>time_zone<span class="String">'</span></span>, <span class="LibraryObject">TimeZone</span>.<span class="FunctionName">us_zones</span>, 
-    <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>default</span> =&gt; <span class="String"><span class="String">&quot;</span>Pacific Time (US &amp; Canada)<span class="String">&quot;</span></span>)
+    <span class="FunctionName">time_zone_select</span>( <span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">'</span>time_zone<span class="String">'</span></span>, <span class="LibraryObject">TimeZone</span>.<span class="FunctionName">us_zones</span>,
+            <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>default</span> =&gt; <span class="String"><span class="String">&quot;</span>Pacific Time (US &amp; Canada)<span class="String">&quot;</span></span>)
 </pre>
 
-<p>In cases where we use the <strong>:default</strong> option, it must be shown with the informed <strong>TimeZone</strong> already selected.</p>
+<p>En los casos dónde usemos la opción <strong>:default</strong>, debe aparecer con el <strong>TimeZone</strong> especificado ya selecionado.</p>
 
-<h3> The formatted_offset method</h3>
+<h3> El método formatted_offset</h3>
 
-<p>The <strong>formatted_offset</strong> method was included in the <strong>Time</strong> and <strong>DateTime</strong> classes to return with the format <strong>+HH:MM</strong> the deviation of UTC time. For example, in our timezone (Brasilia time) the deviation value returned by the method would be a string with its value set to <strong>"-03:00″</strong>.</p>
+<p>Se incluyó el método <strong>formatted_offset</strong> en las clases <strong>Time</strong> y <strong>DateTime</strong> para retornar con el formato <strong>+HH:MM</strong> la desviación de la hora UTC. Por ejemplo, en nuestro timezone (Hora Brasilia) el valor de desviación retornado por el método sería un string con el valor: <strong>"-03:00"</strong>.</p>
 
-<p>Let's see some examples:</p>
+<p>Veamos algunos ejemplos:</p>
 
-<p>Getting the deviation from a DateTime:</p>
+<p>Obteniendo la desviación desde un DateTime:</p>
 
-<pre class="mac_classic">datetime <span class="Keyword">=</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>))
-datetime.<span class="FunctionName">formatted_offset</span>         <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-06:00″</span>
-datetime.<span class="FunctionName">formatted_offset</span>(<span class="BuiltInConstant">false</span>)  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-0600″</span>
+<pre class="mac_classic">    datetime <span class="Keyword">=</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>))
+    datetime.<span class="FunctionName">formatted_offset</span>         <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-06:00&quot;</span>
+    datetime.<span class="FunctionName">formatted_offset</span>(<span class="BuiltInConstant">false</span>)  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-0600&quot;</span>
 </pre>
 
-<p>Now from Time:</p>
+<p>Ahora desde Time:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">local</span>(<span class="Number">2000</span>).<span class="FunctionName">formatted_offset</span>         <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-06:00″</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">local</span>(<span class="Number">2000</span>).<span class="FunctionName">formatted_offset</span>(<span class="BuiltInConstant">false</span>)  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-0600″</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">local</span>(<span class="Number">2000</span>).<span class="FunctionName">formatted_offset</span>         <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-06:00&quot;</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">local</span>(<span class="Number">2000</span>).<span class="FunctionName">formatted_offset</span>(<span class="BuiltInConstant">false</span>)  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;-0600&quot;</span>
 </pre>
 
-<p>Note this method returns <strong>string</strong>, which can be either formatted or not depending of the value given as parameter.</p>
+<p>Note que este método retorna un <strong>string</strong>, el cual puede ser formateado o no dependiendo del valor dado como parámetro.</p>
 
-<h3> The with_env_tz method</h3>
+<h3> El método with_env_tz</h3>
 
-<p>The <strong>with_env_tz</strong> method allows us to make tests with different timezones in a very simple way:</p>
+<p>El método <strong>with_env_tz</strong> nos permite hacer tests con diferentes timezones de una manera muy simple:</p>
 
-<pre class="mac_classic"><span class="Keyword">def</span> <span class="FunctionName">test_local_offset</span>
-  with_env_tz <span class="String"><span class="String">'</span>US/Eastern<span class="String">'</span></span> <span class="Keyword">do</span>
-    assert_equal <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">5</span>, <span class="Number">24</span>), <span class="LibraryObject">DateTime</span>.<span class="FunctionName">local_offset</span>
-  <span class="Keyword">end</span>
-  with_env_tz <span class="String"><span class="String">'</span>US/Central<span class="String">'</span></span> <span class="Keyword">do</span>
-    assert_equal <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>), <span class="LibraryObject">DateTime</span>.<span class="FunctionName">local_offset</span>
-  <span class="Keyword">end</span>
-<span class="Keyword">end</span>
+<pre class="mac_classic">    <span class="Keyword">def</span> <span class="FunctionName">test_local_offset</span>
+      with_env_tz <span class="String"><span class="String">'</span>US/Eastern<span class="String">'</span></span> <span class="Keyword">do</span>
+        assert_equal <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">5</span>, <span class="Number">24</span>), <span class="LibraryObject">DateTime</span>.<span class="FunctionName">local_offset</span>
+      <span class="Keyword">end</span>
+      with_env_tz <span class="String"><span class="String">'</span>US/Central<span class="String">'</span></span> <span class="Keyword">do</span>
+        assert_equal <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>), <span class="LibraryObject">DateTime</span>.<span class="FunctionName">local_offset</span>
+      <span class="Keyword">end</span>
+    <span class="Keyword">end</span>
 </pre>
+
+<p>Este helper</p>
 
 <p>This helper was supposed to call <strong>with_timezone</strong>, but it was renamed for <strong>with_env_tz</strong> to avoid confusion with the timezone informed by using <strong>ENV['TZ']</strong> and <strong>Time.zone</strong>.</p>
 
 <h3> Time.zone_reset!</h3>
 
-<p>Was removed for not being used anymore</p>
+<p>Se eliminó por que ya no se usa más.</p>
 
 <h3> Time#in_current_time_zone</h3>
 
-<p>Was modified to return <strong>self</strong> when <strong>Time.zone</strong> is null. </p>
+<p>Se modificó para que retorne <strong>self</strong> cuando <strong>Time.zone</strong> es null.</p>
 
 <h3> Time#change_time_zone_to_current</h3>
 
-<p>Was modified to return <strong>self</strong> when <strong>Time.zone</strong> is null. </p>
+<p>Se modificó para que retorne <strong>self</strong> cuando <strong>Time.zone</strong> es null.</p>
 
 <h3> TimeZone#now</h3>
 
-<p>The <strong>TimeZone#now</strong> method was modified to return an <strong>ActiveSupport::TimeWithZone</strong> representing the current time in the configured timezone as defined in <strong>Time.zone</strong>. For example:</p>
+<p>El método <strong>TimeZone#now</strong> se modificó para que retorne un objeto <strong>ActiveSupport::TimeWithZone</strong> represetando la hora actual en el timezone configurado en <strong>Time.zone</strong>. Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>Hawaii<span class="String">'</span></span>  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">now</span>         <span class="Comment"><span class="Comment">#</span> =&gt; Wed, 23 Jan 2008 20:24:27 HST -10:00</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">'</span>Hawaii<span class="String">'</span></span>  <span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">now</span>         <span class="Comment"><span class="Comment">#</span> =&gt; Wed, 23 Jan 2008 20:24:27 HST -10:00</span>
 </pre>
 
 <h3> Compare_with_coercion</h3>
 
-<p>The method <strong>compare_with_coercion</strong> (with an alias for &lt;=>) was created  in <strong>Time</strong> e <strong>DateTime</strong> classes, becoming possible to make a chronological comparison between the <strong>Time</strong>, <strong>DateTime</strong> classes and instances of  <strong>ActiveSupport::TimeWithZone</strong> objects. For a better understanding, take a look the examples bellow (each line result is in the comment placed following the code):</p>
+<p>Se creó el método <strong>compare_with_coercion</strong> (con un alias para &lt;=>) en las clases <strong>Time</strong> y <strong>DateTime</strong>, posibilitando  la comparación cronológica entre las clases <strong>Time</strong>, <strong>DateTime</strong> y las instancias de <strong>ActiveSupport::TimeWithZone</strong>. Para una mejor comprensión, vemaos los siguientes ejemplos:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>, <span class="Number">999</span>) <span class="Comment"><span class="Comment">#</span> 1</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) <span class="Comment"><span class="Comment">#</span> 0</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">001</span>)) <span class="Comment"><span class="Comment">#</span> -1</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>, <span class="Number">999</span>) <span class="Comment"><span class="Comment">#</span> 1</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) <span class="Comment"><span class="Comment">#</span> 0</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">001</span>)) <span class="Comment"><span class="Comment">#</span> -1</span>
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>) <span class="Comment"><span class="Comment">#</span> 1</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) <span class="Comment"><span class="Comment">#</span> 0</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">1</span>)) <span class="Comment"><span class="Comment">#</span> -1</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>) <span class="Comment"><span class="Comment">#</span> 1</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) <span class="Comment"><span class="Comment">#</span> 0</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">1</span>)) <span class="Comment"><span class="Comment">#</span> -1</span>
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>) )
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) )
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">1</span>) ))
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>) )
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) )
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">ActiveSupport</span>::<span class="FunctionName">TimeWithZone</span>.<span class="FunctionName">new</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">1</span>) ))
 </pre>
 
 <h3> TimeWithZone#between?</h3>
 
 <p>The <strong>between?</strong> method was included in the <strong>TimeWithZone</strong> class to verify if an instance is found between two dates. Example:</p>
 
-<pre class="mac_classic"><span class="Variable"><span class="Variable">@</span>twz</span>.<span class="FunctionName">between?</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>,<span class="Number">12</span>,<span class="Number">31</span>,<span class="Number">23</span>,<span class="Number">59</span>,<span class="Number">59</span>),
-              <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>,<span class="Number">1</span>,<span class="Number">1</span>,<span class="Number">0</span>,<span class="Number">0</span>,<span class="Number">1</span>))
+<pre class="mac_classic">    <span class="Variable"><span class="Variable">@</span>twz</span>.<span class="FunctionName">between?</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>,<span class="Number">12</span>,<span class="Number">31</span>,<span class="Number">23</span>,<span class="Number">59</span>,<span class="Number">59</span>),
+                  <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>,<span class="Number">1</span>,<span class="Number">1</span>,<span class="Number">0</span>,<span class="Number">0</span>,<span class="Number">1</span>))
 </pre>
 
 <h3> TimeZone#parse</h3>
 
 <p>This method creates a new instance of <strong>ActiveSupport::TimeWithZone</strong> from a string. For example:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span>
-<span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">parse</span>(<span class="String"><span class="String">'</span>1999-12-31 14:00:00<span class="String">'</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">parse</span>(<span class="String"><span class="String">'</span>1999-12-31 14:00:00<span class="String">'</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
 
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">now</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">parse</span>(<span class="String"><span class="String">'</span>22:30:00<span class="String">'</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 22:30:00 HST -10:00</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">now</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">parse</span>(<span class="String"><span class="String">'</span>22:30:00<span class="String">'</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 22:30:00 HST -10:00</span>
 </pre>
 
 <h3> TimeZone#at</h3>
 
 <p>This method can be used to create a new instance of <strong>ActiveSupport::TimeWithZone</strong> from the number of seconds since Unix epoch. For example:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span> <span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
-<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">to_f</span>  <span class="Comment"><span class="Comment">#</span> =&gt; 946684800.0</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span> <span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">to_f</span>  <span class="Comment"><span class="Comment">#</span> =&gt; 946684800.0</span>
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">at</span>(<span class="Number">946684800.0</span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span>.<span class="FunctionName">at</span>(<span class="Number">946684800.0</span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
 </pre>
 
 <h3> More methods</h3>
@@ -1172,25 +1180,25 @@ datetime.<span class="FunctionName">formatted_offset</span>(<span class="BuiltIn
 
 <p>In Ruby 1.9 we'll have some new methods in the <strong>Time</strong> class, methods such as:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; Thu Nov 03 18:58:25 CET 2005</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; Thu Nov 03 18:58:25 CET 2005</span>
 
-<span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>.<span class="FunctionName">sunday?</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; false</span>
+    <span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>.<span class="FunctionName">sunday?</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; false</span>
 </pre>
 
 <p>A respective method exists for each day of the week.</p>
 
 <p>Another interesting things is that <strong>to_s</strong> method of <strong>Time</strong> object will have a different returning value. Today when we execute <strong>Time.new.to_s</strong>, we have the following:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; &quot;Thu Oct 12 10:39:27 +0200 2006″</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;Thu Oct 12 10:39:27 +0200 2006â€³</span>
 </pre>
 
 <p>In Ruby 1.9 we will have:</p>
 
-<pre class="mac_classic"><span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
-<span class="Comment"><span class="Comment">#</span> =&gt; &quot;2006-10-12 10:39:24 +0200″</span>
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;2006-10-12 10:39:24 +0200â€³</span>
 </pre>
 
 <p>What's all of that have to do with Rails 2.1? Everything. Rails is being prepared to deal with these modifications. The <strong>TimeWithZone</strong> class, for example, just received some enhancements to work with the methods of the first example.</p>
