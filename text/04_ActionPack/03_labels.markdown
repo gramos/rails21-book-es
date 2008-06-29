@@ -1,51 +1,54 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## Labels
 
-When creating a new form using **scaffold** it will be created with the following code:
+Cuando creamos un nuevo formulario con **scaffold** será creado con el siguiente código:
 
-	<% form_for(@post) do |f| %>
-	  <p>
-	    <%= f.label :title %><br />
-	    <%= f.text_field :title %>
-	  </p>
-	  <p>
-	    <%= f.label :body %><br />
-	    <%= f.text_area :body %>
-	  </p>
-	  <p>
-	    <%= f.submit "Update" %>
-	  </p>
-	<% end %>
+        <% form_for(@post) do |f| %>
+          <p>
+            <%= f.label :title %><br />
+            <%= f.text_field :title %>
+          </p>
+          <p>
+            <%= f.label :body %><br />
+            <%= f.text_area :body %>
+          </p>
+          <p>
+            <%= f.submit "Update" %>
+          </p>
+        <% end %>
 
-The **label** method was included. This method returns a *string* with the column title inside an HTML **\<label\>** tag.
+Se incluyó el método **label**. Este método retorna un *string* con el título de la columna dentro de un tag HTML **\<label\>**.
 
-	>> f.label :title
-	=> <label for="post_title">Title</label>
+        >> f.label :title
+        => <label for="post_title">Title</label>
 
-	>> f.label :title, "A short title"
-	=> <label for="post_title">A short title</label>
+        >> f.label :title, "A short title"
+        => <label for="post_title">A short title</label>
 
-	>> label :title, "A short title", :class => "title_label"
-	=> <label for="post_title" class="title_label">A short title</label>
+        >> label :title, "A short title", :class => "title_label"
+        => <label for="post_title" class="title_label">A short title</label>
 
-Did you notice the **for** parameter inside the tag ? "post\_title" is the textbox title which contains our post title. The **\<label\>** tag is in fact a label associated to the **post\_title** object. When someone clicks on the label (which isn't a link) the associated HTML controller receives focus.
+¿Se dió cuenta del parámetro **for** dentro del tag? "post\_title" es el título que contiene nuetro título para el post. El tag **\<label\>** de hecho una etiqueta asociada al objeto **post\_title**. Cuando alguien hace click sobre la etiqueta (que no es un link) el controlador HTML asociado recive el foco.
 
-Robby Russell wrote an interesting post in his blog about this subject. You can read it on: [http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label](http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label)
+Robby Russell escribió un post interesante en su blog acerca de este tema. Ud. lo puede leer en: [http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label](http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label)
 
-Also included was the **label\_tag** method in **FormTagHelper**. This method works like label, but in a simpler way:
+También se incluyó el método **label\_tag** en **FormTagHelper**. Este método funciona como label, pero de una forma más simple:
 
-	>> label_tag 'name'
-	=> <label for="name">Name</label> 
+        >> label_tag 'name'
+        => <label for="name">Name</label>
 
-	>> label_tag 'name', 'Your name'
-	=> <label for="name">Your name</label> 
+        >> label_tag 'name', 'Your name'
+        => <label for="name">Your name</label>
 
-	>> label_tag 'name', nil, :class => 'small_label'
-	=> <label for="name" class="small_label">Name</label>
+        >> label_tag 'name', nil, :class => 'small_label'
+        => <label for="name" class="small_label">Name</label>
 
-The method also accepts the **:for** option, Look an example:
 
-	label(:post, :title, nil, :for => "my_for")
+El método acepta la opción **:for**, Veamos un ejemplo:
 
-This will return something like this:
+        label(:post, :title, nil, :for => "my_for")
 
-	<label for="my_for">Title</label>
+Esto va retornar algo como lo siguiente:
+
+        <label for="my_for">Title</label>
