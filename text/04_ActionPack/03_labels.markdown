@@ -1,6 +1,6 @@
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-## Labels
+## Etiquetas
 
 Cuando creamos un nuevo formulario con **scaffold** será creado con el siguiente código:
 
