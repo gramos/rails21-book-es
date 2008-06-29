@@ -1,54 +1,57 @@
-## New namespaces in Atom Feed
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-Do you know the **atom\_feed** method? It is one of the new features of Rails 2.0, making easier the creation of Atom feeds. See an example of use:
+## Nuevos espacios de nombres en Atom Feed
 
-In a *index.atom.builder* file:
+¿Conoce el método **atom\_feed**? Es una de las nuevas características de Rails 2.0, que facilita la creación de Feeds de Atom. Veamos un ejemplo de como se usa:
 
-	atom_feed do |feed|
-	  feed.title("Nome do Jogo")
-	  feed.updated((@posts.first.created_at))
+En el archivo *index.atom.builder*:
 
-	  for post in @posts
-	    feed.entry(post) do |entry|
-	      entry.title(post.title)
-	      entry.content(post.body, :type => 'html')
+        atom_feed do |feed|
+          feed.title("Nome do Jogo")
+          feed.updated((@posts.first.created_at))
 
-	      entry.author do |author|
-	        author.name("Carlos Brando")
-	      end
-	    end
-	  end
-	end
+          for post in @posts
+            feed.entry(post) do |entry|
+              entry.title(post.title)
+              entry.content(post.body, :type => 'html')
 
-What is an Atom feed ? Atom is the name of XML based style and meta data. In other words is a protocol to publish content in Internet that is often updated, like a blog, for example. Feeds are always published in XML and in Atom it is identified as an application/atom+xml media type.
+              entry.author do |author|
+                author.name("Carlos Brando")
+              end
+            end
+          end
+        end
 
-In the first versions of Rails 2.0 this method used to accept as parameter **:language**, **:root_url** and **:url** options, you can obtain more information about these methods in Rails Documentation. But with the update made, we can now include new namespaces in the root element of the feed. For example:
+¿Qué es un Atom feed? Atom es el nombre de estilos y metadatos en formato XML. En otras palabras es un protocolo para publicar contenidos en Internet que son actualizados con frecuencia, como un blog por ejemplo. Los Feeds se publican siempre en XML y en Atom son identificados como tipo de medios application/atom+xml.
 
-	atom_feed('xmlns:app' => 'http://www.w3.org/2007/app') do |feed|
+En las primeras versiones de Rails 2.0 este método aceptaba parámetros como: **:language**, **:root_url** and **:url**, puede obtener más información acerca de estos métodos en la documentación de Rails. pero con la nueva modificación, ahora podemos incluir nuevos espacios de nombre en el elemento raíz del feed. Por ejemplo:
 
-Will return:
 
-	<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom" 
-		xmlns:app="http://www.w3.org/2007/app">
+        atom_feed('xmlns:app' => 'http://www.w3.org/2007/app') do |feed|
 
-Modifying the example used before, we could use this way:
+Va a retornar:
 
-	atom_feed({'xmlns:app' => 'http://www.w3.org/2007/app',
-		'xmlns:openSearch' => 'http://a9.com/-/spec/opensearch/1.1/'}) do |feed| 
+        <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom"
+                xmlns:app="http://www.w3.org/2007/app">
 
-	  feed.title("Nome do Jogo")
-	  feed.updated((@posts.first.created_at))
-	  feed.tag!(openSearch:totalResults, 10) 
+Modificando el ejemplo usado antes, podríamos hacer esto:
 
-	  for post in @posts
-	    feed.entry(post) do |entry|
-	      entry.title(post.title)
-	      entry.content(post.body, :type => 'html')
-	      entry.tag!('app:edited', Time.now) 
+        atom_feed({'xmlns:app' => 'http://www.w3.org/2007/app',
+                'xmlns:openSearch' => 'http://a9.com/-/spec/opensearch/1.1/'}) do |feed|
 
-	      entry.author do |author|
-	        author.name("Carlos Brando")
-	      end
-	    end
-	  end
-	end
+          feed.title("Nome do Jogo")
+          feed.updated((@posts.first.created_at))
+          feed.tag!(openSearch:totalResults, 10)
+
+          for post in @posts
+            feed.entry(post) do |entry|
+              entry.title(post.title)
+              entry.content(post.body, :type => 'html')
+              entry.tag!('app:edited', Time.now)
+
+              entry.author do |author|
+                author.name("Carlos Brando")
+              end
+            end
+          end
+        end

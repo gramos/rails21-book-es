@@ -1122,7 +1122,7 @@ Veamos un ejemplo:</p>
 
 <h3> Compare_with_coercion</h3>
 
-<p>Se creó el método <strong>compare_with_coercion</strong> (con un alias para &lt;=>) en las clases <strong>Time</strong> y <strong>DateTime</strong>, posibilitando  la comparación cronológica entre las clases <strong>Time</strong>, <strong>DateTime</strong> y las instancias de <strong>ActiveSupport::TimeWithZone</strong>. Para una mejor comprensión, vemaos los siguientes ejemplos:</p>
+<p>Se creó el método <strong>compare_with_coercion</strong> (con un alias para &lt;=>) en las clases <strong>Time</strong> y <strong>DateTime</strong>, posibilitando  la comparación cronológica entre las clases <strong>Time</strong>, <strong>DateTime</strong> y las instancias de <strong>ActiveSupport::TimeWithZone</strong>. Para una mejor comprensión, veamos los siguientes ejemplos:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>, <span class="Number">12</span>, <span class="Number">31</span>, <span class="Number">23</span>, <span class="Number">59</span>, <span class="Number">59</span>, <span class="Number">999</span>) <span class="Comment"><span class="Comment">#</span> 1</span>
     <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>) <span class="Keyword">&lt;=&gt;</span> <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>, <span class="Number">1</span>, <span class="Number">1</span>, <span class="Number">0</span>, <span class="Number">0</span>, <span class="Number">0</span>) <span class="Comment"><span class="Comment">#</span> 0</span>
@@ -1139,7 +1139,7 @@ Veamos un ejemplo:</p>
 
 <h3> TimeWithZone#between?</h3>
 
-<p>The <strong>between?</strong> method was included in the <strong>TimeWithZone</strong> class to verify if an instance is found between two dates. Example:</p>
+<p>Se incluyó el método <strong>between?</strong>  en la clase <strong>TimeWithZone</strong> para verificar si una instancia está entre dos fechas. Por ejemplo:</p>
 
 <pre class="mac_classic">    <span class="Variable"><span class="Variable">@</span>twz</span>.<span class="FunctionName">between?</span>(<span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">1999</span>,<span class="Number">12</span>,<span class="Number">31</span>,<span class="Number">23</span>,<span class="Number">59</span>,<span class="Number">59</span>),
                   <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>,<span class="Number">1</span>,<span class="Number">1</span>,<span class="Number">0</span>,<span class="Number">0</span>,<span class="Number">1</span>))
@@ -1147,7 +1147,7 @@ Veamos un ejemplo:</p>
 
 <h3> TimeZone#parse</h3>
 
-<p>This method creates a new instance of <strong>ActiveSupport::TimeWithZone</strong> from a string. For example:</p>
+<p>Este método crea una nueva instancia de <strong>ActiveSupport::TimeWithZone</strong> a partir de un string. Por ejemplo:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span>
 <span class="Comment">    <span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
@@ -1163,7 +1163,7 @@ Veamos un ejemplo:</p>
 
 <h3> TimeZone#at</h3>
 
-<p>This method can be used to create a new instance of <strong>ActiveSupport::TimeWithZone</strong> from the number of seconds since Unix epoch. For example:</p>
+<p>Este método crea una nueva instancia de <strong>ActiveSupport::TimeWithZone</strong> a partir del número de segundos desde la fecha Unix epoch. Por ejemplo:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">zone</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>Hawaii<span class="String">&quot;</span></span> <span class="Comment"><span class="Comment">#</span> =&gt; &quot;Hawaii&quot;</span>
     <span class="LibraryObject">Time</span>.<span class="FunctionName">utc</span>(<span class="Number">2000</span>).<span class="FunctionName">to_f</span>  <span class="Comment"><span class="Comment">#</span> =&gt; 946684800.0</span>
@@ -1172,13 +1172,13 @@ Veamos un ejemplo:</p>
 <span class="Comment">    <span class="Comment">#</span> =&gt; Fri, 31 Dec 1999 14:00:00 HST -10:00</span>
 </pre>
 
-<h3> More methods</h3>
+<h3> Más métodos</h3>
 
-<p>The <strong>to_a</strong>, <strong>to_f</strong>, <strong>to_i</strong>, <strong>httpdate</strong>, <strong>rfc2822</strong>, <strong>to_yaml</strong>, <strong>to_datetime</strong> and <strong>eql?</strong> methodos were added in the <strong>TImeWithZone</strong> class. For more information about these methodos please head to <strong>Rails</strong> documentation.</p>
+<p>Los métodos <strong>to_a</strong>, <strong>to_f</strong>, <strong>to_i</strong>, <strong>httpdate</strong>, <strong>rfc2822</strong>, <strong>to_yaml</strong>, <strong>to_datetime</strong> y  <strong>eql?</strong> se agregaron a la clase <strong>TImeWithZone</strong>.  Para más información acerca de estos métodos por favor lea la documentación de Rails.</p>
 
-<h3> TimeWithZone class preparing itself for Ruby 1.9</h3>
+<h3> Se preparó la clase TimeWithZone para Ruby 1.9</h3>
 
-<p>In Ruby 1.9 we'll have some new methods in the <strong>Time</strong> class, methods such as:</p>
+<p>En Ruby 1.9 tendremos algunos métodos nuevos en la clase <strong>Time</strong>, como por ejemplo:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>
 <span class="Comment">    <span class="Comment">#</span> =&gt; Thu Nov 03 18:58:25 CET 2005</span>
@@ -1187,127 +1187,136 @@ Veamos un ejemplo:</p>
 <span class="Comment">    <span class="Comment">#</span> =&gt; false</span>
 </pre>
 
-<p>A respective method exists for each day of the week.</p>
+<p>Este mismo método existe para cada día de la semana</p>
 
-<p>Another interesting things is that <strong>to_s</strong> method of <strong>Time</strong> object will have a different returning value. Today when we execute <strong>Time.new.to_s</strong>, we have the following:</p>
-
-<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
-<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;Thu Oct 12 10:39:27 +0200 2006â€³</span>
-</pre>
-
-<p>In Ruby 1.9 we will have:</p>
+<p>Otras cosa interesante es que el método <strong>to_s</strong> del objeto <strong>Time</strong> tendrá un valor de retorno diferente. Hoy cuando ejecutamos  <strong>Time.new.to_s</strong>, obtenemos lo siguiente:</p>
 
 <pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
-<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;2006-10-12 10:39:24 +0200â€³</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;Thu Oct 12 10:39:27 +0200 2006&quot;</span>
 </pre>
 
-<p>What's all of that have to do with Rails 2.1? Everything. Rails is being prepared to deal with these modifications. The <strong>TimeWithZone</strong> class, for example, just received some enhancements to work with the methods of the first example.</p>
+<p>En Ruby 1.9 vamos a tener:</p>
+
+<pre class="mac_classic">    <span class="LibraryObject">Time</span>.<span class="FunctionName">new</span>.<span class="FunctionName">to_s</span>
+<span class="Comment">    <span class="Comment">#</span> =&gt; &quot;2006-10-12 10:39:24 +0200&quot;</span>
+</pre>
+
+<p>¿Que tiene que ver todo esto con Rails 2.1? Todo. Rails se está preparando para proveer estas modificaciones. La clase <strong>TimeWithZone</strong>, por ejemplo, sólo tuvo algunas mejoras para funcionar con los métodos del primer ejemplo.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> Auto Link</h2>
 
-<p>The <strong>auto_link</strong> method receives any text given as parameter, and if the texts has some e-mail address or an website, it returns the same text, but with hyperlinks.</p>
+<p>El método  <strong>auto_link</strong> recibe cualquier texto como parámetro, y si el texto contiene alguna dirección de email o website, retorna el mismo texto, pero con hyperlinks.</p>
 
-<p>For example:</p>
+<p>Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="FunctionName">auto_link</span>(<span class="String"><span class="String">&quot;</span>Go to this website now: http://www.rubyonrails.com<span class="String">&quot;</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; Go to this website now: http://www.rubyonrails.com</span>
+<pre class="mac_classic">    <span class="FunctionName">auto_link</span>(<span class="String"><span class="String">&quot;</span>Go to this website now: http://www.rubyonrails.com<span class="String">&quot;</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; Go to this website now: http://www.rubyonrails.com</span>
 </pre>
 
-<p>Some sites, like Amazon, use the "=" symbol in their URL's. This method doesn't recognize that symbol. Look how the method behaves in such case:</p>
+<p>Algunos sites, como Amazon, usan el símbolo "=" en sus URL. Este método no reconoce este símbolo. Veamos como se comporta este método en tal caso:</p>
 
-<pre class="mac_classic"><span class="FunctionName">auto_link</span>(<span class="String"><span class="String">&quot;</span>http://www.amazon.com/Testing/ref=pd_bbs_sr_1<span class="String">&quot;</span></span>)
-<span class="Comment"><span class="Comment">#</span> =&gt; http://www.amazon.com/Testing/ref</span>
+<pre class="mac_classic">    <span class="FunctionName">auto_link</span>(<span class="String"><span class="String">&quot;</span>http://www.amazon.com/Testing/ref=pd_bbs_sr_1<span class="String">&quot;</span></span>)
+<span class="Comment">    <span class="Comment">#</span> =&gt; http://www.amazon.com/Testing/ref</span>
 </pre>
 
-<p>Note the method finished the hyperlink exactly before the "=" symbol, before Rails 2.1 that symbol was not supported. </p>
+<p>Note que el método corta el hyperlink exactamente antes del símbolo "=", antes de Rails 2.1 este símbolo estaba soportado.</p>
 
-<p>The same method was updated later to also allow the use of URL's with parenthesis.</p>
+<p>El mismo método se actualizó para permitir el uso de URL con paréntesis.</p>
 
-<p>An URL example using parenthesis:</p>
+<p>Un ejemplo de URL coc paréntesis:</p>
 
-<pre class="mac_classic">http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>en.<span class="FunctionName">wikipedia</span>.<span class="FunctionName">org</span><span class="Keyword">/</span>wiki<span class="Keyword">/</span><span class="Variable">Sprite_</span>(computer_graphics)
+<pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>en.<span class="FunctionName">wikipedia</span>.<span class="FunctionName">org</span><span class="Keyword">/</span>wiki<span class="Keyword">/</span><span class="Variable">Sprite_</span>(computer_graphics)
 </pre>
 
-<h2> Labels</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>When creating a new form using <strong>scaffold</strong> it will be created with the following code:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="FunctionName">form_for</span>(<span class="Variable"><span class="Variable">@</span>post</span>) <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">  &lt;p<span class="String">&gt;</span></span>
-    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> <span class="String"><span class="String">%&gt;</span>&lt;br /<span class="String">&gt;</span></span>
-    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">text_field</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">  &lt;/p<span class="String">&gt;</span></span>
-  <span class="Keyword">&lt;</span>p<span class="Keyword">&gt;</span>
-    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>body</span> <span class="String"><span class="String">%&gt;</span>&lt;br /<span class="String">&gt;</span></span>
-    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">text_area</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>body</span> <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">  &lt;/p<span class="String">&gt;</span></span>
-  <span class="Keyword">&lt;</span>p<span class="Keyword">&gt;</span>
-    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">submit</span> <span class="String"><span class="String">&quot;</span>Update<span class="String">&quot;</span></span> <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">  &lt;/p<span class="String">&gt;</span></span>
-<span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
+<h2> Etiquetas</h2>
+
+<p>Cuando creamos un nuevo formulario con <strong>scaffold</strong> será creado con el siguiente código:</p>
+
+<pre class="mac_classic">    <span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="FunctionName">form_for</span>(<span class="Variable"><span class="Variable">@</span>post</span>) <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">      &lt;p<span class="String">&gt;</span></span>
+        <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> <span class="String"><span class="String">%&gt;</span>&lt;br /<span class="String">&gt;</span></span>
+        <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">text_field</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span> <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">      &lt;/p<span class="String">&gt;</span></span>
+      <span class="Keyword">&lt;</span>p<span class="Keyword">&gt;</span>
+        <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>body</span> <span class="String"><span class="String">%&gt;</span>&lt;br /<span class="String">&gt;</span></span>
+        <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">text_area</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>body</span> <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">      &lt;/p<span class="String">&gt;</span></span>
+      <span class="Keyword">&lt;</span>p<span class="Keyword">&gt;</span>
+        <span class="Keyword">&lt;</span><span class="Keyword">%=</span> f.<span class="FunctionName">submit</span> <span class="String"><span class="String">&quot;</span>Update<span class="String">&quot;</span></span> <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">      &lt;/p<span class="String">&gt;</span></span>
+    <span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
-<p>The <strong>label</strong> method was included. This method returns a <em>string</em> with the column title inside an HTML <strong>&lt;label></strong> tag.</p>
+<p>Se incluyó el método <strong>label</strong>. Este método retorna un <em>string</em> con el título de la columna dentro de un tag HTML <strong>&lt;label></strong>.</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Title</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Title</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 
-<span class="Keyword">&gt;&gt;</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="String"><span class="String">&quot;</span>A short title<span class="String">&quot;</span></span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">A</span> short title<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
+    <span class="Keyword">&gt;&gt;</span> f.<span class="FunctionName">label</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="String"><span class="String">&quot;</span>A short title<span class="String">&quot;</span></span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">A</span> short title<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 
-<span class="Keyword">&gt;&gt;</span> label <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="String"><span class="String">&quot;</span>A short title<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">&quot;</span>title_label<span class="String">&quot;</span></span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span> <span class="Keyword">class</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>title_label<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">A</span> short title<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
+    <span class="Keyword">&gt;&gt;</span> label <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="String"><span class="String">&quot;</span>A short title<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">&quot;</span>title_label<span class="String">&quot;</span></span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>post_title<span class="String">&quot;</span></span> <span class="Keyword">class</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>title_label<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">A</span> short title<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 </pre>
 
-<p>Did you notice the <strong>for</strong> parameter inside the tag ? "post_title" is the textbox title which contains our post title. The <strong>&lt;label></strong> tag is in fact a label associated to the <strong>post_title</strong> object. When someone clicks on the label (which isn't a link) the associated HTML controller receives focus.</p>
+<p>¿Se dió cuenta del parámetro <strong>for</strong> dentro del tag? "post_title" es el título que contiene nuetro título para el post. El tag <strong>&lt;label></strong> de hecho una etiqueta asociada al objeto <strong>post_title</strong>. Cuando alguien hace click sobre la etiqueta (que no es un link) el controlador HTML asociado recive el foco.</p>
 
-<p>Robby Russell wrote an interesting post in his blog about this subject. You can read it on: <a href="http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label">http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label</a></p>
+<p>Robby Russell escribió un post interesante en su blog acerca de este tema. Ud. lo puede leer en: <a href="http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label">http://www.robbyonrails.com/articles/2007/12/02/that-checkbox-needs-a-label</a></p>
 
-<p>Also included was the <strong>label_tag</strong> method in <strong>FormTagHelper</strong>. This method works like label, but in a simpler way:</p>
+<p>También se incluyó el método <strong>label_tag</strong> en <strong>FormTagHelper</strong>. Este método funciona como label, pero de una forma más simple:</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Name</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span> 
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Name</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 
-<span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>, <span class="String"><span class="String">'</span>Your name<span class="String">'</span></span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Your</span> name<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span> 
+    <span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>, <span class="String"><span class="String">'</span>Your name<span class="String">'</span></span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Your</span> name<span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 
-<span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>small_label<span class="String">'</span></span>
-=&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span> <span class="Keyword">class</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>small_label<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Name</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
+    <span class="Keyword">&gt;&gt;</span> label_tag <span class="String"><span class="String">'</span>name<span class="String">'</span></span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>small_label<span class="String">'</span></span>
+    =&gt; <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>name<span class="String">&quot;</span></span> <span class="Keyword">class</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>small_label<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Name</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 </pre>
 
-<p>The method also accepts the <strong>:for</strong> option, Look an example:</p>
+<p>El método acepta la opción <strong>:for</strong>, Veamos un ejemplo:</p>
 
-<pre class="mac_classic"><span class="FunctionName">label</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>post</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>for</span> =&gt; <span class="String"><span class="String">&quot;</span>my_for<span class="String">&quot;</span></span>)
+<pre class="mac_classic">    <span class="FunctionName">label</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>post</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>title</span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>for</span> =&gt; <span class="String"><span class="String">&quot;</span>my_for<span class="String">&quot;</span></span>)
 </pre>
 
-<p>This will return something like this:</p>
+<p>Esto va retornar algo como lo siguiente:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>my_for<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Title</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
+<pre class="mac_classic">    <span class="Keyword">&lt;</span>label <span class="Keyword">for</span><span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>my_for<span class="String">&quot;</span></span><span class="Keyword">&gt;</span><span class="Variable">Title</span><span class="Keyword">&lt;</span><span class="Keyword">/</span>label<span class="Keyword">&gt;</span>
 </pre>
 
-<h2> A new way of using partials</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>Something very common in Rails software development is the use of <strong>partials</strong> to avoid code repetition. Here is a usage example:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%</span> form_for <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>user</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>url</span> =&gt; users_path <span class="Keyword">do </span><span class="String"><span class="String">%&gt;</span></span>
-<span class="String">    &lt;%= render :partial =<span class="String">&gt;</span></span> <span class="String"><span class="String">'</span>form<span class="String">'</span></span> <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">    &lt;%= submit_tag 'Create' %<span class="String">&gt;</span></span>
-<span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
+<h2> Una nueva forma de usar partials</h2>
+
+<p>El uso de partials es algo muy común para eliminar la duplicación de código en el desarrollo de software con Rails. Aquí hay un ejemplo:</p>
+
+<pre class="mac_classic">    <span class="Keyword">&lt;</span><span class="Keyword">%</span> form_for <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>user</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>url</span> =&gt; users_path <span class="Keyword">do </span><span class="String"><span class="String">%&gt;</span></span>
+<span class="String">            &lt;%= render :partial =<span class="String">&gt;</span></span> <span class="String"><span class="String">'</span>form<span class="String">'</span></span> <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">            &lt;%= submit_tag 'Create' %<span class="String">&gt;</span></span>
+    <span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
-<p><strong>Partial</strong> is a code fragment (a template). The advantage of using a <strong>partial</strong> is to avoid unnecessary code repetition. Using a <strong>partial</strong> is very simple, you can start with something like this: <strong>render :partial => "name"</strong>. You must create a file with the same name of your <strong>partial</strong>, but using an underscore in front of it.</p>
+<p>Un <strong>Partial</strong> es un fragmento de código (una plantilla). La ventaja de usar un <strong>partial</strong> es eliminar la duplicación innecesaria de código. Usar un <strong>partial</strong> es muy simple, puede comenzar con algo como esto: <strong>render :partial => "name"</strong>. Y debe crear un archivo con el mismo nombre que su <strong>partial</strong>, pero anteponiéndole un guión bajo</p>
 
-<p>The code above shows ho we are used to do it, in Rails 2.1 you'll do the same thing in a slightly different way:</p>
+<p>En el código de arriba vimos como podemos usar un patial, en Rails 2.1 ud. va a poder hacer lo mismo pero una forma un poco diferente:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="FunctionName">form_for</span>(<span class="Variable"><span class="Variable">@</span>user</span>) <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">    &lt;%= render :partial =<span class="String">&gt;</span></span> f <span class="String"><span class="String">%&gt;</span></span>
-<span class="String">    &lt;%= submit_tag 'Create' %<span class="String">&gt;</span></span>
-<span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
+<pre class="mac_classic">    <span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="FunctionName">form_for</span>(<span class="Variable"><span class="Variable">@</span>user</span>) <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">            &lt;%= render :partial =<span class="String">&gt;</span></span> f <span class="String"><span class="String">%&gt;</span></span>
+<span class="String">            &lt;%= submit_tag 'Create' %<span class="String">&gt;</span></span>
+    <span class="Keyword">&lt;</span><span class="Keyword">%</span> <span class="Keyword">end</span> <span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
-<p>In this example we render the partial "users/_form", which will receive a variable called "form" with the references created by the <strong>FormBuilder</strong>.</p>
+<p>En este ejemplo vamos a renderizar el partial "users/_form", el cual va a recibir una variable llamada "form" con las referencias creadas por <strong>FormBuilder</strong>.</p>
 
-<p>The old way will continue to work in Rails 2.1.</p>
+<p>La vieja forma continúa funcionando en Rails 2.1</p>
 
 <h2> New namespaces in Atom Feed</h2>
 
