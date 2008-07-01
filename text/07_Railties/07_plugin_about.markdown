@@ -1,18 +1,19 @@
-##Getting information about a plugin
+##Obteniendo información acerca de un plugin
 
-This is one of the new Rails 2.0 features which you probably never used. I say "probably", because in some very specific cases it can be useful, for example, to know a plugin version.
+Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
 
-To test it, we need to create a new file called *about.yml* in the plugin directory, something like this:
+Para probarlo, necesitamos crear un archivo que se llame *about.yml* en el directorio del plugin, con algo como lo siguiente:
 
 	author: Carlos Brando
 	version: 1.2.0
-	description: A description about the plugin
+	description: Una descripción acerca del plugin
 	url: http://www.nomedojogo.com
 
-We can get this information later this way:
+Podemos obtener esta información luego de esta manera:
 
 	plugin = Rails::Plugin.new(plugin_directory)
 	plugin.about["author"] # => “Carlos Brando”
 	plugin.about["url"] # => “http://www.nomedojogo.com”
 
-If you find some good use for this feature and want to share with me, maybe i can change my mind about its real need.
+Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
+
