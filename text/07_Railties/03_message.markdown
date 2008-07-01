@@ -1,5 +1,5 @@
-## New message when starting server
+## Nuevo mensaje cuando se inicializa el servidor
 
-There was a little improvement when starting Rails server, now it shows which Rails version is being loaded:
+Hubo una pequeña mejora en el inicio del servidor de Rails. Ahora se muestra cual versión está siendo cargada: 
 
 	Rails 2.1 application starting on http://0.0.0.0:3000
