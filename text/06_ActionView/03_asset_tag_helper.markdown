@@ -2,16 +2,16 @@
 
 ### register\_javascript\_expansion
 
-This method registers one or more javascript files to be included when a symbol, defined by the programmer, is given as a parameter to the **javascript\_include\_tag** method. The idea is to call this method inside the **init.rb** of your plugin, in order to register the javascript files which your plugin places in the folder **public/javascripts**. Let's see how it works:
+Este método registra uno o más archivos javascript para su inclusión cuando un símbolo, definido por el programador, es indicado como parámetro del método **javascript\_include\_tag**. La idea es llamar a este método dentro del archivo **init.rb** de tu plugin, en orden de registrar los archivos javascript que tu plugin ubica en la carpeta **public/javascripts**. Veamos como funciona: 
 
-	# In the init.rb file
+	# En el archivo init.rb
 	ActionView::Helpers::AssetTagHelper.register_javascript_expansion 
 		:monkey => ["head", "body", "tail"] 
 
-	# In our view:
+	# En nuestar vista:
 	javascript_include_tag :monkey
 
-	# We are going to have:
+	# Vamos a obtener:
 	<script type="text/javascript" src="/javascripts/head.js"></script>
 	<script type="text/javascript" src="/javascripts/body.js"></script>
 	<script type="text/javascript" src="/javascripts/tail.js"></script>
@@ -19,16 +19,16 @@ This method registers one or more javascript files to be included when a symbol,
 
 ### register\_stylesheet\_expansion
 
-This method does exactly the same as the **ActionView::Helpers::AssetTagHelper#register\_javascript\_expansion** method, but it creates a symbol to be used later when making calls to **stylesheet\_link\_tag** method. Look an example:
+Este método hace exactamente lo mismo que que el método **ActionView::Helpers::AssetTagHelper#register\_javascript\_expansion**, pero crea un símbolo para ser usado luego cuando se realicen llamadas al método **stylesheet\_link\_tag**. Veamos un ejemplo: 
 
-	# In the init.rb file
+	# En el archivo init.rb
 	ActionView::Helpers::AssetTagHelper.register_stylesheet_expansion 
 		:monkey => ["head", "body", "tail"] 
 
-	# In our view:
+	# En nuestar vista:
 	stylesheet_link_tag :monkey
 
-	# We are going to have:
+	# Vamos a obtener:
 	<link href="/stylesheets/head.css"  media="screen" rel="stylesheet" 
 		type="text/css" />
 	<link href="/stylesheets/body.css"  media="screen" rel="stylesheet" 

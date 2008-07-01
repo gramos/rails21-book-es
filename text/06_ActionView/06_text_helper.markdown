@@ -2,23 +2,23 @@
 
 ### excerpt
 
-The **excerpt** method is a helper to find a word inside a phrase and return an abreviation of that phrase with the number of given characters as parameters before and after the word, adding, when necessary the "…". Look an example:
+El método **excerpt** nos ayuda a encontrar una palabra dentro de una frase y nos devuelve la abreviatura de esa frase con el número de caracteres que se hayan especificado como parámetro antes y después de la palabra agregando "…" cuando sea necesario. Veamos un ejemplo:
 
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an examp…"
 	
-But the problem it was bugged. If you count, you'll see the method returned 6 chars and not 5. This bug was fixed. Look the example of the correct output for this method:
+Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y fue corregido. Mira el ejemplo de la salida correcta de este método:
 
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an exam…"
 	
 ###simple\_format
 
-The **simple\_format** method basically receives as a parameter any text and formats it in a simple way to **HTML**. It takes the text and replaces line breaks (\n) by **HTML** tag "< br />". And when we have two line breaks one after other  (\n\n)  it separates the text in paragraphs using "< p>"tag.
+El método **simple\_format** básicamente recibe como parámetro cualquier texto y le da formato de una manera muy simple a **HTML**. Toma el texto y reemplaza los saltos de línea (\n) por el tag **HTML** "< br />". Y cuando tenemos dos saltos de línea, uno atrás del otro, separa el texto con tags "< p>".
 
-In Rails 2.1 this method received an additional parameter. Besides text, we are going to be able to inform which **HTML** attributes we would like "< p>" tag had. Look the examples:
+En Rails 2.1 este método recibe un parámetros adicional. Además del texto, podemos informarle que atributo **HTML** nos gustaria que el tag "< p>" incluyera. Veamos el ejemplo: 
 
 	simple_format("Hello Mom!", :class => 'description')
 	# => "<p class=’description’>Hello Mom!</p>"
 
-The **HTML** attributes will be added in all "< p>" tags created by the method.
+Los atributos **HTML** serán agregados a todos los tags  "< p>" creados por este método.

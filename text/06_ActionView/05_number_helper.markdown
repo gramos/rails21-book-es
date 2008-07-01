@@ -2,23 +2,23 @@
 
 ### number\_to\_currency
 
-The **number\_to\_currency** method now accepts the **:format** option as a parameter,letting us to format the method's returning value. In earlier versions, when we had to format values for our local currency, we needed to include a space in front of **:unit** option to make the output format correct. See the examples:
+El método **number\_to\_currency** ahora acepta la opción **:format** como parámetro, permitiéndonos dar formato al valor retornado. En versiones anteriores, cuando teníamos que dar formato a monedas locales, debíamos incluir un espacio antes de la opción **:unit** para que el formato retornado sea el correcto. Veamos un ejemplo: 
 	
-	# R$ is the symbol for Brazilian currency
+	# R$ es el símbolo de la moneda de Brasil.
 	number_to_currency(9.99, :separator => ",", :delimiter => ".", :unit => "R$")
 	# => "R$9,99″
 
 	number_to_currency(9.99, :format => "%u %n", :separator => ",", 
 		:delimiter => ".", :unit => "R$")
 	# => "R$ 9,99″
-	
-Besides that, we can customize in other forms, for example:
 
-	number_to_currency(9.99, :format => "%n in Brazilian reais", :separator => ",", 
+Por otro lado, podemos personalizar de otras formas, por ejemplo:	
+
+	number_to_currency(9.99, :format => "%n en reales brasileros", :separator => ",", 
 		:delimiter => ".", :unit => "R$")
 	# => "9,99 em reais"
 
-When creating your own formatting string, you can use the following parameters:
+Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: 
 
-	%u For the currency
-	%n For the number
+	%u Para la moneda
+	%n Para el número

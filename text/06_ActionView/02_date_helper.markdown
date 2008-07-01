@@ -1,9 +1,9 @@
 ## ActionView::Helpers::DateHelper
 
-Now, all these module methods dealing with dates  (**date\_select**, **time\_select**, **select\_datetime**, etc.) are accepting **HTML** options. Look an example using **date\_select**
+Ahora, todos estos métodos de módulo para trabajar con fechas (**date\_select**, **time\_select**, **select\_datetime**, etc.) aceptan opciones  **HTML**. Mira un ejemplo usando **date\_select**
 
 	<%= date_select 'item','happening', :order => [:day], :class => 'foobar'%>
 	
 ### date\_helper
 
-The **date\_helper** method was updated to use **Date.current** in order to define its default value.
+El método **date\_helper** fue actualizado para que use **Date.current** en orden de definir su valor predeterminado.
