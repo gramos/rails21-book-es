@@ -1,16 +1,16 @@
-## Tasks
+## Tareas
 
 ### rails:update
 
-From now on everytime you run the task **rake rails:freeze:edge** it will also run **rails:update**, updating the config files and *JavaScripts*.
+De ahora en más, cada vez que ejecutes la tarea **rake rails:freeze:edge**, esta también ejecutará  **rails:update**, actualizando los archivos de configuración y los *JavaScripts*.
 
-### Database in 127.0.0.1
+### Base de datos en 127.0.0.1
 
-A change was made in the file databases.rake that used to look only in localhost for local databases, it will now also consider the IP **127.0.0.1**. This works for both **create** and **drop** tasks. The databases.rake file was also refactored to make the code less repetitive.
+Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará **127.0.0.1**. Esto funciona para las tareas **create** y **drop**. El archivo database.rake también fue refactorizado para hacer el codigo menos repetitivo. 
 
-### Freezing a specific Rails release.
+### Congelando a una versión de Rails específica.
 
-Until Rails 2.1 it wasn't possible to freeze a specific Rails release inside your project, you could only use its Revision as a parameter. In Rails 2.1, we can freeze a specific release using the command below:
+Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Solo podías utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: 
 
 	rake rails:freeze:edge RELEASE=1.2.0
 
@@ -18,12 +18,13 @@ Until Rails 2.1 it wasn't possible to freeze a specific Rails release inside you
 
 #### rake time:zones:all
 
-Return all the time zones known to Rails, grouped by offset. You can also filter the return value using the optional parameter OFFSET, for instance: OFFSET=-6.
+Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También podés filtar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.
 
 #### rake time:zones:us
 
-Shows a list with all US time zones. The OFFSET option is still valid here.
+Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es valida en este contexto.
 
 #### rake time:zones:local
 
-Return all the time zones known to Rails that are in the same offset of your OS.
+Retorna todas las zonas horarias conocidas por Rails que están en el mismo uso horario que tu sistema operativo. 
+
