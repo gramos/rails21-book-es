@@ -1,6 +1,6 @@
-##New methodos for DateTime class
+##Nuevos métodos para la clase DateTime
 
-In order to keep compatibility (duck-typing) with **Time** class, three new methods were added to **DateTime** class. The methods are **#utc**, **#utc?** and **#utc\_offset**. Look an example for each one:
+Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, tres nuevos métodos fueron agregado a la clase **DateTime**. Los métodos son **#utc**, **#utc?** y **#utc\_offset**. veamos un ejemplo de cada uno:
 
 	>> date = DateTime.civil(2005, 2, 21, 10, 11, 12, Rational(-6, 24))
 	#=> Mon, 21 Feb 2005 10:11:12 -0600
