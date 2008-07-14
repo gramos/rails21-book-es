@@ -1,11 +1,14 @@
-## Applying title formatting in strings
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-There was a bug when using **String#titleize** method in a string containing 's . The bug made the method return the 's in uppercase. See an example:
+## Aplicando formato de título en strings.
 
-	>> "brando’s blog".titleize
-	=> "Brando’S Blog"
-	
-See the same example, but with the bug fixed:
+Había un bug cuando usábamos el método **String#titleize** en un string que contenía 's. El bug hacía que el método returne la 's en mayúsculas. Vea el ejemplo:
 
-	>> "brando’s blog".titleize
-	=> "Brando’s Blog"
+        >> "brando's blog".titleize
+        => "Brando'S Blog"
+
+
+Vea el ejemplo que con el bug corregido:
+
+        >> "brando's blog".titleize
+        => "Brando's Blog"
