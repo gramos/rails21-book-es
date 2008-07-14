@@ -7,7 +7,6 @@ Había un bug cuando usábamos el método **String#titleize** en un string que c
         >> "brando's blog".titleize
         => "Brando'S Blog"
 
-
 Vea el ejemplo que con el bug corregido:
 
         >> "brando's blog".titleize

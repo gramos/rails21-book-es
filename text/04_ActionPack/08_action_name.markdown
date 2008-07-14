@@ -1,7 +1,10 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## action\_name
 
-In order to find out which view was called during running time of your view, we can use the **action\_name** method:
+Para saber cual vista fue invocada durante la ejecución de su vista, podemos usar  el método **action\_name**:
 
-	<%= action_name %>
+        <%= action_name %>
 
-The return value will be the same as using **params[:action]**, but in a more elegant way.
+El valor de retorno va a ser el mismo que usando **params[:action]**, pero de una forma más elegante.
+
