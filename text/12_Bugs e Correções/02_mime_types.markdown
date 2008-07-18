@@ -1,6 +1,8 @@
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ##Mime Types
 
-It was fixed a bug which didn't allow you to define the assigned attribute for **request.format** using a symbol. Now, we can use the code bellow:
+Se arregló un bug que no permitía definir el atributo para **request.format** usando un símbolo. Ahora podemos usar el siguiente código:
 
-	request.format = :iphone
-	assert_equal :iphone, request.format
+        request.format = :iphone
+        assert_equal :iphone, request.format

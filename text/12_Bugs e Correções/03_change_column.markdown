@@ -1,3 +1,6 @@
-##Bug fixes in change\_column
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-It was fixed an existing bug when using the **change\_column** method with **:null => true** in a column created using **:null => false**. Because of this bug no changes were made when using the method.
+##Bug fixes en change\_column
+
+Se arregló un bug en el uso del método **change\_column** con **:null => true** en una columna creada usando **:null => false**. Debido a este bug no se realizó ningún cambio al usar este método.
+
