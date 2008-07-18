@@ -1318,143 +1318,161 @@ Veamos un ejemplo:</p>
 
 <p>La vieja forma continúa funcionando en Rails 2.1</p>
 
-<h2> New namespaces in Atom Feed</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>Do you know the <strong>atom_feed</strong> method? It is one of the new features of Rails 2.0, making easier the creation of Atom feeds. See an example of use:</p>
 
-<p>In a <em>index.atom.builder</em> file:</p>
+<h2> Nuevos espacios de nombres en Atom Feed</h2>
 
-<pre class="mac_classic">atom_feed <span class="Keyword">do </span>|<span class="Variable">feed</span>|
-  feed.<span class="FunctionName">title</span>(<span class="String"><span class="String">&quot;</span>Nome do Jogo<span class="String">&quot;</span></span>)
-  feed.<span class="FunctionName">updated</span>((<span class="Variable"><span class="Variable">@</span>posts</span>.<span class="FunctionName">first</span>.<span class="FunctionName">created_at</span>))
+<p>¿Conoce el método <strong>atom_feed</strong>? Es una de las nuevas características de Rails 2.0, que facilita la creación de Feeds de Atom. Veamos un ejemplo de como se usa:</p>
 
-  <span class="Keyword">for</span> post <span class="Keyword">in</span> <span class="Variable"><span class="Variable">@</span>posts</span>
-    feed.<span class="FunctionName">entry</span>(post) <span class="Keyword">do </span>|<span class="Variable">entry</span>|
-      entry.<span class="FunctionName">title</span>(post.<span class="FunctionName">title</span>)
-      entry.<span class="FunctionName">content</span>(post.<span class="FunctionName">body</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>type</span> =&gt; <span class="String"><span class="String">'</span>html<span class="String">'</span></span>)
+<p>En el archivo <em>index.atom.builder</em>:</p>
 
-      entry.<span class="FunctionName">author</span> <span class="Keyword">do </span>|<span class="Variable">author</span>|
-        author.<span class="FunctionName">name</span>(<span class="String"><span class="String">&quot;</span>Carlos Brando<span class="String">&quot;</span></span>)
+<pre class="mac_classic">    atom_feed <span class="Keyword">do </span>|<span class="Variable">feed</span>|
+      feed.<span class="FunctionName">title</span>(<span class="String"><span class="String">&quot;</span>Nome do Jogo<span class="String">&quot;</span></span>)
+      feed.<span class="FunctionName">updated</span>((<span class="Variable"><span class="Variable">@</span>posts</span>.<span class="FunctionName">first</span>.<span class="FunctionName">created_at</span>))
+
+      <span class="Keyword">for</span> post <span class="Keyword">in</span> <span class="Variable"><span class="Variable">@</span>posts</span>
+        feed.<span class="FunctionName">entry</span>(post) <span class="Keyword">do </span>|<span class="Variable">entry</span>|
+          entry.<span class="FunctionName">title</span>(post.<span class="FunctionName">title</span>)
+          entry.<span class="FunctionName">content</span>(post.<span class="FunctionName">body</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>type</span> =&gt; <span class="String"><span class="String">'</span>html<span class="String">'</span></span>)
+
+          entry.<span class="FunctionName">author</span> <span class="Keyword">do </span>|<span class="Variable">author</span>|
+            author.<span class="FunctionName">name</span>(<span class="String"><span class="String">&quot;</span>Carlos Brando<span class="String">&quot;</span></span>)
+          <span class="Keyword">end</span>
+        <span class="Keyword">end</span>
       <span class="Keyword">end</span>
     <span class="Keyword">end</span>
-  <span class="Keyword">end</span>
-<span class="Keyword">end</span>
 </pre>
 
-<p>What is an Atom feed ? Atom is the name of XML based style and meta data. In other words is a protocol to publish content in Internet that is often updated, like a blog, for example. Feeds are always published in XML and in Atom it is identified as an application/atom+xml media type.</p>
+<p>¿Qué es un Atom feed? Atom es el nombre de estilos y metadatos en formato XML. En otras palabras es un protocolo para publicar contenidos en Internet que son actualizados con frecuencia, como un blog por ejemplo. Los Feeds se publican siempre en XML y en Atom son identificados como tipo de medios application/atom+xml.</p>
 
-<p>In the first versions of Rails 2.0 this method used to accept as parameter <strong>:language</strong>, <strong>:root_url</strong> and <strong>:url</strong> options, you can obtain more information about these methods in Rails Documentation. But with the update made, we can now include new namespaces in the root element of the feed. For example:</p>
+<p>En las primeras versiones de Rails 2.0 este método aceptaba parámetros como: <strong>:language</strong>, <strong>:root_url</strong> and <strong>:url</strong>, puede obtener más información acerca de estos métodos en la documentación de Rails. pero con la nueva modificación, ahora podemos incluir nuevos espacios de nombre en el elemento raíz del feed. Por ejemplo:</p>
 
-<pre class="mac_classic"><span class="FunctionName">atom_feed</span>(<span class="String"><span class="String">'</span>xmlns:app<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://www.w3.org/2007/app<span class="String">'</span></span>) <span class="Keyword">do </span>|<span class="Variable">feed</span>|
+<pre class="mac_classic">    <span class="FunctionName">atom_feed</span>(<span class="String"><span class="String">'</span>xmlns:app<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://www.w3.org/2007/app<span class="String">'</span></span>) <span class="Keyword">do </span>|<span class="Variable">feed</span>|
 </pre>
 
-<p>Will return:</p>
+<p>Va a retornar:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span>feed xml<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>lang=</span><span class="String"><span class="String">&quot;</span>en-US<span class="String">&quot;</span></span> xmlns<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>http://www.w3.org/2005/Atom<span class="String">&quot;</span></span>
-    xmlns<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>app=</span><span class="String"><span class="String">&quot;</span>http://www.w3.org/2007/app<span class="String">&quot;</span></span><span class="Keyword">&gt;</span>
+<pre class="mac_classic">    <span class="Keyword">&lt;</span>feed xml<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>lang=</span><span class="String"><span class="String">&quot;</span>en-US<span class="String">&quot;</span></span> xmlns<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>http://www.w3.org/2005/Atom<span class="String">&quot;</span></span>
+            xmlns<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>app=</span><span class="String"><span class="String">&quot;</span>http://www.w3.org/2007/app<span class="String">&quot;</span></span><span class="Keyword">&gt;</span>
 </pre>
 
-<p>Modifying the example used before, we could use this way:</p>
+<p>Modificando el ejemplo usado antes, podríamos hacer esto:</p>
 
-<pre class="mac_classic"><span class="FunctionName">atom_feed</span>({<span class="String"><span class="String">'</span>xmlns:app<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://www.w3.org/2007/app<span class="String">'</span></span>,
-    <span class="String"><span class="String">'</span>xmlns:openSearch<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://a9.com/-/spec/opensearch/1.1/<span class="String">'</span></span>}) <span class="Keyword">do </span>|<span class="Variable">feed</span>| 
+<pre class="mac_classic">    <span class="FunctionName">atom_feed</span>({<span class="String"><span class="String">'</span>xmlns:app<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://www.w3.org/2007/app<span class="String">'</span></span>,
+            <span class="String"><span class="String">'</span>xmlns:openSearch<span class="String">'</span></span> =&gt; <span class="String"><span class="String">'</span>http://a9.com/-/spec/opensearch/1.1/<span class="String">'</span></span>}) <span class="Keyword">do </span>|<span class="Variable">feed</span>|
 
-  feed.<span class="FunctionName">title</span>(<span class="String"><span class="String">&quot;</span>Nome do Jogo<span class="String">&quot;</span></span>)
-  feed.<span class="FunctionName">updated</span>((<span class="Variable"><span class="Variable">@</span>posts</span>.<span class="FunctionName">first</span>.<span class="FunctionName">created_at</span>))
-  feed.<span class="FunctionName">tag!</span>(openSearch<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>totalResults</span>, <span class="Number">10</span>) 
+      feed.<span class="FunctionName">title</span>(<span class="String"><span class="String">&quot;</span>Nome do Jogo<span class="String">&quot;</span></span>)
+      feed.<span class="FunctionName">updated</span>((<span class="Variable"><span class="Variable">@</span>posts</span>.<span class="FunctionName">first</span>.<span class="FunctionName">created_at</span>))
+      feed.<span class="FunctionName">tag!</span>(openSearch<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>totalResults</span>, <span class="Number">10</span>)
 
-  <span class="Keyword">for</span> post <span class="Keyword">in</span> <span class="Variable"><span class="Variable">@</span>posts</span>
-    feed.<span class="FunctionName">entry</span>(post) <span class="Keyword">do </span>|<span class="Variable">entry</span>|
-      entry.<span class="FunctionName">title</span>(post.<span class="FunctionName">title</span>)
-      entry.<span class="FunctionName">content</span>(post.<span class="FunctionName">body</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>type</span> =&gt; <span class="String"><span class="String">'</span>html<span class="String">'</span></span>)
-      entry.<span class="FunctionName">tag!</span>(<span class="String"><span class="String">'</span>app:edited<span class="String">'</span></span>, <span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>) 
+      <span class="Keyword">for</span> post <span class="Keyword">in</span> <span class="Variable"><span class="Variable">@</span>posts</span>
+        feed.<span class="FunctionName">entry</span>(post) <span class="Keyword">do </span>|<span class="Variable">entry</span>|
+          entry.<span class="FunctionName">title</span>(post.<span class="FunctionName">title</span>)
+          entry.<span class="FunctionName">content</span>(post.<span class="FunctionName">body</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>type</span> =&gt; <span class="String"><span class="String">'</span>html<span class="String">'</span></span>)
+          entry.<span class="FunctionName">tag!</span>(<span class="String"><span class="String">'</span>app:edited<span class="String">'</span></span>, <span class="LibraryObject">Time</span>.<span class="FunctionName">now</span>)
 
-      entry.<span class="FunctionName">author</span> <span class="Keyword">do </span>|<span class="Variable">author</span>|
-        author.<span class="FunctionName">name</span>(<span class="String"><span class="String">&quot;</span>Carlos Brando<span class="String">&quot;</span></span>)
+          entry.<span class="FunctionName">author</span> <span class="Keyword">do </span>|<span class="Variable">author</span>|
+            author.<span class="FunctionName">name</span>(<span class="String"><span class="String">&quot;</span>Carlos Brando<span class="String">&quot;</span></span>)
+          <span class="Keyword">end</span>
+        <span class="Keyword">end</span>
       <span class="Keyword">end</span>
     <span class="Keyword">end</span>
-  <span class="Keyword">end</span>
-<span class="Keyword">end</span>
 </pre>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> Cache</h2>
 
-<p>All <strong>fragment_cache_key</strong> methods now return by default the namespace 'view/' as prefix.</p>
+<p>Ahora todos los métodos de <strong>fragment_cache_key</strong> retornan por defecto el namespace 'view/' como prefijo.</p>
 
-<p>All caching stores were removed from <strong>ActionController::Caching::Fragments::</strong><em> and now they can be found in <strong>ActiveSupport::Cache::</strong></em>. In this case, if you made a reference to a store, like <strong>ActionController::Caching::Fragments::MemoryStore</strong>, for example, you'll have to change its reference to <strong>ActiveSupport::Cache::MemoryStore</strong>.</p>
+<p>Se eliminaron todos los caching store de <strong>ActionController::Caching::Fragments::</strong><em> y ahora están en <strong>ActiveSupport::Cache::</strong></em>. En este caso, si ud. a hecho una referencia a store, como por ejemplo: <strong>ActionController::Caching::Fragments::MemoryStore</strong>, va a tener que cambiarla por: <strong>ActiveSupport::Cache::MemoryStore</strong>.</p>
 
-<p><strong>ActionController::Base.fragment_cache_store</strong> is no more and <strong>ActionController::Base.cache_store</strong> takes its place.</p>
+<p><strong>ActionController::Base.fragment_cache_store* no va más, y </strong>ActionController::Base.cache_store** toma su lugar.</p>
 
-<p>It was included in the <strong>ActiveRecord::Base</strong> the <strong>cache_key</strong> method to facilitate the storing cache of Active Records by the new libraries <strong>ActiveSupport::Cache::</strong>*. It works this way:</p>
+<p>Se incluyó en  <strong>ActiveRecord::Base</strong> el método <strong>cache_key</strong> que facilita el modo de almacenamiento de cache de Active Records mediante la nueva biblioteca <strong>ActiveSupport::Cache::</strong>*. Funciona así:</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Product</span>.<span class="FunctionName">new</span>.<span class="FunctionName">cache_key</span>
-=&gt; <span class="String"><span class="String">&quot;</span>products/new<span class="String">&quot;</span></span>
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Product</span>.<span class="FunctionName">new</span>.<span class="FunctionName">cache_key</span>
+    =&gt; <span class="String"><span class="String">&quot;</span>products/new<span class="String">&quot;</span></span>
 
-<span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Product</span>.<span class="FunctionName">find</span>(<span class="Number">5</span>).<span class="FunctionName">cache_key</span>
-=&gt; <span class="String"><span class="String">&quot;</span>products/5<span class="String">&quot;</span></span>
+    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Product</span>.<span class="FunctionName">find</span>(<span class="Number">5</span>).<span class="FunctionName">cache_key</span>
+    =&gt; <span class="String"><span class="String">&quot;</span>products/5<span class="String">&quot;</span></span>
 
-<span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="Number">5</span>).<span class="FunctionName">cache_key</span>
-=&gt; <span class="String"><span class="String">&quot;</span>people/5-20071224150000<span class="String">&quot;</span></span>
+    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Person</span>.<span class="FunctionName">find</span>(<span class="Number">5</span>).<span class="FunctionName">cache_key</span>
+    =&gt; <span class="String"><span class="String">&quot;</span>people/5-20071224150000<span class="String">&quot;</span></span>
 </pre>
 
-<p><strong>ActiveSupport::Gzip.decompress/compress</strong>  was included to make easier the use as a wrapper for <strong>Zlib</strong>.</p>
+<p>Se incluyó <strong>ActiveSupport::Gzip.decompress/compress</strong> para facilitar el uso de como mapeo para <strong>Zlib</strong>.</p>
 
-<p>Now you can use among environment options the <strong>config.cache_store</strong> to specify the default place of caching store. It is worth mentioning, if the <strong>tmp/cache</strong> directory exists, the default is <strong>FileStore</strong>, in other case the <strong>MemoryStore</strong> will be used. You can configure in the following ways:</p>
+<p>Ahora ud. puede usar las opciones de ambiente (environment) <strong>config.cache_store</strong> para especificar el valor por defecto del tipo de almacenamiento de cache. Como hemos mencionado si existe el directorio <strong>tmp/cache</strong>, el valor por defecto es <strong>FileStore</strong>, en otro caso se usará <strong>MemoryStore</strong>, puede configurarlo de la siguiente manera:</p>
 
-<pre class="mac_classic">config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>memory_store</span>
-config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>file_store</span>, <span class="String"><span class="String">&quot;</span>/path/to/cache/directory<span class="String">&quot;</span></span>
-config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>drb_store</span>, <span class="String"><span class="String">&quot;</span>druby://localhost:9192<span class="String">&quot;</span></span>
-config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>
-config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="LibraryObject">MyOwnStore</span>.<span class="FunctionName">new</span>(<span class="String"><span class="String">&quot;</span>parameter<span class="String">&quot;</span></span>)
+<pre class="mac_classic">    config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>memory_store</span>
+    config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>file_store</span>, <span class="String"><span class="String">&quot;</span>/path/to/cache/directory<span class="String">&quot;</span></span>
+    config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>drb_store</span>, <span class="String"><span class="String">&quot;</span>druby://localhost:9192<span class="String">&quot;</span></span>
+    config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>mem_cache_store</span>, <span class="String"><span class="String">&quot;</span>localhost<span class="String">&quot;</span></span>
+    config.<span class="FunctionName">cache_store</span> <span class="Keyword">=</span> <span class="LibraryObject">MyOwnStore</span>.<span class="FunctionName">new</span>(<span class="String"><span class="String">&quot;</span>parameter<span class="String">&quot;</span></span>)
 </pre>
 
-<p>To make things even easier, the comment bellow is included in <em>environments/production.rb</em> file, in order to remind you of this option.</p>
+<p>Para hace las cosas más fáciles aún, el comentario de abajo se incluye en <em>environments/production.rb</em>, en favor de recordarle estas opciones.</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Use a different cache store in production</span>
-<span class="Comment"><span class="Comment">#</span> config.cache_store = :mem_cache_store</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> Use a different cache store in production</span>
+<span class="Comment">    <span class="Comment">#</span> config.cache_store = :mem_cache_store</span>
 </pre>
 
-<h2> Applying title formatting in strings</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>There was a bug when using <strong>String#titleize</strong> method in a string containing 's . The bug made the method return the 's in uppercase. See an example:</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> <span class="String"><span class="String">&quot;</span>brando’s blog<span class="String">&quot;</span></span>.<span class="FunctionName">titleize</span>
-=&gt; <span class="String"><span class="String">&quot;</span>Brando’S Blog<span class="String">&quot;</span></span>
+<h2> Aplicando formato de título en strings.</h2>
+
+<p>Había un bug cuando usábamos el método <strong>String#titleize</strong> en un string que contenía 's. El bug hacía que el método returne la 's en mayúsculas. Vea el ejemplo:</p>
+
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> <span class="String"><span class="String">&quot;</span>brando's blog<span class="String">&quot;</span></span>.<span class="FunctionName">titleize</span>
+    =&gt; <span class="String"><span class="String">&quot;</span>Brando'S Blog<span class="String">&quot;</span></span>
 </pre>
 
-<p>See the same example, but with the bug fixed:</p>
+<p>Vea el ejemplo que con el bug corregido:</p>
 
-<pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> <span class="String"><span class="String">&quot;</span>brando’s blog<span class="String">&quot;</span></span>.<span class="FunctionName">titleize</span>
-=&gt; <span class="String"><span class="String">&quot;</span>Brando’s Blog<span class="String">&quot;</span></span>
+<pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> <span class="String"><span class="String">&quot;</span>brando's blog<span class="String">&quot;</span></span>.<span class="FunctionName">titleize</span>
+    =&gt; <span class="String"><span class="String">&quot;</span>Brando's Blog<span class="String">&quot;</span></span>
 </pre>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> action_name</h2>
 
-<p>In order to find out which view was called during running time of your view, we can use the <strong>action_name</strong> method:</p>
+<p>Para saber cual vista fue invocada durante la ejecución de su vista, podemos usar  el método <strong>action_name</strong>:</p>
 
-<pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%=</span> action_name <span class="String"><span class="String">%&gt;</span></span>
+<pre class="mac_classic">    <span class="Keyword">&lt;</span><span class="Keyword">%=</span> action_name <span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
-<p>The return value will be the same as using <strong>params[:action]</strong>, but in a more elegant way.</p>
+<p>El valor de retorno va a ser el mismo que usando <strong>params[:action]</strong>, pero de una forma más elegante.</p>
 
-<h2> caches_action accepts conditionals</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>The <strong>caches_action</strong> method now accepts the <strong>:if</strong> option, allowing the use of conditionals to specify when an <strong>action</strong> can be <strong>cached</strong>. For example:</p>
 
-<pre class="mac_classic">caches_action <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>if</span> =&gt; <span class="LibraryObject">Proc</span>.<span class="FunctionName">new</span> { |<span class="Variable">c</span>| <span class="Keyword">!</span>c.<span class="FunctionName">request</span>.<span class="FunctionName">format</span>.<span class="FunctionName">json?</span> }
+<h2> caches_action acepta condicionales</h2>
+
+<p>El método <strong>caches_action</strong> ahora acepta la opción <strong>:if</strong>, permitiendo el uso de condicionales para especificar cuando una acción (<strong>action</strong>) puede ser cacheada (<strong>cached</strong>) Por ejemplo:</p>
+
+<pre class="mac_classic">    caches_action <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>if</span> =&gt; <span class="LibraryObject">Proc</span>.<span class="FunctionName">new</span> { |<span class="Variable">c</span>| <span class="Keyword">!</span>c.<span class="FunctionName">request</span>.<span class="FunctionName">format</span>.<span class="FunctionName">json?</span> }
 </pre>
 
-<p>In the example above, the <strong>action index</strong> will go to the <strong>cache</strong> only if it's not accessed by a JSON request.</p>
+<p>En el ejemplo de arriba, la <strong>acción index</strong> será cacheada únicamente si no es accedida por una petición JSON.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2> Conditional in the caches_page method</h2>
 
 <p>The <strong>caches_page</strong> method now has the option to use conditionals (<strong>:if</strong>). See example:</p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> The Rails 2.0 way</span>
-caches_page <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>
+<pre class="mac_classic"><span class="Comment">    <span class="Comment">#</span> The Rails 2.0 way</span>
+    caches_page <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>
 
-<span class="Comment"><span class="Comment">#</span> In Rails 2.1 you can use :if option</span>
-caches_page <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>if</span> =&gt; <span class="LibraryObject">Proc</span>.<span class="FunctionName">new</span> { |<span class="Variable">c</span>| <span class="Keyword">!</span>c.<span class="FunctionName">request</span>.<span class="FunctionName">format</span>.<span class="FunctionName">json?</span> }
+<span class="Comment">    <span class="Comment">#</span> In Rails 2.1 you can use :if option</span>
+    caches_page <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>if</span> =&gt; <span class="LibraryObject">Proc</span>.<span class="FunctionName">new</span> { |<span class="Variable">c</span>| <span class="Keyword">!</span>c.<span class="FunctionName">request</span>.<span class="FunctionName">format</span>.<span class="FunctionName">json?</span> }
 </pre>
 
 <h2> flash.now now works in tests</h2>
@@ -1658,15 +1676,15 @@ map.<span class="FunctionName">root</span> <span class="UserDefinedConstant"><sp
 
 <h1>ActionView</h1>
 
-<p>ActionView is the layer responsible by the generation of the viewable interface visible to users through conversion of ERB templates.</p>
+<p>ActionView es la capa responsable de la generación de interfaces visibles al usuario a través de la conversión de plantillas ERB.</p>
 
 <h2> ActionView::Helpers::FormHelper</h2>
 
-<h3> fields_for form_for with index option.</h3>
+<h3> fields_for form_for con la opción index.</h3>
 
-<p>The <strong>#fields_for</strong> and <strong>form_for</strong> methods received the <strong>:index</strong> option, removing the need of using <strong>:index => nil</strong> on each form object. Look the examples:</p>
+<p>Los métodos <strong>#fields_for</strong> y <strong>form_for</strong> recibían la opción <strong>:index</strong>, eliminando la necesidad de utilizar <strong>:index => nil</strong> en cada objeto form. Mira los ejemplos:</p>
 
-<p>This is the way code used to be:</p>
+<p>Así es como solía ser el código antes:</p>
 
 <pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%</span> fields_for <span class="String"><span class="String">&quot;</span>project[task_attributes][]<span class="String">&quot;</span></span>, task <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
 <span class="String">  &lt;%= f.text_field :name, :index =<span class="String">&gt;</span></span> <span class="BuiltInConstant">nil</span> <span class="String"><span class="String">%&gt;</span></span>
@@ -1675,7 +1693,7 @@ map.<span class="FunctionName">root</span> <span class="UserDefinedConstant"><sp
 <span class="String">&lt;% end %<span class="String">&gt;</span></span>
 </pre>
 
-<p>Now it looks like this:</p>
+<p>Ahora luce de la siguiente forma:</p>
 
 <pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%</span> fields_for <span class="String"><span class="String">&quot;</span>project[task_attributes][]<span class="String">&quot;</span></span>, task,
               <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>index</span> =&gt; <span class="BuiltInConstant">nil</span> <span class="Keyword">do </span>|<span class="Variable">f</span>| <span class="String"><span class="String">%&gt;</span></span>
@@ -1687,29 +1705,29 @@ map.<span class="FunctionName">root</span> <span class="UserDefinedConstant"><sp
 
 <h2> ActionView::Helpers::DateHelper</h2>
 
-<p>Now, all these module methods dealing with dates  (<strong>date_select</strong>, <strong>time_select</strong>, <strong>select_datetime</strong>, etc.) are accepting <strong>HTML</strong> options. Look an example using <strong>date_select</strong></p>
+<p>Ahora, todos estos métodos de módulo para trabajar con fechas (<strong>date_select</strong>, <strong>time_select</strong>, <strong>select_datetime</strong>, etc.) aceptan opciones  <strong>HTML</strong>. Mira un ejemplo usando <strong>date_select</strong></p>
 
 <pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%=</span> date_select <span class="String"><span class="String">'</span>item<span class="String">'</span></span>,<span class="String"><span class="String">'</span>happening<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; [<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>day</span>], <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>foobar<span class="String">'</span></span><span class="String"><span class="String">%&gt;</span></span>
 </pre>
 
 <h3> date_helper</h3>
 
-<p>The <strong>date_helper</strong> method was updated to use <strong>Date.current</strong> in order to define its default value.</p>
+<p>El método <strong>date_helper</strong> fue actualizado para que use <strong>Date.current</strong> en orden de definir su valor predeterminado.</p>
 
 <h2> ActionView::Helpers::AssetTagHelper</h2>
 
 <h3> register_javascript_expansion</h3>
 
-<p>This method registers one or more javascript files to be included when a symbol, defined by the programmer, is given as a parameter to the <strong>javascript_include_tag</strong> method. The idea is to call this method inside the <strong>init.rb</strong> of your plugin, in order to register the javascript files which your plugin places in the folder <strong>public/javascripts</strong>. Let's see how it works:</p>
+<p>Este método registra uno o más archivos javascript para su inclusión cuando un símbolo, definido por el programador, es indicado como parámetro del método <strong>javascript_include_tag</strong>. La idea es llamar a este método dentro del archivo <strong>init.rb</strong> de tu plugin, en orden de registrar los archivos javascript que tu plugin ubica en la carpeta <strong>public/javascripts</strong>. Veamos como funciona: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> In the init.rb file</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> En el archivo init.rb</span>
 <span class="LibraryObject">ActionView</span>::<span class="FunctionName">Helpers</span>::<span class="FunctionName">AssetTagHelper</span>.<span class="FunctionName">register_javascript_expansion</span> 
     <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>monkey</span> =&gt; [<span class="String"><span class="String">&quot;</span>head<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>body<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>tail<span class="String">&quot;</span></span>] 
 
-<span class="Comment"><span class="Comment">#</span> In our view:</span>
+<span class="Comment"><span class="Comment">#</span> En nuestar vista:</span>
 javascript_include_tag <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>monkey</span>
 
-<span class="Comment"><span class="Comment">#</span> We are going to have:</span>
+<span class="Comment"><span class="Comment">#</span> Vamos a obtener:</span>
 <span class="Keyword">&lt;</span>script type<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>text/javascript<span class="String">&quot;</span></span> src<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>/javascripts/head.js<span class="String">&quot;</span></span>&gt;<span class="Keyword">&lt;</span><span class="Keyword">/</span>script<span class="Keyword">&gt;</span>
 <span class="Keyword">&lt;</span>script type<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>text/javascript<span class="String">&quot;</span></span> src<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>/javascripts/body.js<span class="String">&quot;</span></span>&gt;<span class="Keyword">&lt;</span><span class="Keyword">/</span>script<span class="Keyword">&gt;</span>
 <span class="Keyword">&lt;</span>script type<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>text/javascript<span class="String">&quot;</span></span> src<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>/javascripts/tail.js<span class="String">&quot;</span></span>&gt;<span class="Keyword">&lt;</span><span class="Keyword">/</span>script<span class="Keyword">&gt;</span>
@@ -1717,16 +1735,16 @@ javascript_include_tag <span class="UserDefinedConstant"><span class="UserDefine
 
 <h3> register_stylesheet_expansion</h3>
 
-<p>This method does exactly the same as the <strong>ActionView::Helpers::AssetTagHelper#register_javascript_expansion</strong> method, but it creates a symbol to be used later when making calls to <strong>stylesheet_link_tag</strong> method. Look an example:</p>
+<p>Este método hace exactamente lo mismo que que el método <strong>ActionView::Helpers::AssetTagHelper#register_javascript_expansion</strong>, pero crea un símbolo para ser usado luego cuando se realicen llamadas al método <strong>stylesheet_link_tag</strong>. Veamos un ejemplo: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> In the init.rb file</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> En el archivo init.rb</span>
 <span class="LibraryObject">ActionView</span>::<span class="FunctionName">Helpers</span>::<span class="FunctionName">AssetTagHelper</span>.<span class="FunctionName">register_stylesheet_expansion</span> 
     <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>monkey</span> =&gt; [<span class="String"><span class="String">&quot;</span>head<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>body<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>tail<span class="String">&quot;</span></span>] 
 
-<span class="Comment"><span class="Comment">#</span> In our view:</span>
+<span class="Comment"><span class="Comment">#</span> En nuestar vista:</span>
 stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>monkey</span>
 
-<span class="Comment"><span class="Comment">#</span> We are going to have:</span>
+<span class="Comment"><span class="Comment">#</span> Vamos a obtener:</span>
 <span class="Keyword">&lt;</span>link href<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>/stylesheets/head.css<span class="String">&quot;</span></span>  media<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>screen<span class="String">&quot;</span></span> rel<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>stylesheet<span class="String">&quot;</span></span> 
     type<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>text/css<span class="String">&quot;</span></span> <span class="Keyword">/</span><span class="Keyword">&gt;</span>
 <span class="Keyword">&lt;</span>link href<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>/stylesheets/body.css<span class="String">&quot;</span></span>  media<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>screen<span class="String">&quot;</span></span> rel<span class="Keyword">=</span><span class="String"><span class="String">&quot;</span>stylesheet<span class="String">&quot;</span></span> 
@@ -1739,7 +1757,7 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 
 <h3> submit_tag</h3>
 
-<p>It was added the <strong>:confirm</strong> option in the parameters of <strong>#submit_tag</strong> method. This option works the same way like the method <strong>link_to</strong>. Look an example:</p>
+<p>Se agregó la opción <strong>:confirm</strong> a los parámetros del método <strong>#submit_tag</strong>. Esta opción funciona de la misma forma que el método <strong>link_to</strong>. Veamos un ejemplo: </p>
 
 <pre class="mac_classic"><span class="FunctionName">submit_tag</span>(<span class="String"><span class="String">'</span>Save changes<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>confirm</span> =&gt; <span class="String"><span class="String">&quot;</span>Are you sure?<span class="String">&quot;</span></span>)
 </pre>
@@ -1748,9 +1766,9 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 
 <h3> number_to_currency</h3>
 
-<p>The <strong>number_to_currency</strong> method now accepts the <strong>:format</strong> option as a parameter,letting us to format the method's returning value. In earlier versions, when we had to format values for our local currency, we needed to include a space in front of <strong>:unit</strong> option to make the output format correct. See the examples:</p>
+<p>El método <strong>number_to_currency</strong> ahora acepta la opción <strong>:format</strong> como parámetro, permitiéndonos dar formato al valor retornado. En versiones anteriores, cuando teníamos que dar formato a monedas locales, debíamos incluir un espacio antes de la opción <strong>:unit</strong> para que el formato retornado sea el correcto. Veamos un ejemplo: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> R$ is the symbol for Brazilian currency</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> R$ es el símbolo de la moneda de Brasil.</span>
 <span class="FunctionName">number_to_currency</span>(<span class="Number">9.99</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>separator</span> =&gt; <span class="String"><span class="String">&quot;</span>,<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>delimiter</span> =&gt; <span class="String"><span class="String">&quot;</span>.<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>unit</span> =&gt; <span class="String"><span class="String">&quot;</span>R$<span class="String">&quot;</span></span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;R$9,99″</span>
 
@@ -1759,30 +1777,31 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;R$ 9,99″</span>
 </pre>
 
-<p>Besides that, we can customize in other forms, for example:</p>
+<p>Por otro lado, podemos personalizar de otras formas, por ejemplo: <br/>
+</p>
 
-<pre class="mac_classic"><span class="FunctionName">number_to_currency</span>(<span class="Number">9.99</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>format</span> =&gt; <span class="String"><span class="String">&quot;</span>%n in Brazilian reais<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>separator</span> =&gt; <span class="String"><span class="String">&quot;</span>,<span class="String">&quot;</span></span>,
+<pre class="mac_classic"><span class="FunctionName">number_to_currency</span>(<span class="Number">9.99</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>format</span> =&gt; <span class="String"><span class="String">&quot;</span>%n en reales brasileros<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>separator</span> =&gt; <span class="String"><span class="String">&quot;</span>,<span class="String">&quot;</span></span>,
     <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>delimiter</span> =&gt; <span class="String"><span class="String">&quot;</span>.<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>unit</span> =&gt; <span class="String"><span class="String">&quot;</span>R$<span class="String">&quot;</span></span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;9,99 em reais&quot;</span>
 </pre>
 
-<p>When creating your own formatting string, you can use the following parameters:</p>
+<p>Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: </p>
 
-<pre class="mac_classic"><span class="Keyword">%</span>u <span class="Variable">For</span> the currency
-<span class="Keyword">%</span>n <span class="Variable">For</span> the number
+<pre class="mac_classic"><span class="Keyword">%</span>u <span class="Variable">Para</span> la moneda
+<span class="Keyword">%</span>n <span class="Variable">Para</span> el número
 </pre>
 
 <h2> ActionView::Helpers::TextHelper</h2>
 
 <h3> excerpt</h3>
 
-<p>The <strong>excerpt</strong> method is a helper to find a word inside a phrase and return an abreviation of that phrase with the number of given characters as parameters before and after the word, adding, when necessary the "…". Look an example:</p>
+<p>El método <strong>excerpt</strong> nos ayuda a encontrar una palabra dentro de una frase y nos devuelve la abreviatura de esa frase con el número de caracteres que se hayan especificado como parámetro antes y después de la palabra agregando "…" cuando sea necesario. Veamos un ejemplo:</p>
 
 <pre class="mac_classic"><span class="FunctionName">excerpt</span>(<span class="String"><span class="String">'</span>This is an example<span class="String">'</span></span>, <span class="String"><span class="String">'</span>an<span class="String">'</span></span>, <span class="Number">5</span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;…s is an examp…&quot;</span>
 </pre>
 
-<p>But the problem it was bugged. If you count, you'll see the method returned 6 chars and not 5. This bug was fixed. Look the example of the correct output for this method:</p>
+<p>Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y fue corregido. Mira el ejemplo de la salida correcta de este método:</p>
 
 <pre class="mac_classic"><span class="FunctionName">excerpt</span>(<span class="String"><span class="String">'</span>This is an example<span class="String">'</span></span>, <span class="String"><span class="String">'</span>an<span class="String">'</span></span>, <span class="Number">5</span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;…s is an exam…&quot;</span>
@@ -1790,21 +1809,21 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 
 <h3>simple_format</h3>
 
-<p>The <strong>simple_format</strong> method basically receives as a parameter any text and formats it in a simple way to <strong>HTML</strong>. It takes the text and replaces line breaks (\n) by <strong>HTML</strong> tag "&lt; br />". And when we have two line breaks one after other  (\n\n)  it separates the text in paragraphs using "&lt; p>"tag.</p>
+<p>El método <strong>simple_format</strong> básicamente recibe como parámetro cualquier texto y le da formato de una manera muy simple a <strong>HTML</strong>. Toma el texto y reemplaza los saltos de línea (\n) por el tag <strong>HTML</strong> "&lt; br />". Y cuando tenemos dos saltos de línea, uno atrás del otro, separa el texto con tags "&lt; p>".</p>
 
-<p>In Rails 2.1 this method received an additional parameter. Besides text, we are going to be able to inform which <strong>HTML</strong> attributes we would like "&lt; p>" tag had. Look the examples:</p>
+<p>En Rails 2.1 este método recibe un parámetros adicional. Además del texto, podemos informarle que atributo <strong>HTML</strong> nos gustaria que el tag "&lt; p>" incluyera. Veamos el ejemplo: </p>
 
 <pre class="mac_classic"><span class="FunctionName">simple_format</span>(<span class="String"><span class="String">&quot;</span>Hello Mom!<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>description<span class="String">'</span></span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;&lt;p class=’description’&gt;Hello Mom!&lt;/p&gt;&quot;</span>
 </pre>
 
-<p>The <strong>HTML</strong> attributes will be added in all "&lt; p>" tags created by the method.</p>
+<p>Los atributos <strong>HTML</strong> serán agregados a todos los tags  "&lt; p>" creados por este método.</p>
 
 <h1> Railties</h1>
 
 <h2> config.gem</h2>
 
-<p>Now it's possible to configure all necessary gems to get a project running by using a new feature called <strong>config.gem</strong>. In  <strong>environment.rb</strong> file you can specify which gems your project depends to run. Look at the example:</p>
+<p>Ahora es posible configurar todas las gemas necesarias para obtener un proyecto listo para su ejecución usando una nueva característica llamada <strong>config.gem</strong>. En el archivo <strong>environment.rb</strong> puedes especificar de qué gemas depende tu proyecto para ejecutarse correctamente. Veamos un ejemplo: </p>
 
 <pre class="mac_classic">config.<span class="FunctionName">gem</span> <span class="String"><span class="String">&quot;</span>bj<span class="String">&quot;</span></span>
 
@@ -1814,39 +1833,39 @@ config.<span class="FunctionName">gem</span> <span class="String"><span class="S
 config.<span class="FunctionName">gem</span> <span class="String"><span class="String">&quot;</span>aws-s3<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>lib</span> =&gt; <span class="String"><span class="String">&quot;</span>aws/s3<span class="String">&quot;</span></span>
 </pre>
 
-<p>To install all dependencies at once, we just use a Rake task:</p>
+<p>Para instalar todas las dependencias de una sola vez, utilizamos una tarea Rake: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Installs all specified gems</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Instala todas las gemas especificadas</span>
 rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>install</span>
 </pre>
 
-<p>It's also possible to list which gems are being used in the running project by using:</p>
+<p>También es posible listar cuales gemas están siendo usadas en el proyecto ejecutando: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Listing all gem dependencies</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Listando todas las dependencias</span>
 rake gems
 </pre>
 
-<p>If one of the gems have a <strong>rails/init.rb</strong> file and you want to take the gem with your application, you can use:</p>
+<p>Si una de las gemas tiene un archivo <strong>rails/init.rb</strong> y vos querés llevar la gema con tu aplicación, podés hacer: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Copy the specified gem to vendor/gems/nome_do_gem-x.x.x</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Copia la gema especificada a vendor/gems/nome_do_gem-x.x.x</span>
 rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>unpack</span> <span class="Variable">GEM</span><span class="Keyword">=</span>gem_name
 </pre>
 
-<p>Then, the gem will be copied to the directory  <strong>vendor/gems/gem_name-x.x.x</strong>. In case you don't specify gem name, Rails will copy all gems to the directory <strong>vendor/gem</strong></p>
+<p>Entonces, la gema será copiada al directorio <strong>vendor/gems/gem_name-x.x.x</strong>. En caso de no especificas el nombre de la gema, Rails copiará todas las gemas al directorio <strong>vendor/gem</strong></p>
 
-<h2> config.gem in plugins</h2>
+<h2> config.gem en plugins</h2>
 
-<p>The <strong>config.gem</strong> feature is also available for use with plugins.</p>
+<p>El comando <strong>config.gem</strong> está también disponible para ser utilizado con plugins.</p>
 
-<p>Untill Rails 2.0 the <strong>init.rb</strong> file of a plugin used to look like this:</p>
+<p>Hasta Rails 2.0, el archivo <strong>init.rb</strong> de un plugin solía lucir de la siguiente forma: </p>
 
-<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> init.rb of plugin open_id_authentication</span>
+<pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> init.rb del plugin open_id_authentication</span>
 <span class="Keyword">require</span> <span class="String"><span class="String">'</span>yadis<span class="String">'</span></span> 
 <span class="Keyword">require</span> <span class="String"><span class="String">'</span>openid<span class="String">'</span></span> 
 <span class="LibraryObject">ActionController</span>::<span class="FunctionName">Base</span>.<span class="FunctionName">send</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include</span>, <span class="Variable">OpenIdAuthentication</span> 
 </pre>
 
-<p>But in Rails 2.1 the <strong>init.rb</strong> file would be:</p>
+<p>Pero en Rails 2.1 el archivo <strong>init.rb</strong> sería:</p>
 
 <pre class="mac_classic">config.<span class="FunctionName">gem</span> <span class="String"><span class="String">&quot;</span>ruby-openid<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>lib</span> =&gt; <span class="String"><span class="String">&quot;</span>openid<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>version</span> =&gt; <span class="String"><span class="String">&quot;</span>1.1.4<span class="String">&quot;</span></span>
 config.<span class="FunctionName">gem</span> <span class="String"><span class="String">&quot;</span>ruby-yadis<span class="String">&quot;</span></span>,  <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>lib</span> =&gt; <span class="String"><span class="String">&quot;</span>yadis<span class="String">&quot;</span></span>,  <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>version</span> =&gt; <span class="String"><span class="String">&quot;</span>0.3.4<span class="String">&quot;</span></span> 
@@ -1856,33 +1875,33 @@ config.<span class="FunctionName">after_initialize</span> <span class="Keyword">
 <span class="Keyword">end</span>
 </pre>
 
-<p>So, when you run the task to install all necessary gems, these gems will be among them.</p>
+<p>Así que, cuando ejecutes la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.</p>
 
 <h2> gems:build</h2>
 
-<p>The <strong>gems:build</strong> task compiles all native extensions of gems which were installed through <strong>gems:unpack</strong>. The syntax is the following:</p>
+<p>La tarea <strong>gems:build</strong> compila todas las extensiones de las gemas que fueron instaladas a través de <strong>gems:unpack</strong>. La sintaxis es la siguiente:</p>
 
-<pre class="mac_classic">rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>build</span> <span class="Comment"><span class="Comment">#</span> For all gems</span>
-rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>build</span> <span class="Variable">GEM</span><span class="Keyword">=</span>mygem <span class="Comment"><span class="Comment">#</span> I'm specifing the gem</span>
+<pre class="mac_classic">rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>build</span> <span class="Comment"><span class="Comment">#</span> Para todas las gemas</span>
+rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>build</span> <span class="Variable">GEM</span><span class="Keyword">=</span>mygem <span class="Comment"><span class="Comment">#</span> Estoy especificando una gema</span>
 </pre>
 
-<h2> New message when starting server</h2>
+<h2> Nuevo mensaje cuando se inicializa el servidor</h2>
 
-<p>There was a little improvement when starting Rails server, now it shows which Rails version is being loaded:</p>
+<p>Hubo una pequeña mejora en el inicio del servidor de Rails. Ahora se muestra cual versión está siendo cargada: </p>
 
 <pre class="mac_classic"><span class="Variable">Rails</span> <span class="Number">2.1</span> application starting on http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span><span class="Number">0.0</span>.<span class="Number">0.0</span>:<span class="Number">3000</span>
 </pre>
 
 <h2> Rails.public_path</h2>
 
-<p>It was added the <strong>Rails.public_path</strong> shortcut to recover the path of the project's <strong>"public"</strong> directory.</p>
+<p>Se agregó un acceso directo para recuperar el path del directorio <strong>"public"</strong> de un proyecto.</p>
 
 <pre class="mac_classic"><span class="LibraryObject">Rails</span>.<span class="FunctionName">public_path</span>
 </pre>
 
-<h2> Rails.logger, Rails.root, Rails.env and Rails.cache</h2>
+<h2> Rails.logger, Rails.root, Rails.env y Rails.cache</h2>
 
-<p>In Rails 2.1 instead of using the constants: <strong>RAILS_DEFAULT_LOGGER</strong>, <strong>RAILS_ROOT</strong>, <strong>RAILS_ENV</strong> and <strong>RAILS_CACHE</strong>. We will use:</p>
+<p>En Rails 2.1 en vez de usar las constantes: <strong>RAILS_DEFAULT_LOGGER</strong>, <strong>RAILS_ROOT</strong>, <strong>RAILS_ENV</strong> and <strong>RAILS_CACHE</strong>. Ahora usaremos:</p>
 
 <pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> RAILS_DEFAULT_LOGGER</span>
 <span class="LibraryObject">Rails</span>.<span class="FunctionName">logger</span>
@@ -1899,52 +1918,52 @@ rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</
 
 <h2> Rails.version</h2>
 
-<p>In earlier versions to discover, during running time, what's the Rails version in use, we used:</p>
+<p>En versiones anteriores para descubrir, en tiempo de ejecución, cual es la versión de Rails en uso usabamos:</p>
 
 <pre class="mac_classic"><span class="LibraryObject">Rails</span>::<span class="FunctionName">VERSION</span>::<span class="FunctionName">STRING</span>
 </pre>
 
-<p>In Rails 2.1 changed to:</p>
+<p>En Rails 2.1 cambió a:</p>
 
 <pre class="mac_classic"><span class="LibraryObject">Rails</span>.<span class="FunctionName">version</span>
 </pre>
 
-<h2>Getting information about a plugin</h2>
+<h2>Obteniendo información acerca de un plugin</h2>
 
-<p>This is one of the new Rails 2.0 features which you probably never used. I say "probably", because in some very specific cases it can be useful, for example, to know a plugin version.</p>
+<p>Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. </p>
 
-<p>To test it, we need to create a new file called <em>about.yml</em> in the plugin directory, something like this:</p>
+<p>Para probarlo, necesitamos crear un archivo que se llame <em>about.yml</em> en el directorio del plugin, con algo como lo siguiente:</p>
 
 <pre class="mac_classic">author: <span class="Variable">Carlos</span> <span class="Variable">Brando</span>
 version: <span class="Number">1.2</span>.<span class="Number">0</span>
-description: <span class="Variable">A</span> description about the plugin
+description: <span class="Variable">Una</span> descripción acerca del plugin
 url: http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">nomedojogo</span>.<span class="FunctionName">com</span>
 </pre>
 
-<p>We can get this information later this way:</p>
+<p>Podemos obtener esta información luego de esta manera:</p>
 
 <pre class="mac_classic">plugin <span class="Keyword">=</span> <span class="LibraryObject">Rails</span>::<span class="FunctionName">Plugin</span>.<span class="FunctionName">new</span>(plugin_directory)
 plugin.<span class="FunctionName">about</span>[<span class="String"><span class="String">&quot;</span>author<span class="String">&quot;</span></span>] <span class="Comment"><span class="Comment">#</span> =&gt; “Carlos Brando”</span>
 plugin.<span class="FunctionName">about</span>[<span class="String"><span class="String">&quot;</span>url<span class="String">&quot;</span></span>] <span class="Comment"><span class="Comment">#</span> =&gt; “http://www.nomedojogo.com”</span>
 </pre>
 
-<p>If you find some good use for this feature and want to share with me, maybe i can change my mind about its real need.</p>
+<p>Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. </p>
 
-<h1> Rake Tasks, Plugins and Scripts</h1>
+<h1> Rake Tasks, Plugins y Scripts</h1>
 
-<h2> Tasks</h2>
+<h2> Tareas</h2>
 
 <h3> rails:update</h3>
 
-<p>From now on everytime you run the task <strong>rake rails:freeze:edge</strong> it will also run <strong>rails:update</strong>, updating the config files and <em>JavaScripts</em>.</p>
+<p>De ahora en más, cada vez que ejecutes la tarea <strong>rake rails:freeze:edge</strong>, esta también ejecutará  <strong>rails:update</strong>, actualizando los archivos de configuración y los <em>JavaScripts</em>.</p>
 
-<h3> Database in 127.0.0.1</h3>
+<h3> Base de datos en 127.0.0.1</h3>
 
-<p>A change was made in the file databases.rake that used to look only in localhost for local databases, it will now also consider the IP <strong>127.0.0.1</strong>. This works for both <strong>create</strong> and <strong>drop</strong> tasks. The databases.rake file was also refactored to make the code less repetitive.</p>
+<p>Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará <strong>127.0.0.1</strong>. Esto funciona para las tareas <strong>create</strong> y <strong>drop</strong>. El archivo database.rake también fue refactorizado para hacer el codigo menos repetitivo. </p>
 
-<h3> Freezing a specific Rails release.</h3>
+<h3> Congelando a una versión de Rails específica.</h3>
 
-<p>Until Rails 2.1 it wasn't possible to freeze a specific Rails release inside your project, you could only use its Revision as a parameter. In Rails 2.1, we can freeze a specific release using the command below:</p>
+<p>Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Solo podías utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: </p>
 
 <pre class="mac_classic">rake rails<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>freeze</span><span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>edge</span> <span class="Variable">RELEASE</span><span class="Keyword">=</span><span class="Number">1.2</span>.<span class="Number">0</span>
 </pre>
@@ -1953,61 +1972,62 @@ plugin.<span class="FunctionName">about</span>[<span class="String"><span class=
 
 <h4> rake time:zones:all</h4>
 
-<p>Return all the time zones known to Rails, grouped by offset. You can also filter the return value using the optional parameter OFFSET, for instance: OFFSET=-6.</p>
+<p>Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También podés filtar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.</p>
 
 <h4> rake time:zones:us</h4>
 
-<p>Shows a list with all US time zones. The OFFSET option is still valid here.</p>
+<p>Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es valida en este contexto.</p>
 
 <h4> rake time:zones:local</h4>
 
-<p>Return all the time zones known to Rails that are in the same offset of your OS.</p>
+<p>Retorna todas las zonas horarias conocidas por Rails que están en el mismo uso horario que tu sistema operativo. </p>
 
 <h2> Scripts</h2>
 
 <h3> plugin</h3>
 
-<p>The command script/plugin install now allows the use of –e/--export option, so that it issues a svn export. 
-Added support for plugins hosted in GIT repositories.</p>
+<p>El comando script/plugin install ahora provee la opción -e/--export que emite un svn export.<br/>
+Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <h3> dbconsole</h3>
 
-<p>This script does the same thig as script/console but for your database. In other words it connects to the command line client of your database.</p>
+<p>Este script hace lo mismo que script/console, solo que para la base de datos. En otras palabras, te conecta con el cliente por línea de comando de tu base de datos.</p>
 
-<p>Looking at the code, this apparently will only work for mysql, postgresql and sqlite(3). When another database is configured in database.yml, this script will show: "not supported for this database type".</p>
+<p>Mirando al código, este funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".</p>
 
 <h2> Plugins</h2>
 
-<h3> Gems can now be plugins</h3>
+<h3> Gemas ahora pueden ser plugins</h3>
 
-<p>Now, any gem that has a <strong>rails/init.rb</strong> file can be installed inside the <strong>vendor</strong> directory of your Rails project just like a <strong>plugin</strong>.</p>
+<p>Ahora, cualqioer gema que tenga un archivo <strong>rails/init.rb</strong> puede ser instalado dentro del directorio <strong>vendor</strong> de tu proyecto Rails igual que un <strong>plugin</strong>.</p>
 
-<h3> Using generators in plugins</h3>
+<h3> Usando generadores en plugins</h3>
 
-<p>It's possible to configure <strong>Rails</strong> to search for <strong>plugins</strong> in places other than the <strong>vendor/plugins</strong> directory, just including this line of code in your <strong>environment.rb</strong>.</p>
+<p>Es posible configurar <strong>Rails</strong> para buscar <strong>plugins</strong> en directorios diferentes a <strong>vendor/plugins</strong>, solo incluyendo esta línea de código en el archivo <strong>environment.rb</strong>.</p>
 
 <pre class="mac_classic">config.<span class="FunctionName">plugin_paths</span> <span class="Keyword">=</span> [<span class="String"><span class="String">'</span>lib/plugins<span class="String">'</span></span>, <span class="String"><span class="String">'</span>vendor/plugins<span class="String">'</span></span>]
 </pre>
 
-<p>Rails 2.0, however, had a bug in this configuration that showed up when the plugin had generators. Because of that bug Rails only found generators in plugins that were inside the <strong>vendor/plugins</strong> directory. In 2.1 this bug was squashed.</p>
+<p>Rails 2.0 tenía un bug en esta configuración que muestraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentra generadores en plugins que estén dentro de <strong>vendor/plugins</strong>. En Rails 2.1 ese bug fue corregido.   <br/>
+</p>
 
-<h1> Prototype and script.aculo.us</h1>
+<h1> Prototype y script.aculo.us</h1>
 
 <h2> Prototype</h2>
 
-<p>Rails 2.1 now uses Prototype version 1.6.0.1. It serves as a preparatory to version 1.8.1 of script.aculo.us.</p>
+<p>Rails 2.1 ahora usa Prototype versión 1.6.0.1. Este sirve como base de la versión 1.8.1 de script.aculo.us.</p>
 
 <h1> Ruby 1.9</h1>
 
 <h2> Details</h2>
 
-<p>The main focus of Rails changes was Ruby 1.9, even minor details were analyzed to increase Rails compatibility with the new Ruby version. Details like changing from <strong>File.exists?</strong> to <strong>File.exist?</strong> were not kept aside.</p>
+<p>El foco principal de los cambios de Rails fue Ruby 1.9, aún detalles menores fueon analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar <strong>File.exists?</strong> por <strong>File.exist?</strong> no fueron dejados de lado.</p>
 
-<p>Also, in Ruby 1.9, the module <strong>Base64</strong> (base64.rb) was removed, because of that, all references to it were replaced by <strong>ActiveSupport::Base64</strong>.</p>
+<p>Además, en Ruby 1.9, el modulo <strong>Base64</strong> (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  <strong>ActiveSupport::Base64</strong>.</p>
 
-<h2>New methodos for DateTime class</h2>
+<h2>Nuevos métodos para la clase DateTime</h2>
 
-<p>In order to keep compatibility (duck-typing) with <strong>Time</strong> class, three new methods were added to <strong>DateTime</strong> class. The methods are <strong>#utc</strong>, <strong>#utc?</strong> and <strong>#utc_offset</strong>. Look an example for each one:</p>
+<p>Con el objetivo de mantener compatibilidad (duck-typing) con la clase <strong>Time</strong>, tres nuevos métodos fueron agregado a la clase <strong>DateTime</strong>. Los métodos son <strong>#utc</strong>, <strong>#utc?</strong> y <strong>#utc_offset</strong>. veamos un ejemplo de cada uno:</p>
 
 <pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> date <span class="Keyword">=</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2005</span>, <span class="Number">2</span>, <span class="Number">21</span>, <span class="Number">10</span>, <span class="Number">11</span>, <span class="Number">12</span>, <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>))
 <span class="Comment"><span class="Comment">#</span>=&gt; Mon, 21 Feb 2005 10:11:12 -0600</span>
@@ -2027,9 +2047,9 @@ Added support for plugins hosted in GIT repositories.</p>
 
 <h1> Debug</h1>
 
-<h2>Native Ruby-debug</h2>
+<h2>Ruby-debug Nativo</h2>
 
-<p>It was enabled again the option for using <strong>ruby-debug</strong> in Rails tests. Now, since you already have the gem installed, it only needs the <strong>debugger</strong> method.</p>
+<p>Fue habilitado nuevamente la opción para utilizar <strong>ruby-debug</strong> en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método <strong>debugger</strong>.</p>
 
 <h1> Bugs and Fixes</h1>
 

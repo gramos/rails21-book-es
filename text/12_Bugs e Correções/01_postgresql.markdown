@@ -1,48 +1,50 @@
-## Add columns in PostgreSQL
+## Aregar columnas en PostgreSQL
 
-There was a bug when using **PostgreSQL**. The bug occurred when creating a migration for adding a column in an existing table. Look an example:
+Había un bug usando  **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
 
-File: *db/migrate/002\_add\_cost.rb*
 
-	class AddCost < ActiveRecord::Migration
-	  def self.up
-	    add_column :items, :cost, :decimal, :precision => 6, 
-	   :scale => 2
-	  end
+Archivo: *db/migrate/002\_add\_cost.rb*
 
-	  def self.down
-	    remove_column :items, :cost
-	  end
-	end
+        class AddCost < ActiveRecord::Migration
+          def self.up
+            add_column :items, :cost, :decimal, :precision => 6,
+           :scale => 2
+          end
 
-Note we are creating a column with **:precision => 6** and **:scale => 2**. Now run **rake db:migrate** and let's see how is our table in database:
+          def self.down
+            remove_column :items, :cost
+          end
+        end
+
+Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
 
 <table border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<td><strong>Column</strong></td>
-		<td><strong>Type</strong></td>
-		<td><strong>Modifiers</strong></td>
-	</tr>
-	<tr>
-		<td>id</td>
-		<td>integer</td>
-		<td>not null</td>
-	</tr>
-	<tr>
-		<td>descr</td>
-		<td>character varying(255)</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>price</td>
-		<td>numeric(5,2)</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>cost</td>
-		<td>numeric</td>
-		<td></td>
-	</tr>
+        <tr>
+                <td><strong>Column</strong></td>
+                <td><strong>Type</strong></td>
+                <td><strong>Modifiers</strong></td>
+        </tr>
+        <tr>
+                <td>id</td>
+                <td>integer</td>
+                <td>not null</td>
+        </tr>
+        <tr>
+                <td>descr</td>
+                <td>character varying(255)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>price</td>
+                <td>numeric(5,2)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>cost</td>
+                <td>numeric</td>
+                <td></td>
+        </tr>
 </table>
 
-See "cost" column which we just created. It is a common **numeric**, but it was supposed to be a column like "price", above it, more precisely a **numeric(6,2)**. In Rails 2.1 this error doesn't occur anymore and the column will be created in the correct way.
+Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columan se crea correctamente.
+

@@ -1175,132 +1175,149 @@ En este ejemplo vamos a renderizar el partial "users/\_form", el cual va a recib
 La vieja forma continúa funcionando en Rails 2.1
 
 
-## New namespaces in Atom Feed
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-Do you know the **atom\_feed** method? It is one of the new features of Rails 2.0, making easier the creation of Atom feeds. See an example of use:
+## Nuevos espacios de nombres en Atom Feed
 
-In a *index.atom.builder* file:
+¿Conoce el método **atom\_feed**? Es una de las nuevas características de Rails 2.0, que facilita la creación de Feeds de Atom. Veamos un ejemplo de como se usa:
 
-	atom_feed do |feed|
-	  feed.title("Nome do Jogo")
-	  feed.updated((@posts.first.created_at))
+En el archivo *index.atom.builder*:
 
-	  for post in @posts
-	    feed.entry(post) do |entry|
-	      entry.title(post.title)
-	      entry.content(post.body, :type => 'html')
+        atom_feed do |feed|
+          feed.title("Nome do Jogo")
+          feed.updated((@posts.first.created_at))
 
-	      entry.author do |author|
-	        author.name("Carlos Brando")
-	      end
-	    end
-	  end
-	end
+          for post in @posts
+            feed.entry(post) do |entry|
+              entry.title(post.title)
+              entry.content(post.body, :type => 'html')
 
-What is an Atom feed ? Atom is the name of XML based style and meta data. In other words is a protocol to publish content in Internet that is often updated, like a blog, for example. Feeds are always published in XML and in Atom it is identified as an application/atom+xml media type.
+              entry.author do |author|
+                author.name("Carlos Brando")
+              end
+            end
+          end
+        end
 
-In the first versions of Rails 2.0 this method used to accept as parameter **:language**, **:root_url** and **:url** options, you can obtain more information about these methods in Rails Documentation. But with the update made, we can now include new namespaces in the root element of the feed. For example:
+¿Qué es un Atom feed? Atom es el nombre de estilos y metadatos en formato XML. En otras palabras es un protocolo para publicar contenidos en Internet que son actualizados con frecuencia, como un blog por ejemplo. Los Feeds se publican siempre en XML y en Atom son identificados como tipo de medios application/atom+xml.
 
-	atom_feed('xmlns:app' => 'http://www.w3.org/2007/app') do |feed|
+En las primeras versiones de Rails 2.0 este método aceptaba parámetros como: **:language**, **:root_url** and **:url**, puede obtener más información acerca de estos métodos en la documentación de Rails. pero con la nueva modificación, ahora podemos incluir nuevos espacios de nombre en el elemento raíz del feed. Por ejemplo:
 
-Will return:
 
-	<feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom" 
-		xmlns:app="http://www.w3.org/2007/app">
+        atom_feed('xmlns:app' => 'http://www.w3.org/2007/app') do |feed|
 
-Modifying the example used before, we could use this way:
+Va a retornar:
 
-	atom_feed({'xmlns:app' => 'http://www.w3.org/2007/app',
-		'xmlns:openSearch' => 'http://a9.com/-/spec/opensearch/1.1/'}) do |feed| 
+        <feed xml:lang="en-US" xmlns="http://www.w3.org/2005/Atom"
+                xmlns:app="http://www.w3.org/2007/app">
 
-	  feed.title("Nome do Jogo")
-	  feed.updated((@posts.first.created_at))
-	  feed.tag!(openSearch:totalResults, 10) 
+Modificando el ejemplo usado antes, podríamos hacer esto:
 
-	  for post in @posts
-	    feed.entry(post) do |entry|
-	      entry.title(post.title)
-	      entry.content(post.body, :type => 'html')
-	      entry.tag!('app:edited', Time.now) 
+        atom_feed({'xmlns:app' => 'http://www.w3.org/2007/app',
+                'xmlns:openSearch' => 'http://a9.com/-/spec/opensearch/1.1/'}) do |feed|
 
-	      entry.author do |author|
-	        author.name("Carlos Brando")
-	      end
-	    end
-	  end
-	end
+          feed.title("Nome do Jogo")
+          feed.updated((@posts.first.created_at))
+          feed.tag!(openSearch:totalResults, 10)
+
+          for post in @posts
+            feed.entry(post) do |entry|
+              entry.title(post.title)
+              entry.content(post.body, :type => 'html')
+              entry.tag!('app:edited', Time.now)
+
+              entry.author do |author|
+                author.name("Carlos Brando")
+              end
+            end
+          end
+        end
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## Cache
 
-All **fragment\_cache\_key** methods now return by default the namespace 'view/' as prefix.
+Ahora todos los métodos de **fragment\_cache\_key** retornan por defecto el namespace 'view/' como prefijo.
 
-All caching stores were removed from **ActionController::Caching::Fragments::*** and now they can be found in **ActiveSupport::Cache::***. In this case, if you made a reference to a store, like **ActionController::Caching::Fragments::MemoryStore**, for example, you'll have to change its reference to **ActiveSupport::Cache::MemoryStore**.
+Se eliminaron todos los caching store de **ActionController::Caching::Fragments::*** y ahora están en **ActiveSupport::Cache::***. En este caso, si ud. a hecho una referencia a store, como por ejemplo: **ActionController::Caching::Fragments::MemoryStore**, va a tener que cambiarla por: **ActiveSupport::Cache::MemoryStore**.
 
-**ActionController::Base.fragment\_cache\_store** is no more and **ActionController::Base.cache\_store** takes its place.
+**ActionController::Base.fragment\_cache\_store* no va más, y **ActionController::Base.cache\_store** toma su lugar.
 
-It was included in the **ActiveRecord::Base** the **cache\_key** method to facilitate the storing cache of Active Records by the new libraries **ActiveSupport::Cache::***. It works this way:
+Se incluyó en  **ActiveRecord::Base** el método **cache\_key** que facilita el modo de almacenamiento de cache de Active Records mediante la nueva biblioteca **ActiveSupport::Cache::***. Funciona así:
 
-	>> Product.new.cache_key
-	=> "products/new"
+        >> Product.new.cache_key
+        => "products/new"
 
-	>> Product.find(5).cache_key
-	=> "products/5"
+        >> Product.find(5).cache_key
+        => "products/5"
 
-	>> Person.find(5).cache_key
-	=> "people/5-20071224150000"
+        >> Person.find(5).cache_key
+        => "people/5-20071224150000"
 
-**ActiveSupport::Gzip.decompress/compress**  was included to make easier the use as a wrapper for **Zlib**.
+Se incluyó **ActiveSupport::Gzip.decompress/compress** para facilitar el uso de como mapeo para **Zlib**.
 
-Now you can use among environment options the **config.cache\_store** to specify the default place of caching store. It is worth mentioning, if the **tmp/cache** directory exists, the default is **FileStore**, in other case the **MemoryStore** will be used. You can configure in the following ways:
+Ahora ud. puede usar las opciones de ambiente (environment) **config.cache\_store** para especificar el valor por defecto del tipo de almacenamiento de cache. Como hemos mencionado si existe el directorio **tmp/cache**, el valor por defecto es **FileStore**, en otro caso se usará **MemoryStore**, puede configurarlo de la siguiente manera:
 
-	config.cache_store = :memory_store
-	config.cache_store = :file_store, "/path/to/cache/directory"
-	config.cache_store = :drb_store, "druby://localhost:9192"
-	config.cache_store = :mem_cache_store, "localhost"
-	config.cache_store = MyOwnStore.new("parameter")
+        config.cache_store = :memory_store
+        config.cache_store = :file_store, "/path/to/cache/directory"
+        config.cache_store = :drb_store, "druby://localhost:9192"
+        config.cache_store = :mem_cache_store, "localhost"
+        config.cache_store = MyOwnStore.new("parameter")
 
-To make things even easier, the comment bellow is included in *environments/production.rb* file, in order to remind you of this option.
 
-	# Use a different cache store in production
-	# config.cache_store = :mem_cache_store
+Para hace las cosas más fáciles aún, el comentario de abajo se incluye en *environments/production.rb*, en favor de recordarle estas opciones.
 
-## Applying title formatting in strings
 
-There was a bug when using **String#titleize** method in a string containing 's . The bug made the method return the 's in uppercase. See an example:
+        # Use a different cache store in production
+        # config.cache_store = :mem_cache_store
 
-	>> "brando’s blog".titleize
-	=> "Brando’S Blog"
-	
-See the same example, but with the bug fixed:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	>> "brando’s blog".titleize
-	=> "Brando’s Blog"
+## Aplicando formato de título en strings.
+
+Había un bug cuando usábamos el método **String#titleize** en un string que contenía 's. El bug hacía que el método returne la 's en mayúsculas. Vea el ejemplo:
+
+        >> "brando's blog".titleize
+        => "Brando'S Blog"
+
+Vea el ejemplo que con el bug corregido:
+
+        >> "brando's blog".titleize
+        => "Brando's Blog"
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## action\_name
 
-In order to find out which view was called during running time of your view, we can use the **action\_name** method:
+Para saber cual vista fue invocada durante la ejecución de su vista, podemos usar  el método **action\_name**:
 
-	<%= action_name %>
+        <%= action_name %>
 
-The return value will be the same as using **params[:action]**, but in a more elegant way.
+El valor de retorno va a ser el mismo que usando **params[:action]**, pero de una forma más elegante.
 
-## caches\_action accepts conditionals
 
-The **caches\_action** method now accepts the **:if** option, allowing the use of conditionals to specify when an **action** can be **cached**. For example:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	caches_action :index, :if => Proc.new { |c| !c.request.format.json? }
+## caches\_action acepta condicionales
 
-In the example above, the **action index** will go to the **cache** only if it's not accessed by a JSON request.
+El método **caches\_action** ahora acepta la opción **:if**, permitiendo el uso de condicionales para especificar cuando una acción (**action**) puede ser cacheada (**cached**) Por ejemplo:
+
+        caches_action :index, :if => Proc.new { |c| !c.request.format.json? }
+
+En el ejemplo de arriba, la **acción index** será cacheada únicamente si no es accedida por una petición JSON.
+
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 ## Conditional in the caches\_page method
 
 The **caches\_page** method now has the option to use conditionals (**:if**). See example:
 
-	# The Rails 2.0 way
-	caches_page :index
+        # The Rails 2.0 way
+        caches_page :index
 
-	# In Rails 2.1 you can use :if option
-	caches_page :index, :if => Proc.new { |c| !c.request.format.json? }
+        # In Rails 2.1 you can use :if option
+        caches_page :index, :if => Proc.new { |c| !c.request.format.json? }
 
 ## flash.now now works in tests
 
@@ -1478,14 +1495,15 @@ Now it's possible to explicitly declare a class instead of using a symbol. This 
 	end
 #ActionView
 
-ActionView is the layer responsible by the generation of the viewable interface visible to users through conversion of ERB templates.
+ActionView es la capa responsable de la generación de interfaces visibles al usuario a través de la conversión de plantillas ERB.
+
 ## ActionView::Helpers::FormHelper
 
-### fields\_for form\_for with index option.
+### fields\_for form\_for con la opción index.
 
-The **#fields\_for** and **form\_for** methods received the **:index** option, removing the need of using **:index => nil** on each form object. Look the examples:
+Los métodos **#fields\_for** y **form\_for** recibían la opción **:index**, eliminando la necesidad de utilizar **:index => nil** en cada objeto form. Mira los ejemplos:
 
-This is the way code used to be:
+Así es como solía ser el código antes:
 
 	<% fields_for "project[task_attributes][]", task do |f| %>
 	  <%= f.text_field :name, :index => nil %>
@@ -1493,7 +1511,7 @@ This is the way code used to be:
 	  <%= f.hidden_field :should_destroy, :index => nil %>
 	<% end %>
 
-Now it looks like this:
+Ahora luce de la siguiente forma:
 
 	<% fields_for "project[task_attributes][]", task,
 	              :index => nil do |f| %>
@@ -1503,27 +1521,27 @@ Now it looks like this:
 	<% end %>
 ## ActionView::Helpers::DateHelper
 
-Now, all these module methods dealing with dates  (**date\_select**, **time\_select**, **select\_datetime**, etc.) are accepting **HTML** options. Look an example using **date\_select**
+Ahora, todos estos métodos de módulo para trabajar con fechas (**date\_select**, **time\_select**, **select\_datetime**, etc.) aceptan opciones  **HTML**. Mira un ejemplo usando **date\_select**
 
 	<%= date_select 'item','happening', :order => [:day], :class => 'foobar'%>
 	
 ### date\_helper
 
-The **date\_helper** method was updated to use **Date.current** in order to define its default value.
+El método **date\_helper** fue actualizado para que use **Date.current** en orden de definir su valor predeterminado.
 ## ActionView::Helpers::AssetTagHelper
 
 ### register\_javascript\_expansion
 
-This method registers one or more javascript files to be included when a symbol, defined by the programmer, is given as a parameter to the **javascript\_include\_tag** method. The idea is to call this method inside the **init.rb** of your plugin, in order to register the javascript files which your plugin places in the folder **public/javascripts**. Let's see how it works:
+Este método registra uno o más archivos javascript para su inclusión cuando un símbolo, definido por el programador, es indicado como parámetro del método **javascript\_include\_tag**. La idea es llamar a este método dentro del archivo **init.rb** de tu plugin, en orden de registrar los archivos javascript que tu plugin ubica en la carpeta **public/javascripts**. Veamos como funciona: 
 
-	# In the init.rb file
+	# En el archivo init.rb
 	ActionView::Helpers::AssetTagHelper.register_javascript_expansion 
 		:monkey => ["head", "body", "tail"] 
 
-	# In our view:
+	# En nuestar vista:
 	javascript_include_tag :monkey
 
-	# We are going to have:
+	# Vamos a obtener:
 	<script type="text/javascript" src="/javascripts/head.js"></script>
 	<script type="text/javascript" src="/javascripts/body.js"></script>
 	<script type="text/javascript" src="/javascripts/tail.js"></script>
@@ -1531,16 +1549,16 @@ This method registers one or more javascript files to be included when a symbol,
 
 ### register\_stylesheet\_expansion
 
-This method does exactly the same as the **ActionView::Helpers::AssetTagHelper#register\_javascript\_expansion** method, but it creates a symbol to be used later when making calls to **stylesheet\_link\_tag** method. Look an example:
+Este método hace exactamente lo mismo que que el método **ActionView::Helpers::AssetTagHelper#register\_javascript\_expansion**, pero crea un símbolo para ser usado luego cuando se realicen llamadas al método **stylesheet\_link\_tag**. Veamos un ejemplo: 
 
-	# In the init.rb file
+	# En el archivo init.rb
 	ActionView::Helpers::AssetTagHelper.register_stylesheet_expansion 
 		:monkey => ["head", "body", "tail"] 
 
-	# In our view:
+	# En nuestar vista:
 	stylesheet_link_tag :monkey
 
-	# We are going to have:
+	# Vamos a obtener:
 	<link href="/stylesheets/head.css"  media="screen" rel="stylesheet" 
 		type="text/css" />
 	<link href="/stylesheets/body.css"  media="screen" rel="stylesheet" 
@@ -1551,62 +1569,62 @@ This method does exactly the same as the **ActionView::Helpers::AssetTagHelper#r
 
 ### submit\_tag
 
-It was added the **:confirm** option in the parameters of **#submit\_tag** method. This option works the same way like the method **link\_to**. Look an example:
+Se agregó la opción **:confirm** a los parámetros del método **#submit\_tag**. Esta opción funciona de la misma forma que el método **link_to**. Veamos un ejemplo: 
 
 	submit_tag('Save changes', :confirm => "Are you sure?")
 ## ActionView::Helpers::NumberHelper
 
 ### number\_to\_currency
 
-The **number\_to\_currency** method now accepts the **:format** option as a parameter,letting us to format the method's returning value. In earlier versions, when we had to format values for our local currency, we needed to include a space in front of **:unit** option to make the output format correct. See the examples:
+El método **number\_to\_currency** ahora acepta la opción **:format** como parámetro, permitiéndonos dar formato al valor retornado. En versiones anteriores, cuando teníamos que dar formato a monedas locales, debíamos incluir un espacio antes de la opción **:unit** para que el formato retornado sea el correcto. Veamos un ejemplo: 
 	
-	# R$ is the symbol for Brazilian currency
+	# R$ es el símbolo de la moneda de Brasil.
 	number_to_currency(9.99, :separator => ",", :delimiter => ".", :unit => "R$")
 	# => "R$9,99″
 
 	number_to_currency(9.99, :format => "%u %n", :separator => ",", 
 		:delimiter => ".", :unit => "R$")
 	# => "R$ 9,99″
-	
-Besides that, we can customize in other forms, for example:
 
-	number_to_currency(9.99, :format => "%n in Brazilian reais", :separator => ",", 
+Por otro lado, podemos personalizar de otras formas, por ejemplo:	
+
+	number_to_currency(9.99, :format => "%n en reales brasileros", :separator => ",", 
 		:delimiter => ".", :unit => "R$")
 	# => "9,99 em reais"
 
-When creating your own formatting string, you can use the following parameters:
+Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: 
 
-	%u For the currency
-	%n For the number
+	%u Para la moneda
+	%n Para el número
 ## ActionView::Helpers::TextHelper
 
 ### excerpt
 
-The **excerpt** method is a helper to find a word inside a phrase and return an abreviation of that phrase with the number of given characters as parameters before and after the word, adding, when necessary the "…". Look an example:
+El método **excerpt** nos ayuda a encontrar una palabra dentro de una frase y nos devuelve la abreviatura de esa frase con el número de caracteres que se hayan especificado como parámetro antes y después de la palabra agregando "…" cuando sea necesario. Veamos un ejemplo:
 
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an examp…"
 	
-But the problem it was bugged. If you count, you'll see the method returned 6 chars and not 5. This bug was fixed. Look the example of the correct output for this method:
+Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y fue corregido. Mira el ejemplo de la salida correcta de este método:
 
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an exam…"
 	
 ###simple\_format
 
-The **simple\_format** method basically receives as a parameter any text and formats it in a simple way to **HTML**. It takes the text and replaces line breaks (\n) by **HTML** tag "< br />". And when we have two line breaks one after other  (\n\n)  it separates the text in paragraphs using "< p>"tag.
+El método **simple\_format** básicamente recibe como parámetro cualquier texto y le da formato de una manera muy simple a **HTML**. Toma el texto y reemplaza los saltos de línea (\n) por el tag **HTML** "< br />". Y cuando tenemos dos saltos de línea, uno atrás del otro, separa el texto con tags "< p>".
 
-In Rails 2.1 this method received an additional parameter. Besides text, we are going to be able to inform which **HTML** attributes we would like "< p>" tag had. Look the examples:
+En Rails 2.1 este método recibe un parámetros adicional. Además del texto, podemos informarle que atributo **HTML** nos gustaria que el tag "< p>" incluyera. Veamos el ejemplo: 
 
 	simple_format("Hello Mom!", :class => 'description')
 	# => "<p class=’description’>Hello Mom!</p>"
 
-The **HTML** attributes will be added in all "< p>" tags created by the method.
+Los atributos **HTML** serán agregados a todos los tags  "< p>" creados por este método.
 # Railties
 
 ## config.gem
 
-Now it's possible to configure all necessary gems to get a project running by using a new feature called **config.gem**. In  **environment.rb** file you can specify which gems your project depends to run. Look at the example:
+Ahora es posible configurar todas las gemas necesarias para obtener un proyecto listo para su ejecución usando una nueva característica llamada **config.gem**. En el archivo **environment.rb** puedes especificar de qué gemas depende tu proyecto para ejecutarse correctamente. Veamos un ejemplo: 
 
 	config.gem "bj" 
 
@@ -1615,35 +1633,35 @@ Now it's possible to configure all necessary gems to get a project running by us
 
 	config.gem "aws-s3", :lib => "aws/s3"
 
-To install all dependencies at once, we just use a Rake task:
+Para instalar todas las dependencias de una sola vez, utilizamos una tarea Rake: 
 
-	# Installs all specified gems
+	# Instala todas las gemas especificadas
 	rake gems:install
 
-It's also possible to list which gems are being used in the running project by using:
+También es posible listar cuales gemas están siendo usadas en el proyecto ejecutando: 
 
-	# Listing all gem dependencies
+	# Listando todas las dependencias
 	rake gems
 
-If one of the gems have a **rails/init.rb** file and you want to take the gem with your application, you can use:
+Si una de las gemas tiene un archivo **rails/init.rb** y vos querés llevar la gema con tu aplicación, podés hacer: 
 
-	# Copy the specified gem to vendor/gems/nome_do_gem-x.x.x
+	# Copia la gema especificada a vendor/gems/nome_do_gem-x.x.x
 	rake gems:unpack GEM=gem_name
 
-Then, the gem will be copied to the directory  **vendor/gems/gem\_name-x.x.x**. In case you don't specify gem name, Rails will copy all gems to the directory **vendor/gem**
+Entonces, la gema será copiada al directorio **vendor/gems/gem\_name-x.x.x**. En caso de no especificas el nombre de la gema, Rails copiará todas las gemas al directorio **vendor/gem**
 
-## config.gem in plugins
+## config.gem en plugins
 
-The **config.gem** feature is also available for use with plugins.
+El comando **config.gem** está también disponible para ser utilizado con plugins.
 
-Untill Rails 2.0 the **init.rb** file of a plugin used to look like this:
+Hasta Rails 2.0, el archivo **init.rb** de un plugin solía lucir de la siguiente forma: 
 
-	# init.rb of plugin open_id_authentication
+	# init.rb del plugin open_id_authentication
 	require 'yadis' 
 	require 'openid' 
 	ActionController::Base.send :include, OpenIdAuthentication 
 
-But in Rails 2.1 the **init.rb** file would be:
+Pero en Rails 2.1 el archivo **init.rb** sería:
 
 	config.gem "ruby-openid", :lib => "openid", :version => "1.1.4"
 	config.gem "ruby-yadis",  :lib => "yadis",  :version => "0.3.4" 
@@ -1652,28 +1670,28 @@ But in Rails 2.1 the **init.rb** file would be:
 	  ActionController::Base.send :include, OpenIdAuthentication
 	end
 
-So, when you run the task to install all necessary gems, these gems will be among them.
+Así que, cuando ejecutes la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.
 
 ## gems:build
 
-The **gems:build** task compiles all native extensions of gems which were installed through **gems:unpack**. The syntax is the following:
+La tarea **gems:build** compila todas las extensiones de las gemas que fueron instaladas a través de **gems:unpack**. La sintaxis es la siguiente:
 
-	rake gems:build # For all gems
-	rake gems:build GEM=mygem # I'm specifing the gem
+	rake gems:build # Para todas las gemas
+	rake gems:build GEM=mygem # Estoy especificando una gema
 
-## New message when starting server
+## Nuevo mensaje cuando se inicializa el servidor
 
-There was a little improvement when starting Rails server, now it shows which Rails version is being loaded:
+Hubo una pequeña mejora en el inicio del servidor de Rails. Ahora se muestra cual versión está siendo cargada: 
 
 	Rails 2.1 application starting on http://0.0.0.0:3000
 ## Rails.public\_path
 
-It was added the **Rails.public\_path** shortcut to recover the path of the project's **"public"** directory.
+Se agregó un acceso directo para recuperar el path del directorio **"public"** de un proyecto.
 
 	Rails.public_path
-## Rails.logger, Rails.root, Rails.env and Rails.cache
+## Rails.logger, Rails.root, Rails.env y Rails.cache
 
-In Rails 2.1 instead of using the constants: **RAILS\_DEFAULT\_LOGGER**, **RAILS\_ROOT**, **RAILS\_ENV** and **RAILS\_CACHE**. We will use:
+En Rails 2.1 en vez de usar las constantes: **RAILS\_DEFAULT\_LOGGER**, **RAILS\_ROOT**, **RAILS\_ENV** and **RAILS\_CACHE**. Ahora usaremos:
 
 	# RAILS_DEFAULT_LOGGER
 	Rails.logger
@@ -1689,49 +1707,50 @@ In Rails 2.1 instead of using the constants: **RAILS\_DEFAULT\_LOGGER**, **RAILS
 
 ## Rails.version
 
-In earlier versions to discover, during running time, what's the Rails version in use, we used:
+En versiones anteriores para descubrir, en tiempo de ejecución, cual es la versión de Rails en uso usabamos:
 
 	Rails::VERSION::STRING
 
-In Rails 2.1 changed to:
+En Rails 2.1 cambió a:
 
 	Rails.version
 
 
-##Getting information about a plugin
+##Obteniendo información acerca de un plugin
 
-This is one of the new Rails 2.0 features which you probably never used. I say "probably", because in some very specific cases it can be useful, for example, to know a plugin version.
+Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
 
-To test it, we need to create a new file called *about.yml* in the plugin directory, something like this:
+Para probarlo, necesitamos crear un archivo que se llame *about.yml* en el directorio del plugin, con algo como lo siguiente:
 
 	author: Carlos Brando
 	version: 1.2.0
-	description: A description about the plugin
+	description: Una descripción acerca del plugin
 	url: http://www.nomedojogo.com
 
-We can get this information later this way:
+Podemos obtener esta información luego de esta manera:
 
 	plugin = Rails::Plugin.new(plugin_directory)
 	plugin.about["author"] # => “Carlos Brando”
 	plugin.about["url"] # => “http://www.nomedojogo.com”
 
-If you find some good use for this feature and want to share with me, maybe i can change my mind about its real need.
+Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
 
-# Rake Tasks, Plugins and Scripts
 
-## Tasks
+# Rake Tasks, Plugins y Scripts
+
+## Tareas
 
 ### rails:update
 
-From now on everytime you run the task **rake rails:freeze:edge** it will also run **rails:update**, updating the config files and *JavaScripts*.
+De ahora en más, cada vez que ejecutes la tarea **rake rails:freeze:edge**, esta también ejecutará  **rails:update**, actualizando los archivos de configuración y los *JavaScripts*.
 
-### Database in 127.0.0.1
+### Base de datos en 127.0.0.1
 
-A change was made in the file databases.rake that used to look only in localhost for local databases, it will now also consider the IP **127.0.0.1**. This works for both **create** and **drop** tasks. The databases.rake file was also refactored to make the code less repetitive.
+Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará **127.0.0.1**. Esto funciona para las tareas **create** y **drop**. El archivo database.rake también fue refactorizado para hacer el codigo menos repetitivo. 
 
-### Freezing a specific Rails release.
+### Congelando a una versión de Rails específica.
 
-Until Rails 2.1 it wasn't possible to freeze a specific Rails release inside your project, you could only use its Revision as a parameter. In Rails 2.1, we can freeze a specific release using the command below:
+Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Solo podías utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: 
 
 	rake rails:freeze:edge RELEASE=1.2.0
 
@@ -1739,60 +1758,62 @@ Until Rails 2.1 it wasn't possible to freeze a specific Rails release inside you
 
 #### rake time:zones:all
 
-Return all the time zones known to Rails, grouped by offset. You can also filter the return value using the optional parameter OFFSET, for instance: OFFSET=-6.
+Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También podés filtar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.
 
 #### rake time:zones:us
 
-Shows a list with all US time zones. The OFFSET option is still valid here.
+Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es valida en este contexto.
 
 #### rake time:zones:local
 
-Return all the time zones known to Rails that are in the same offset of your OS.
+Retorna todas las zonas horarias conocidas por Rails que están en el mismo uso horario que tu sistema operativo. 
+
 
 ## Scripts
 
 ### plugin
 
-The command script/plugin install now allows the use of –e/--export option, so that it issues a svn export. 
-Added support for plugins hosted in GIT repositories.
+El comando script/plugin install ahora provee la opción -e/--export que emite un svn export.  
+Se agregó soporte para plugins alojados en repositorios GIT.
 
 
 ### dbconsole
 
-This script does the same thig as script/console but for your database. In other words it connects to the command line client of your database.
+Este script hace lo mismo que script/console, solo que para la base de datos. En otras palabras, te conecta con el cliente por línea de comando de tu base de datos.
 
-Looking at the code, this apparently will only work for mysql, postgresql and sqlite(3). When another database is configured in database.yml, this script will show: "not supported for this database type".
+Mirando al código, este funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".
 
 ## Plugins
 
-### Gems can now be plugins
+### Gemas ahora pueden ser plugins
 
-Now, any gem that has a **rails/init.rb** file can be installed inside the **vendor** directory of your Rails project just like a **plugin**.
+Ahora, cualqioer gema que tenga un archivo **rails/init.rb** puede ser instalado dentro del directorio **vendor** de tu proyecto Rails igual que un **plugin**.
 
-### Using generators in plugins
+### Usando generadores en plugins
 
-It's possible to configure **Rails** to search for **plugins** in places other than the **vendor/plugins** directory, just including this line of code in your **environment.rb**.
+Es posible configurar **Rails** para buscar **plugins** en directorios diferentes a **vendor/plugins**, solo incluyendo esta línea de código en el archivo **environment.rb**.
 
 	config.plugin_paths = ['lib/plugins', 'vendor/plugins']
-	
-Rails 2.0, however, had a bug in this configuration that showed up when the plugin had generators. Because of that bug Rails only found generators in plugins that were inside the **vendor/plugins** directory. In 2.1 this bug was squashed.
-# Prototype and script.aculo.us
+
+Rails 2.0 tenía un bug en esta configuración que muestraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentra generadores en plugins que estén dentro de **vendor/plugins**. En Rails 2.1 ese bug fue corregido.  	
+
+# Prototype y script.aculo.us
 
 ## Prototype
 
-Rails 2.1 now uses Prototype version 1.6.0.1. It serves as a preparatory to version 1.8.1 of script.aculo.us.
+Rails 2.1 ahora usa Prototype versión 1.6.0.1. Este sirve como base de la versión 1.8.1 de script.aculo.us.
 
 # Ruby 1.9
 
 ## Details
 
-The main focus of Rails changes was Ruby 1.9, even minor details were analyzed to increase Rails compatibility with the new Ruby version. Details like changing from **File.exists?** to **File.exist?** were not kept aside.
+El foco principal de los cambios de Rails fue Ruby 1.9, aún detalles menores fueon analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar **File.exists?** por **File.exist?** no fueron dejados de lado.
 
-Also, in Ruby 1.9, the module **Base64** (base64.rb) was removed, because of that, all references to it were replaced by **ActiveSupport::Base64**.
+Además, en Ruby 1.9, el modulo **Base64** (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  **ActiveSupport::Base64**.
 
-##New methodos for DateTime class
+##Nuevos métodos para la clase DateTime
 
-In order to keep compatibility (duck-typing) with **Time** class, three new methods were added to **DateTime** class. The methods are **#utc**, **#utc?** and **#utc\_offset**. Look an example for each one:
+Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, tres nuevos métodos fueron agregado a la clase **DateTime**. Los métodos son **#utc**, **#utc?** y **#utc\_offset**. veamos un ejemplo de cada uno:
 
 	>> date = DateTime.civil(2005, 2, 21, 10, 11, 12, Rational(-6, 24))
 	#=> Mon, 21 Feb 2005 10:11:12 -0600
@@ -1811,9 +1832,9 @@ In order to keep compatibility (duck-typing) with **Time** class, three new meth
 
 # Debug
 
-##Native Ruby-debug
+##Ruby-debug Nativo
 
-It was enabled again the option for using **ruby-debug** in Rails tests. Now, since you already have the gem installed, it only needs the **debugger** method.
+Fue habilitado nuevamente la opción para utilizar **ruby-debug** en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método **debugger**.
 
 # Bugs and Fixes
 

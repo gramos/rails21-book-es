@@ -1,1 +1,3 @@
-# Bugs and Fixes
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+# Bugs y arreglos
