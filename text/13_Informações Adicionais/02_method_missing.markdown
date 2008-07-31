@@ -1,6 +1,6 @@
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-## Used method\_missing, then don't leave loose ends
+## Use method\_missing, sin dejar cabos sueltos
 
 Debido a la naturaleza dinámica de Ruby, el método **respond\_to?** es crucial. ¿Cuantas veces necesitamos verificar si un método existe en el objeto que estamos manipulando, o si un objeto es lo que estamos esperando (**is\_a?**)?
 
