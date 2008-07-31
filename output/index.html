@@ -2051,95 +2051,113 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <p>Fue habilitado nuevamente la opción para utilizar <strong>ruby-debug</strong> en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método <strong>debugger</strong>.</p>
 
-<h1> Bugs and Fixes</h1>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<h2> Add columns in PostgreSQL</h2>
 
-<p>There was a bug when using <strong>PostgreSQL</strong>. The bug occurred when creating a migration for adding a column in an existing table. Look an example:</p>
+<h1> Bugs y arreglos</h1>
 
-<p>File: <em>db/migrate/002_add_cost.rb</em></p>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">AddCost<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Migration</span></span>
-  <span class="Keyword">def</span> <span class="FunctionName">self.up</span>
-    add_column <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>items</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>cost</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>decimal</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>precision</span> =&gt; <span class="Number">6</span>, 
-   <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>scale</span> =&gt; <span class="Number">2</span>
-  <span class="Keyword">end</span>
 
-  <span class="Keyword">def</span> <span class="FunctionName">self.down</span>
-    remove_column <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>items</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>cost</span>
-  <span class="Keyword">end</span>
-<span class="Keyword">end</span>
+<h2> Aregar columnas en PostgreSQL</h2>
+
+<p>Había un bug usando  <strong>PostgreSQL</strong>. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:</p>
+
+<p>Archivo: <em>db/migrate/002_add_cost.rb</em></p>
+
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">AddCost<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveRecord::Migration</span></span>
+      <span class="Keyword">def</span> <span class="FunctionName">self.up</span>
+        add_column <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>items</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>cost</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>decimal</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>precision</span> =&gt; <span class="Number">6</span>,
+       <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>scale</span> =&gt; <span class="Number">2</span>
+      <span class="Keyword">end</span>
+
+      <span class="Keyword">def</span> <span class="FunctionName">self.down</span>
+        remove_column <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>items</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>cost</span>
+      <span class="Keyword">end</span>
+    <span class="Keyword">end</span>
 </pre>
 
-<p>Note we are creating a column with <strong>:precision => 6</strong> and <strong>:scale => 2</strong>. Now run <strong>rake db:migrate</strong> and let's see how is our table in database:</p>
+<p>Note que estamos creadno una columna con <strong>:precision => 6</strong> y  <strong>:scale => 2</strong>. Ahora ejecutamos <strong>rake db:migrate</strong> y vemos como se ve nuestra tabla en la base de datos:</p>
 
 <table border="1" cellspacing="0" cellpadding="5">
-    <tr>
-        <td><strong>Column</strong></td>
-        <td><strong>Type</strong></td>
-        <td><strong>Modifiers</strong></td>
-    </tr>
-    <tr>
-        <td>id</td>
-        <td>integer</td>
-        <td>not null</td>
-    </tr>
-    <tr>
-        <td>descr</td>
-        <td>character varying(255)</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>price</td>
-        <td>numeric(5,2)</td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>cost</td>
-        <td>numeric</td>
-        <td></td>
-    </tr>
+        <tr>
+                <td><strong>Column</strong></td>
+                <td><strong>Type</strong></td>
+                <td><strong>Modifiers</strong></td>
+        </tr>
+        <tr>
+                <td>id</td>
+                <td>integer</td>
+                <td>not null</td>
+        </tr>
+        <tr>
+                <td>descr</td>
+                <td>character varying(255)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>price</td>
+                <td>numeric(5,2)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>cost</td>
+                <td>numeric</td>
+                <td></td>
+        </tr>
 </table>
 
 
-<p>See "cost" column which we just created. It is a common <strong>numeric</strong>, but it was supposed to be a column like "price", above it, more precisely a <strong>numeric(6,2)</strong>. In Rails 2.1 this error doesn't occur anymore and the column will be created in the correct way.</p>
+<p>Vea la columna "cost" que acabamos de crear. Es un <strong>numeric</strong> común, pero debería ser como la columna "price" de arriba, más precisamente un <strong>numeric(6,2)</strong>. En Rails 2.1 este error no sucede más y la columan se crea correctamente.</p>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 
 <h2>Mime Types</h2>
 
-<p>It was fixed a bug which didn't allow you to define the assigned attribute for <strong>request.format</strong> using a symbol. Now, we can use the code bellow:</p>
+<p>Se arregló un bug que no permitía definir el atributo para <strong>request.format</strong> usando un símbolo. Ahora podemos usar el siguiente código:</p>
 
-<pre class="mac_classic">request.<span class="FunctionName">format</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>iphone</span>
-assert_equal <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>iphone</span>, request.<span class="FunctionName">format</span>
+<pre class="mac_classic">    request.<span class="FunctionName">format</span> <span class="Keyword">=</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>iphone</span>
+    assert_equal <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>iphone</span>, request.<span class="FunctionName">format</span>
 </pre>
 
-<h2>Bug fixes in change_column</h2>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<p>It was fixed an existing bug when using the <strong>change_column</strong> method with <strong>:null => true</strong> in a column created using <strong>:null => false</strong>. Because of this bug no changes were made when using the method.</p>
 
-<h1> Additional Information</h1>
+<h2>Bug fixes en change_column</h2>
 
-<h2> Protecting from Cross Site Scripting</h2>
+<p>Se arregló un bug en el uso del método <strong>change_column</strong> con <strong>:null => true</strong> en una columna creada usando <strong>:null => false</strong>. Debido a este bug no se realizó ningún cambio al usar este método.</p>
 
-<p>In Rails 2.0 the file <em>application.rb</em> looks like this:</p>
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-<pre class="mac_classic"><span class="Keyword">class</span> <span class="TypeName">ApplicationController<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActionController::Base</span></span>
-  helper <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>
 
-  protect_from_forgery
-<span class="Keyword">end</span>
+<h1> Información adicional</h1>
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
+<h2> Protección contra Cross Site Scripting</h2>
+
+<p>En Rails 2.0 el archivo <em>application.rb</em> era así:</p>
+
+<pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">ApplicationController<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActionController::Base</span></span>
+      helper <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>all</span>
+
+      protect_from_forgery
+    <span class="Keyword">end</span>
 </pre>
 
-<p>Notice the call to the method <strong>protect_from_forgery</strong>.</p>
+<p>Vea la llamada al método  <strong>protect_from_forgery</strong>.</p>
 
-<p>Have you heard about Cross Site Scripting? This is the name of a security failure easily found in most websites and web applications that allows evil people (here I'm talking about teenagers with nothing to do and no social life) to alter the content of web pages, perform fishing attacks, take over the control of the browser through JavaScript code and in most cases force the user to execute some command they wish. That last type of attack is called cross-site request forgery.</p>
+<p>¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de una fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.</p>
 
-<p>Cross Site Request Forgery is a type of attack that forces legit users to execute a series of commands without even knowing. And with the increasing use of Ajax, things are getting even worse.</p>
+<p>Cross Site Request Forgery es un tipo de ataque fuerza al usuario a ejecutar comandos si que este lo sepa. Y con el incremento del uso de ajax, las cosas empeoran.</p>
 
-<p>Actually, this method is useful to make sure that all forms your application is receiving are coming from itself, and not from a lost link in another site. It achieves it by including a token based on the session in all forms and Ajax requests generated by Rails, and later checking the authenticity of this token in the controller.</p>
+<p>Actualmente, este método es útil para asegurar que todos los formularios de tu aplicación están recibiendo datos que vienen de la misma aplicación, y no desde un link perdido en otro sitio. Esto se hace inlcuyendo un token basado en la sesión en todos los formularios y peticiones ajax generadas por Rails, y luego verificando la autenticidad de este token en el controlador.</p>
 
-<p>Remember that GET requests are not protected. But it won't be a problem if we use it only to bring data, and never to alter or save anything in our database.</p>
+<p>Recuerder que las peticiones GET no están protegidas. Pero esto no es un problema si usamos sólamente para obtener datos, y nunca para alterar o guardar nada en nuestra base de datos.</p>
 
-<p>If you want to learn more about CSRF (Cross-Site Request Forgery) use the addresses below:</p>
+<p>Si ud. quiere aprender más acerca de CSRF (Cross-Site Request Forgery) vaya a la siguiente dirección:</p>
 
 <ul>
 <li><p><a href="http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750">http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750</a></p></li>
@@ -2147,7 +2165,7 @@ assert_equal <span class="UserDefinedConstant"><span class="UserDefinedConstant"
 </ul>
 
 
-<p>But remember that this is not a definitive solution to our problem, or like we usually say, it's not a silver bullet.</p>
+<p>Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, noes una bala de plata.</p>
 
 <h2> Used method_missing, then don't leave loose ends</h2>
 
@@ -2209,9 +2227,12 @@ rex.<span class="FunctionName">bark</span> <span class="Comment"><span class="Co
 
 <p>Of course that in Rails 2.1 this problem was fixed, we can use <strong>respond_to?</strong> to check the existence of methods like <strong>find_by_something</strong>.</p>
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
+
 <h2> PostgreSQL</h2>
 
-<p>In Rails 2.0, the adapter for <strong>PostgreSQL</strong> had support only for versions 8.1 up to 8.3. It has been added support for versions 7.4 up to 8.3.</p>
+<p>En Rails 2.0, el adaptador para <strong>PostgreSQL</strong> tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3</p>
 
 <h1> CHANGELOG</h1>
 

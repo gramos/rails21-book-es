@@ -12,7 +12,7 @@ En Rails 2.0 el archivo *application.rb* era así:
 
 Vea la llamada al método  **protect\_from\_forgery**.
 
-¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de una fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.
+¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de un fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.
 
 Cross Site Request Forgery es un tipo de ataque fuerza al usuario a ejecutar comandos si que este lo sepa. Y con el incremento del uso de ajax, las cosas empeoran.
 

@@ -1836,95 +1836,114 @@ Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, 
 
 Fue habilitado nuevamente la opción para utilizar **ruby-debug** en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método **debugger**.
 
-# Bugs and Fixes
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-## Add columns in PostgreSQL
+# Bugs y arreglos
 
-There was a bug when using **PostgreSQL**. The bug occurred when creating a migration for adding a column in an existing table. Look an example:
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-File: *db/migrate/002\_add\_cost.rb*
+## Aregar columnas en PostgreSQL
 
-	class AddCost < ActiveRecord::Migration
-	  def self.up
-	    add_column :items, :cost, :decimal, :precision => 6, 
-	   :scale => 2
-	  end
+Había un bug usando  **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
 
-	  def self.down
-	    remove_column :items, :cost
-	  end
-	end
 
-Note we are creating a column with **:precision => 6** and **:scale => 2**. Now run **rake db:migrate** and let's see how is our table in database:
+Archivo: *db/migrate/002\_add\_cost.rb*
+
+        class AddCost < ActiveRecord::Migration
+          def self.up
+            add_column :items, :cost, :decimal, :precision => 6,
+           :scale => 2
+          end
+
+          def self.down
+            remove_column :items, :cost
+          end
+        end
+
+Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
 
 <table border="1" cellspacing="0" cellpadding="5">
-	<tr>
-		<td><strong>Column</strong></td>
-		<td><strong>Type</strong></td>
-		<td><strong>Modifiers</strong></td>
-	</tr>
-	<tr>
-		<td>id</td>
-		<td>integer</td>
-		<td>not null</td>
-	</tr>
-	<tr>
-		<td>descr</td>
-		<td>character varying(255)</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>price</td>
-		<td>numeric(5,2)</td>
-		<td></td>
-	</tr>
-	<tr>
-		<td>cost</td>
-		<td>numeric</td>
-		<td></td>
-	</tr>
+        <tr>
+                <td><strong>Column</strong></td>
+                <td><strong>Type</strong></td>
+                <td><strong>Modifiers</strong></td>
+        </tr>
+        <tr>
+                <td>id</td>
+                <td>integer</td>
+                <td>not null</td>
+        </tr>
+        <tr>
+                <td>descr</td>
+                <td>character varying(255)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>price</td>
+                <td>numeric(5,2)</td>
+                <td></td>
+        </tr>
+        <tr>
+                <td>cost</td>
+                <td>numeric</td>
+                <td></td>
+        </tr>
 </table>
 
-See "cost" column which we just created. It is a common **numeric**, but it was supposed to be a column like "price", above it, more precisely a **numeric(6,2)**. In Rails 2.1 this error doesn't occur anymore and the column will be created in the correct way.
+Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columan se crea correctamente.
+
+
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ##Mime Types
 
-It was fixed a bug which didn't allow you to define the assigned attribute for **request.format** using a symbol. Now, we can use the code bellow:
+Se arregló un bug que no permitía definir el atributo para **request.format** usando un símbolo. Ahora podemos usar el siguiente código:
 
-	request.format = :iphone
-	assert_equal :iphone, request.format
+        request.format = :iphone
+        assert_equal :iphone, request.format
 
-##Bug fixes in change\_column
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-It was fixed an existing bug when using the **change\_column** method with **:null => true** in a column created using **:null => false**. Because of this bug no changes were made when using the method.
-# Additional Information
+##Bug fixes en change\_column
 
-## Protecting from Cross Site Scripting
+Se arregló un bug en el uso del método **change\_column** con **:null => true** en una columna creada usando **:null => false**. Debido a este bug no se realizó ningún cambio al usar este método.
 
-In Rails 2.0 the file *application.rb* looks like this:
 
-	class ApplicationController < ActionController::Base
-	  helper :all
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-	  protect_from_forgery
-	end
+# Información adicional
 
-Notice the call to the method **protect\_from\_forgery**.
- 
-Have you heard about Cross Site Scripting? This is the name of a security failure easily found in most websites and web applications that allows evil people (here I'm talking about teenagers with nothing to do and no social life) to alter the content of web pages, perform fishing attacks, take over the control of the browser through JavaScript code and in most cases force the user to execute some command they wish. That last type of attack is called cross-site request forgery.
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-Cross Site Request Forgery is a type of attack that forces legit users to execute a series of commands without even knowing. And with the increasing use of Ajax, things are getting even worse.
+## Protección contra Cross Site Scripting
 
-Actually, this method is useful to make sure that all forms your application is receiving are coming from itself, and not from a lost link in another site. It achieves it by including a token based on the session in all forms and Ajax requests generated by Rails, and later checking the authenticity of this token in the controller.
+En Rails 2.0 el archivo *application.rb* era así:
 
-Remember that GET requests are not protected. But it won't be a problem if we use it only to bring data, and never to alter or save anything in our database.
+        class ApplicationController < ActionController::Base
+          helper :all
 
-If you want to learn more about CSRF (Cross-Site Request Forgery) use the addresses below:
+          protect_from_forgery
+        end
+
+Vea la llamada al método  **protect\_from\_forgery**.
+
+¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de una fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.
+
+Cross Site Request Forgery es un tipo de ataque fuerza al usuario a ejecutar comandos si que este lo sepa. Y con el incremento del uso de ajax, las cosas empeoran.
+
+Actualmente, este método es útil para asegurar que todos los formularios de tu aplicación están recibiendo datos que vienen de la misma aplicación, y no desde un link perdido en otro sitio. Esto se hace inlcuyendo un token basado en la sesión en todos los formularios y peticiones ajax generadas por Rails, y luego verificando la autenticidad de este token en el controlador.
+
+Recuerder que las peticiones GET no están protegidas. Pero esto no es un problema si usamos sólamente para obtener datos, y nunca para alterar o guardar nada en nuestra base de datos.
+
+Si ud. quiere aprender más acerca de CSRF (Cross-Site Request Forgery) vaya a la siguiente dirección:
 
 * [http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750](http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750)
 
 * [http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750](http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750)
 
-But remember that this is not a definitive solution to our problem, or like we usually say, it's not a silver bullet.
+Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, noes una bala de plata.
+
+
 
 ## Used method\_missing, then don't leave loose ends
 
@@ -1983,21 +2002,23 @@ Ruby is an amazing and highly flexible language, but if we don't watch it we can
 
 Of course that in Rails 2.1 this problem was fixed, we can use **respond\_to?** to check the existence of methods like **find\_by\_something**.
 
+<!-- -*- mode: markdown; coding: utf-8; -*- -->
+
 ## PostgreSQL
 
-In Rails 2.0, the adapter for **PostgreSQL** had support only for versions 8.1 up to 8.3. It has been added support for versions 7.4 up to 8.3.
+En Rails 2.0, el adaptador para **PostgreSQL** tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3
+
+
 
 # CHANGELOG
 ## ActionMailer
 
-
- 
 \* Fixed that a return-path header would be ignored #7572 [joost]
- 
+
 \* Less verbose mail logging: just recipients for :info log level; the whole email for :debug only.  #8000 [iaddict, Tarmo Tänav]
- 
+
 \* Updated TMail to version 1.2.1 [raasdnil]
- 
+
 \* Fixed that you don't have to call super in ActionMailer::TestCase#setup #10406 [jamesgolick]
 ## ActionPack
 
