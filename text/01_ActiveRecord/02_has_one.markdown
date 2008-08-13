@@ -46,7 +46,7 @@ Para seguir con nuestro ejemplo, vamos a crear dos clases que van a representar 
 
 **Person** y **Business** están relacionadas con mi clase  **Client** a través de la tabla  **ContactCard**. En otras palabras, tengo dos tipos de contactos, personal y de negocios.
 
-Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:
+Por otro lado, cuando intente recuperar un contacto esto no va a funcionar, veamos:
 
         >> Client.find(:first).contacts
         # ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:

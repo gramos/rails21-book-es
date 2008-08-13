@@ -178,7 +178,7 @@
 
 <p><strong>Person</strong> y <strong>Business</strong> están relacionadas con mi clase  <strong>Client</strong> a través de la tabla  <strong>ContactCard</strong>. En otras palabras, tengo dos tipos de contactos, personal y de negocios.</p>
 
-<p>Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:</p>
+<p>Por otro lado, cuando intente recuperar un contacto esto no va a funcionar, veamos:</p>
 
 <pre class="mac_classic">    <span class="Keyword">&gt;&gt;</span> <span class="LibraryObject">Client</span>.<span class="FunctionName">find</span>(<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>first</span>).<span class="FunctionName">contacts</span>
 <span class="Comment">    <span class="Comment">#</span> ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:</span>
@@ -383,7 +383,7 @@ Esta búsqueda genera una consulta como la siguiente:</p>
       <span class="Variable">LEFT</span> <span class="Variable">OUTER</span> <span class="Variable">JOIN</span> comments <span class="Variable">ON</span> comments.<span class="FunctionName">author_id</span> <span class="Keyword">=</span> authors.<span class="FunctionName">id</span>
 </pre>
 
-<p>Un única consulta SQL con <strong>joins</strong> entre las tablas  <strong>authors</strong>, <strong>posts</strong> y <strong>comments</strong>. A esto lo llamamos <strong>producto cartesiano</strong>.</p>
+<p>Una única consulta SQL con <strong>joins</strong> entre las tablas  <strong>authors</strong>, <strong>posts</strong> y <strong>comments</strong>. A esto lo llamamos <strong>producto cartesiano</strong>.</p>
 
 <p>Este tipo de consultas no siempre tiene una buena performance, entonces esto se cambió en Rails 2.1. La misma consulta para la clase <strong>Author</strong> ahora se hace de una forma diferente para traer la información de las tres tablas. En vez de usar una única consulta SQL con las tres tablas, Rails ahora usa tres consultas diferentes - una por cada tabla - las cuales son más cortas que la anterior. El resultado se puede ver en los logs despues de ejecutar el codigo ruby on rails previo:</p>
 
@@ -725,7 +725,7 @@ en las asociaciones.</p>
 
 <p>El valor por defecto es "<em>" (como en "SELECT </em> FROM table"), pero se puede editar para recuperar sólo las columnas que vamos a usar.</p>
 
-<p>No olvide incluir las <strong>claves promarias</strong> y las <strong>claves foráneas</strong>, de lo contrario obtendrá un error.</p>
+<p>No olvide incluir las <strong>claves primarias</strong> y las <strong>claves foráneas</strong>, de lo contrario obtendrá un error.</p>
 
 <p>El método <strong>belongs_to</strong> ya no tiene la opción <strong>:order</strong>. Pero no se preocupe por que realmente no
 era muy útil.</p>
@@ -779,7 +779,7 @@ era muy útil.</p>
 
 <p>Hay varias formas de "intentar" resolver este problema. Se crearon muchos plugins con diferentes maneras de resolver esto. Más allá de los plugins disponibles, una cosa era clara: la antigua forma simplemente no funcionaba.</p>
 
-<p>Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con <strong>migraciones</strong> desactualizadas en tdoas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).</p>
+<p>Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con <strong>migraciones</strong> desactualizadas en todas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).</p>
 
 <p>Para resolver este gran problema, el core team de Rails cambió el funcionanmiento de las migraciones. En vez de anteponer cada archivo de migración con un número, ahora se le antepone con un string basado en la hora <strong>UTC</strong> con el siguiente formato  YYYYMMDDHHMMSS.</p>
 
@@ -869,7 +869,7 @@ era muy útil.</p>
 
 <p>Se agregaron dos nuevos métodos a  <strong>cache_store</strong>: <strong>fragment_exist?</strong> y <strong>exist?</strong>.</p>
 
-<p>El método <strong>fragment_exist?</strong> hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:</p>
+<p>El método <strong>fragment_exist?</strong> hace exactamente lo que ud. esperaría, verifica si un fragmento está cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:</p>
 
 <pre class="mac_classic">    <span class="FunctionName">read_fragment</span>(path).<span class="FunctionName">nil?</span>
 </pre>
@@ -976,12 +976,12 @@ Veamos un ejemplo:</p>
 
 <h2> Usando el email como nombre de usuario.</h2>
 
-<p>Algunos servicioes usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:</p>
+<p>Algunos servicios usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:</p>
 
 <pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>ernesto.<span class="FunctionName">jimenez</span><span class="Variable"><span class="Variable">@</span>negonation</span>.<span class="FunctionName">com</span><span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>pass</span><span class="Variable"><span class="Variable">@</span>tractis</span>.<span class="FunctionName">com</span>
 </pre>
 
-<p>Pero nos genera un problema. Por que tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió <strong>ActiveResource</strong> un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:</p>
+<p>Pero nos genera un problema. Por que     tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió <strong>ActiveResource</strong> un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:</p>
 
 <pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Person<span class="InheritedClassName"> <span class="InheritedClassName">&lt;</span> ActiveResource::Base</span></span>
       <span class="Variable">self</span>.<span class="FunctionName">site</span> <span class="Keyword">=</span> <span class="String"><span class="String">&quot;</span>http://tractis.com<span class="String">&quot;</span></span>
@@ -1048,7 +1048,7 @@ Veamos un ejemplo:</p>
 
 <h3>  Definiendo un timezone por defecto</h3>
 
-<p>Se agregó una nueva opción al método <strong>time_zone_select</strong>, ahora ud. puede poner un valor por defecto en caso de el usuario no haya seleccionado ningún <strong>TimeZone</strong>, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción <strong>:default</strong> que se puede usar de la siguiente manera:</p>
+<p>Se agregó una nueva opción al método <strong>time_zone_select</strong>, ahora ud. puede poner un valor por defecto en caso de que el usuario no haya seleccionado ningún <strong>TimeZone</strong>, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción <strong>:default</strong> que se puede usar de la siguiente manera:</p>
 
 <pre class="mac_classic">    <span class="FunctionName">time_zone_select</span>(<span class="String"><span class="String">&quot;</span>user<span class="String">&quot;</span></span>, <span class="String"><span class="String">&quot;</span>time_zone<span class="String">&quot;</span></span>, <span class="BuiltInConstant">nil</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>include_blank</span> =&gt; <span class="BuiltInConstant">true</span>)
 
@@ -1606,29 +1606,29 @@ Una acción es definida como método público dentro de los controladores que es
 
 <h3> Map.root</h3>
 
-<p>Now, when using <strong>map.root</strong> you can be much more <strong>DRY</strong> using an alias for that.</p>
+<p>Ahora, podemos usar un alias con  <strong>map.root</strong> para que sea mucho más <strong>DRY</strong>.</p>
 
-<p>In the earlier versions of rails you used to do it like this:</p>
+<p>En las primeras versiones de rails ud. hacia esto:</p>
 
 <pre class="mac_classic">    map.<span class="FunctionName">new_session</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>controller</span> =&gt; <span class="String"><span class="String">'</span>sessions<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>action</span> =&gt; <span class="String"><span class="String">'</span>new<span class="String">'</span></span>
     map.<span class="FunctionName">root</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>controller</span> =&gt; <span class="String"><span class="String">'</span>sessions<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>action</span> =&gt; <span class="String"><span class="String">'</span>new<span class="String">'</span></span>
 </pre>
 
-<p>Now you can do it this way:</p>
+<p>Ahora puede hacer lo mismo de la siguiente manera:</p>
 
 <pre class="mac_classic">    map.<span class="FunctionName">new_session</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>controller</span> =&gt; <span class="String"><span class="String">'</span>sessions<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>action</span> =&gt; <span class="String"><span class="String">'</span>new<span class="String">'</span></span>
     map.<span class="FunctionName">root</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>new_session</span>
 </pre>
 
-<h3> Routes recognition</h3>
+<h3> Reconocimiento de Rutas</h3>
 
-<p>Routes recognition's old implementation used to sweep all routes, one by one, and often turned to be very time consuming. A new and smarter implementation was developed. It creates a tree for routes and the route recognition is made by prefixing, skipping similar routes. This approach lowers recognition time in approximately 2.7 times.</p>
+<p>La vieja implementación del reconocimiento de rutas recorría todas la rutas una a una, lo que hacía que terminara consumiendo mucho tiempo. Se desarrolló una nueva y más inteligente implementación. Esta crea un árbol para las rutas y el reconocimiento de rutas se hace mediante un prefijo, dejando de lado las rutas similares. Esta aproximación baja el tiempo de reconocimiento en aproximadamente 2.7 veces.</p>
 
-<p>All the new implementations are in the file <strong>recognition_optimisation.rb</strong> and its working details are well explained in the comments. See the the documentation inside the source code itself for more information about its implementation.</p>
+<p>Todas las nuevas implementaciones están en el archivo <strong>recognition_optimisation.rb</strong> y los detalles de su funcionamiento están en los comentarios. Vea la documentación dentro del código fuente para más información.</p>
 
 <h3> Assert_routing</h3>
 
-<p>Now it's possible to test a route with an HTTP method. Look at the following example:</p>
+<p>Ahora es posible testear una ruta con un método HTTP. Vea el siguiente ejempo:</p>
 
 <pre class="mac_classic">    <span class="FunctionName">assert_routing</span>({ <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>method</span> =&gt; <span class="String"><span class="String">'</span>put<span class="String">'</span></span>,
                      <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>path</span> =&gt; <span class="String"><span class="String">'</span>/product/321<span class="String">'</span></span> },
@@ -1639,23 +1639,23 @@ Una acción es definida como método público dentro de los controladores que es
 
 <h3> Map.resources</h3>
 
-<p>Imagine you have a site written in a language other than english, and you want to taylor your routes to use the same language. In other words, instead of having:</p>
+<p>Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también estén español. En otras palabras, en vez de tener:</p>
 
 <pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">mysite</span>.<span class="FunctionName">com</span>.<span class="FunctionName">br</span><span class="Keyword">/</span>products<span class="Keyword">/</span><span class="Number">1234</span><span class="Keyword">/</span>reviews
 </pre>
 
-<p>You wished to have something like this:</p>
+<p>quiesiera tener algo así:</p>
 
 <pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">mysite</span>.<span class="FunctionName">com</span>.<span class="FunctionName">br</span><span class="Keyword">/</span>produtos<span class="Keyword">/</span><span class="Number">1234</span><span class="Keyword">/</span>comentarios
 </pre>
 
-<p>This was already possible, but not in a simple way and without compromising some rails conventions.</p>
+<p>Esto era posible, pero no en de una forma simple y sin compromete algunas de las convenciones de rails.</p>
 
-<p>Now we have the option <strong>:as</strong> within <strong>map.resources</strong> to personalize our routes. Look our example to get the URL above in portuguese:</p>
+<p>Ahora tenemos la opción <strong>:as</strong> dentro de <strong>map.resources</strong> para personalizar nuestras rutas. Mire el ejemplo para tener  la URL de arriba en español:</p>
 
 <pre class="mac_classic">    map.<span class="FunctionName">resources</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>products</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="String"><span class="String">'</span>produtos<span class="String">'</span></span> <span class="Keyword">do </span>|<span class="Variable">product</span>|
 <span class="Comment">      <span class="Comment">#</span> product_reviews_path(product) ==</span>
-<span class="Comment">      <span class="Comment">#</span> '/produtos/1234/comentariosâ€™</span>
+<span class="Comment">      <span class="Comment">#</span> '/produtos/1234/comentarios</span>
       product.<span class="FunctionName">resources</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>product_reviews</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="String"><span class="String">'</span>comentarios<span class="String">'</span></span>
     <span class="Keyword">end</span>
 </pre>

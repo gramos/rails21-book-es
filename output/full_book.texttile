@@ -122,7 +122,7 @@ Para seguir con nuestro ejemplo, vamos a crear dos clases que van a representar 
 
 **Person** y **Business** están relacionadas con mi clase  **Client** a través de la tabla  **ContactCard**. En otras palabras, tengo dos tipos de contactos, personal y de negocios.
 
-Por otro cuando intente recuperar un contacto esto no va a funcionar, veamos:
+Por otro lado, cuando intente recuperar un contacto esto no va a funcionar, veamos:
 
         >> Client.find(:first).contacts
         # ArgumentError: /.../active_support/core_ext/hash/keys.rb:48:
@@ -310,7 +310,7 @@ Esta búsqueda genera una consulta como la siguiente:
           LEFT OUTER JOIN posts ON posts.author_id = authors.id
           LEFT OUTER JOIN comments ON comments.author_id = authors.id
 
-Un única consulta SQL con **joins** entre las tablas  **authors**, **posts** y **comments**. A esto lo llamamos **producto cartesiano**.
+Una única consulta SQL con **joins** entre las tablas  **authors**, **posts** y **comments**. A esto lo llamamos **producto cartesiano**.
 
 Este tipo de consultas no siempre tiene una buena performance, entonces esto se cambió en Rails 2.1. La misma consulta para la clase **Author** ahora se hace de una forma diferente para traer la información de las tres tablas. En vez de usar una única consulta SQL con las tres tablas, Rails ahora usa tres consultas diferentes - una por cada tabla - las cuales son más cortas que la anterior. El resultado se puede ver en los logs despues de ejecutar el codigo ruby on rails previo:
 
@@ -624,7 +624,7 @@ Los ya conocidos métodos **has\_one** y **belongs\_to** ahora tienen la opción
 
 El valor por defecto es "*" (como en "SELECT * FROM table"), pero se puede editar para recuperar sólo las columnas que vamos a usar.
 
-No olvide incluir las **claves promarias** y las **claves foráneas**, de lo contrario obtendrá un error.
+No olvide incluir las **claves primarias** y las **claves foráneas**, de lo contrario obtendrá un error.
 
 El método **belongs_to** ya no tiene la opción **:order**. Pero no se preocupe por que realmente no
 era muy útil.
@@ -675,7 +675,7 @@ Antes de la llegada de **timestamped migrations**, cada nueva migración tenía 
 
 Hay varias formas de "intentar" resolver este problema. Se crearon muchos plugins con diferentes maneras de resolver esto. Más allá de los plugins disponibles, una cosa era clara: la antigua forma simplemente no funcionaba.
 
-Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con **migraciones** desactualizadas en tdoas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).
+Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con **migraciones** desactualizadas en todas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).
 
 Para resolver este gran problema, el core team de Rails cambió el funcionanmiento de las migraciones. En vez de anteponer cada archivo de migración con un número, ahora se le antepone con un string basado en la hora **UTC** con el siguiente formato  YYYYMMDDHHMMSS.
 
@@ -765,7 +765,7 @@ La clase **Date** tiene un nuevo método llamado **current** el cual se usa en v
 
 Se agregaron dos nuevos métodos a  **cache\_store**: **fragment\_exist?** y **exist?**.
 
-El método **fragment\_exist?** hace exactamente lo que ud. esperaría, verifica si un fragmento cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:
+El método **fragment\_exist?** hace exactamente lo que ud. esperaría, verifica si un fragmento está cacheado, informado a través de una clave existe. Básicamente sustituyendo al famoso:
 
         read_fragment(path).nil?
 
@@ -861,11 +861,11 @@ ActiveResource es la capa responsable de la implementación de sistemas RESTful 
 
 ## Usando el email como nombre de usuario.
 
-Algunos servicioes usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:
+Algunos servicios usan el e-mail como nombre de usuario, lo cual nos obliga a usar una URL como la siguiente:
 
         http://ernesto.jimenez@negonation.com:pass@tractis.com
 
-Pero nos genera un problema. Por que tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió **ActiveResource** un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:
+Pero nos genera un problema. Por que     tenemos dos (@), el intérprete se pierde cuando lee algo como esto. Por este motivo, Se exntendió **ActiveResource** un poco más, con el fin de facilitar el uso de e-emails para la autenticación. Ahora ud. puede hacer lo siguiente:
 
         class Person < ActiveResource::Base
           self.site = "http://tractis.com"
@@ -925,7 +925,7 @@ Está compuesto por ActionView (generación de visualización para el usuario, p
 
 ###  Definiendo un timezone por defecto
 
-Se agregó una nueva opción al método **time\_zone\_select**, ahora ud. puede poner un valor por defecto en caso de el usuario no haya seleccionado ningún **TimeZone**, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción **:default** que se puede usar de la siguiente manera:
+Se agregó una nueva opción al método **time\_zone\_select**, ahora ud. puede poner un valor por defecto en caso de que el usuario no haya seleccionado ningún **TimeZone**, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción **:default** que se puede usar de la siguiente manera:
 
         time_zone_select("user", "time_zone", nil, :include_blank => true)
 
@@ -1437,27 +1437,29 @@ Una acción es definida como método público dentro de los controladores que es
 ## ActionController::Routing
 
 ### Map.root
-Now, when using **map.root** you can be much more **DRY** using an alias for that.
 
-In the earlier versions of rails you used to do it like this:
+Ahora, podemos usar un alias con  **map.root** para que sea mucho más **DRY**.
+
+En las primeras versiones de rails ud. hacia esto:
 
         map.new_session :controller => 'sessions', :action => 'new'
         map.root :controller => 'sessions', :action => 'new'
 
-Now you can do it this way:
+
+Ahora puede hacer lo mismo de la siguiente manera:
 
         map.new_session :controller => 'sessions', :action => 'new'
         map.root :new_session
 
-### Routes recognition
+### Reconocimiento de Rutas
 
-Routes recognition's old implementation used to sweep all routes, one by one, and often turned to be very time consuming. A new and smarter implementation was developed. It creates a tree for routes and the route recognition is made by prefixing, skipping similar routes. This approach lowers recognition time in approximately 2.7 times.
+La vieja implementación del reconocimiento de rutas recorría todas la rutas una a una, lo que hacía que terminara consumiendo mucho tiempo. Se desarrolló una nueva y más inteligente implementación. Esta crea un árbol para las rutas y el reconocimiento de rutas se hace mediante un prefijo, dejando de lado las rutas similares. Esta aproximación baja el tiempo de reconocimiento en aproximadamente 2.7 veces.
 
-All the new implementations are in the file **recognition\_optimisation.rb** and its working details are well explained in the comments. See the the documentation inside the source code itself for more information about its implementation.
+Todas las nuevas implementaciones están en el archivo **recognition\_optimisation.rb** y los detalles de su funcionamiento están en los comentarios. Vea la documentación dentro del código fuente para más información.
 
 ### Assert_routing
 
-Now it's possible to test a route with an HTTP method. Look at the following example:
+Ahora es posible testear una ruta con un método HTTP. Vea el siguiente ejempo:
 
         assert_routing({ :method => 'put',
                          :path => '/product/321' },
@@ -1467,21 +1469,23 @@ Now it's possible to test a route with an HTTP method. Look at the following exa
 
 ### Map.resources
 
-Imagine you have a site written in a language other than english, and you want to taylor your routes to use the same language. In other words, instead of having:
+Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también estén español. En otras palabras, en vez de tener:
 
         http://www.mysite.com.br/products/1234/reviews
 
-You wished to have something like this:
+quiesiera tener algo así:
 
         http://www.mysite.com.br/produtos/1234/comentarios
 
-This was already possible, but not in a simple way and without compromising some rails conventions.
 
-Now we have the option **:as** within **map.resources** to personalize our routes. Look our example to get the URL above in portuguese:
+
+Esto era posible, pero no en de una forma simple y sin compromete algunas de las convenciones de rails.
+
+Ahora tenemos la opción **:as** dentro de **map.resources** para personalizar nuestras rutas. Mire el ejemplo para tener  la URL de arriba en español:
 
         map.resources :products, :as => 'produtos' do |product|
           # product_reviews_path(product) ==
-          # '/produtos/1234/comentariosâ€™
+          # '/produtos/1234/comentarios
           product.resources :product_reviews, :as => 'comentarios'
         end
 <!-- -*- mode: markdown; coding: utf-8; -*- -->

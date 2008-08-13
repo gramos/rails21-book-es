@@ -26,7 +26,7 @@ Esta búsqueda genera una consulta como la siguiente:
           LEFT OUTER JOIN posts ON posts.author_id = authors.id
           LEFT OUTER JOIN comments ON comments.author_id = authors.id
 
-Un única consulta SQL con **joins** entre las tablas  **authors**, **posts** y **comments**. A esto lo llamamos **producto cartesiano**.
+Una única consulta SQL con **joins** entre las tablas  **authors**, **posts** y **comments**. A esto lo llamamos **producto cartesiano**.
 
 Este tipo de consultas no siempre tiene una buena performance, entonces esto se cambió en Rails 2.1. La misma consulta para la clase **Author** ahora se hace de una forma diferente para traer la información de las tres tablas. En vez de usar una única consulta SQL con las tres tablas, Rails ahora usa tres consultas diferentes - una por cada tabla - las cuales son más cortas que la anterior. El resultado se puede ver en los logs despues de ejecutar el codigo ruby on rails previo:
 

@@ -4,7 +4,7 @@
 
 ###  Definiendo un timezone por defecto
 
-Se agregó una nueva opción al método **time\_zone\_select**, ahora ud. puede poner un valor por defecto en caso de el usuario no haya seleccionado ningún **TimeZone**, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción **:default** que se puede usar de la siguiente manera:
+Se agregó una nueva opción al método **time\_zone\_select**, ahora ud. puede poner un valor por defecto en caso de que el usuario no haya seleccionado ningún **TimeZone**, o cuando la columna en la base de datos es null. Para hacer esto, se creó la opción **:default** que se puede usar de la siguiente manera:
 
         time_zone_select("user", "time_zone", nil, :include_blank => true)
 

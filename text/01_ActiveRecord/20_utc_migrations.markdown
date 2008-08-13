@@ -8,7 +8,7 @@ Antes de la llegada de **timestamped migrations**, cada nueva migración tenía 
 
 Hay varias formas de "intentar" resolver este problema. Se crearon muchos plugins con diferentes maneras de resolver esto. Más allá de los plugins disponibles, una cosa era clara: la antigua forma simplemente no funcionaba.
 
-Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con **migraciones** desactualizadas en tdoas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).
+Si ud. estuviese usando Git, entonces se podría complicar mucho más, su equipo probablemente tenga algunas ramas (branches) con **migraciones** desactualizadas en todas ellas. Probablemente tenga serios conflictos a la ahora de hacer un merge de esas ramas (branches).
 
 Para resolver este gran problema, el core team de Rails cambió el funcionanmiento de las migraciones. En vez de anteponer cada archivo de migración con un número, ahora se le antepone con un string basado en la hora **UTC** con el siguiente formato  YYYYMMDDHHMMSS.
 
