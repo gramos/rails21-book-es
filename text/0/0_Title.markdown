@@ -29,7 +29,7 @@ A toda la comunidad Brazilera de Ruby on Rails que nos ayudó directa o indirect
 
 ## Traductores
 
-Este libro fue orgullosamente traducido al español inglés por estos chicos Argenitnos:
+Este libro fue orgullosamente traducido al español por estos chicos Argentinos:
 
 **Lucas Florio** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
 
