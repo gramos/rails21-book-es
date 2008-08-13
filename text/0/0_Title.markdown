@@ -29,24 +29,13 @@ A toda la comunidad Brazilera de Ruby on Rails que nos ayudó directa o indirect
 
 ## Traductores
 
-Este libro fue orgullosamente traducido al inglés por estos chicos Brazileros:
+Este libro fue orgullosamente traducido al español inglés por estos chicos Argenitnos:
 
-**Pedro Pimentel** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
+**Lucas Florio** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
 
-Capítulos 3-8 y 10-13
+Capítulos 8-12
 
-**Rafael Barbosa** - [http://www.act-as-newbie.com](http://www.act-as-newbie.com/)
+**Gastón Ramos** - [http://gastonramos.wordpress.com](http://gastonramos.wordpress.com)
 
-Introducción y capítulo 1
+Introducción y capítulos 1-7, 13-14
 
-**Ricardo S Yasuda** - [http://blog.shadowmaru.org](http://blog.shadowmaru.org/)
-
-Capítulo 14
-
-**Caike Souza** - [http://tech-death.blogspot.com](http://tech-death.blogspot.com/)
-
-Capítulo 2
-
-**AbraÃ£o Coelho** - [http://abrcoelho.net](http://abrcoelho.net/)
-
-Capítulo 9
