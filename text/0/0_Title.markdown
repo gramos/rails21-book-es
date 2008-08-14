@@ -31,7 +31,7 @@ A toda la comunidad Brazilera de Ruby on Rails que nos ayudó directa o indirect
 
 Este libro fue orgullosamente traducido al español por estos chicos Argentinos:
 
-**Lucas Florio** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
+**Lucas Florio** - [http://blog.lucasefe.com.ar/](http://blog.lucasefe.com.ar/)
 
 Capítulos 8-12
 
