@@ -35,22 +35,22 @@ Ahora es posible testear una ruta con un método HTTP. Vea el siguiente ejempo:
 
 ### Map.resources
 
-Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también estén español. En otras palabras, en vez de tener:
+Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también para que se correspondan con el idioma. En otras palabras, en vez de tener:
 
         http://www.mysite.com.br/products/1234/reviews
 
-quiesiera tener algo así:
+quisiera tener algo así:
 
-        http://www.mysite.com.br/produtos/1234/comentarios
+        http://www.mysite.com.br/productos/1234/comentarios
 
 
 
-Esto era posible, pero no en de una forma simple y sin compromete algunas de las convenciones de rails.
+Esto era posible, pero no en de una forma simple y sin comprometer algunas de las convenciones de rails.
 
-Ahora tenemos la opción **:as** dentro de **map.resources** para personalizar nuestras rutas. Mire el ejemplo para tener  la URL de arriba en español:
+Ahora tenemos la opción **:as** dentro de **map.resources** para personalizar nuestras rutas. Mire el ejemplo para obtener la URL de arriba en español:
 
-        map.resources :products, :as => 'produtos' do |product|
+        map.resources :products, :as => 'productos' do |product|
           # product_reviews_path(product) ==
-          # '/produtos/1234/comentarios
+          # '/productos/1234/comentarios
           product.resources :product_reviews, :as => 'comentarios'
         end

@@ -2,6 +2,6 @@
 
 # ActionController
 
-ActionController es la capa responsable de recibir las peticiones web y tomar decisiones de qué se debe ejecutar y renderizar o redirgir la petición a otra acctión
+ActionController es la capa responsable de recibir las peticiones web y tomar decisiones con respecto a qué se debe ejecutar y renderizar o si se debe redirigir la petición a otra acción
 Una acción es definida como método público dentro de los controladores que están automáticamente disponibles a través de las rutas.
 
