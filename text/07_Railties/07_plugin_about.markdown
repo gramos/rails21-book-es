@@ -1,6 +1,6 @@
 ##Obteniendo información acerca de un plugin
 
-Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
+Esta es una de las nuevas características de Rails 2.1 que probablemente nunca use. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
 
 Para probarlo, necesitamos crear un archivo que se llame *about.yml* en el directorio del plugin, con algo como lo siguiente:
 
@@ -15,5 +15,5 @@ Podemos obtener esta información luego de esta manera:
 	plugin.about["author"] # => “Carlos Brando”
 	plugin.about["url"] # => “http://www.nomedojogo.com”
 
-Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
+Si encuentras algún buen uso de esta carácterística y la quieres compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
 

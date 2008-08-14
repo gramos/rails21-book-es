@@ -19,12 +19,12 @@ También es posible listar cuales gemas están siendo usadas en el proyecto ejec
 	# Listando todas las dependencias
 	rake gems
 
-Si una de las gemas tiene un archivo **rails/init.rb** y vos querés llevar la gema con tu aplicación, podés hacer: 
+Si una de las gemas tiene un archivo **rails/init.rb** y vos querés llevar la gema con tu aplicación, puedes hacer: 
 
 	# Copia la gema especificada a vendor/gems/nome_do_gem-x.x.x
 	rake gems:unpack GEM=gem_name
 
-Entonces, la gema será copiada al directorio **vendor/gems/gem\_name-x.x.x**. En caso de no especificas el nombre de la gema, Rails copiará todas las gemas al directorio **vendor/gem**
+Entonces, la gema será copiada al directorio **vendor/gems/gem\_name-x.x.x**. En caso de no especificar el nombre de la gema, Rails copiará todas las gemas al directorio **vendor/gem**
 
 ## config.gem en plugins
 
@@ -46,4 +46,4 @@ Pero en Rails 2.1 el archivo **init.rb** sería:
 	  ActionController::Base.send :include, OpenIdAuthentication
 	end
 
-Así que, cuando ejecutes la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.
+Así que, cuando ejecute la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.

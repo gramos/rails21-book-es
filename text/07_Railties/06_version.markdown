@@ -4,7 +4,7 @@ En versiones anteriores para descubrir, en tiempo de ejecución, cual es la vers
 
 	Rails::VERSION::STRING
 
-En Rails 2.1 cambió a:
+En Rails 2.1 usamos:
 
 	Rails.version
 
