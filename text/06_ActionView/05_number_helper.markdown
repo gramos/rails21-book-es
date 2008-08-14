@@ -18,7 +18,7 @@ Por otro lado, podemos personalizar de otras formas, por ejemplo:
 		:delimiter => ".", :unit => "R$")
 	# => "9,99 em reais"
 
-Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: 
+Cuando creas tu cadena de formateo, se puede especificar el siguiente parámetro: 
 
 	%u Para la moneda
 	%n Para el número
