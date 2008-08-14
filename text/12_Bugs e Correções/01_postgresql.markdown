@@ -1,8 +1,8 @@
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-## Aregar columnas en PostgreSQL
+## Agregar columnas en PostgreSQL
 
-Había un bug usando  **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
+Existía un bug cuando se usaba **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
 
 
 Archivo: *db/migrate/002\_add\_cost.rb*
@@ -18,7 +18,7 @@ Archivo: *db/migrate/002\_add\_cost.rb*
           end
         end
 
-Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
+Note que estamos creando una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
 
 <table border="1" cellspacing="0" cellpadding="5">
         <tr>
@@ -48,5 +48,5 @@ Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**.
         </tr>
 </table>
 
-Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columan se crea correctamente.
+Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columa se crea correctamente.
 
