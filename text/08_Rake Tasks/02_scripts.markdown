@@ -10,4 +10,4 @@ Se agregó soporte para plugins alojados en repositorios GIT.
 
 Este script hace lo mismo que script/console, solo que para la base de datos. En otras palabras, te conecta con el cliente por línea de comando de tu base de datos.
 
-Mirando al código, este funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".
+Mirando al código, éste funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".
