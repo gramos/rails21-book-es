@@ -81,7 +81,7 @@
 
 <p>Este libro fue orgullosamente traducido al español por estos chicos Argentinos:</p>
 
-<p><strong>Lucas Florio</strong> - <a href="http://www.pedropimentel.com">http://www.pedropimentel.com</a></p>
+<p><strong>Lucas Florio</strong> - <a href="http://blog.lucasefe.com.ar/">http://blog.lucasefe.com.ar/</a></p>
 
 <p>Capítulos 8-12</p>
 
@@ -1586,7 +1586,7 @@ Veamos un ejemplo:</p>
 
 <h1> ActionController</h1>
 
-<p>ActionController es la capa responsable de recibir las peticiones web y tomar decisiones de qué se debe ejecutar y renderizar o redirgir la petición a otra acctión
+<p>ActionController es la capa responsable de recibir las peticiones web y tomar decisiones con respecto a qué se debe ejecutar y renderizar o si se debe redirigir la petición a otra acción
 Una acción es definida como método público dentro de los controladores que están automáticamente disponibles a través de las rutas.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
@@ -1629,23 +1629,23 @@ Una acción es definida como método público dentro de los controladores que es
 
 <h3> Map.resources</h3>
 
-<p>Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también estén español. En otras palabras, en vez de tener:</p>
+<p>Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también para que se correspondan con el idioma. En otras palabras, en vez de tener:</p>
 
 <pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">mysite</span>.<span class="FunctionName">com</span>.<span class="FunctionName">br</span><span class="Keyword">/</span>products<span class="Keyword">/</span><span class="Number">1234</span><span class="Keyword">/</span>reviews
 </pre>
 
-<p>quiesiera tener algo así:</p>
+<p>quisiera tener algo así:</p>
 
-<pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">mysite</span>.<span class="FunctionName">com</span>.<span class="FunctionName">br</span><span class="Keyword">/</span>produtos<span class="Keyword">/</span><span class="Number">1234</span><span class="Keyword">/</span>comentarios
+<pre class="mac_classic">    http<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>/</span><span class="Keyword">/</span>www.<span class="FunctionName">mysite</span>.<span class="FunctionName">com</span>.<span class="FunctionName">br</span><span class="Keyword">/</span>productos<span class="Keyword">/</span><span class="Number">1234</span><span class="Keyword">/</span>comentarios
 </pre>
 
-<p>Esto era posible, pero no en de una forma simple y sin compromete algunas de las convenciones de rails.</p>
+<p>Esto era posible, pero no en de una forma simple y sin comprometer algunas de las convenciones de rails.</p>
 
-<p>Ahora tenemos la opción <strong>:as</strong> dentro de <strong>map.resources</strong> para personalizar nuestras rutas. Mire el ejemplo para tener  la URL de arriba en español:</p>
+<p>Ahora tenemos la opción <strong>:as</strong> dentro de <strong>map.resources</strong> para personalizar nuestras rutas. Mire el ejemplo para obtener la URL de arriba en español:</p>
 
-<pre class="mac_classic">    map.<span class="FunctionName">resources</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>products</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="String"><span class="String">'</span>produtos<span class="String">'</span></span> <span class="Keyword">do </span>|<span class="Variable">product</span>|
+<pre class="mac_classic">    map.<span class="FunctionName">resources</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>products</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="String"><span class="String">'</span>productos<span class="String">'</span></span> <span class="Keyword">do </span>|<span class="Variable">product</span>|
 <span class="Comment">      <span class="Comment">#</span> product_reviews_path(product) ==</span>
-<span class="Comment">      <span class="Comment">#</span> '/produtos/1234/comentarios</span>
+<span class="Comment">      <span class="Comment">#</span> '/productos/1234/comentarios</span>
       product.<span class="FunctionName">resources</span> <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>product_reviews</span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>as</span> =&gt; <span class="String"><span class="String">'</span>comentarios<span class="String">'</span></span>
     <span class="Keyword">end</span>
 </pre>
@@ -1704,7 +1704,7 @@ Una acción es definida como método público dentro de los controladores que es
 
 <h2> ActionView::Helpers::DateHelper</h2>
 
-<p>Ahora, todos estos métodos de módulo para trabajar con fechas (<strong>date_select</strong>, <strong>time_select</strong>, <strong>select_datetime</strong>, etc.) aceptan opciones  <strong>HTML</strong>. Mira un ejemplo usando <strong>date_select</strong></p>
+<p>Ahora todos estos métodos de módulo para trabajar con fechas (<strong>date_select</strong>, <strong>time_select</strong>, <strong>select_datetime</strong>, etc.) aceptan opciones  <strong>HTML</strong>. Mira un ejemplo usando <strong>date_select</strong></p>
 
 <pre class="mac_classic"><span class="Keyword">&lt;</span><span class="Keyword">%=</span> date_select <span class="String"><span class="String">'</span>item<span class="String">'</span></span>,<span class="String"><span class="String">'</span>happening<span class="String">'</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>order</span> =&gt; [<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>day</span>], <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>foobar<span class="String">'</span></span><span class="String"><span class="String">%&gt;</span></span>
 </pre>
@@ -1784,7 +1784,7 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;9,99 em reais&quot;</span>
 </pre>
 
-<p>Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: </p>
+<p>Cuando creas tu cadena de formateo, se puede especificar el siguiente parámetro: </p>
 
 <pre class="mac_classic"><span class="Keyword">%</span>u <span class="Variable">Para</span> la moneda
 <span class="Keyword">%</span>n <span class="Variable">Para</span> el número
@@ -1800,7 +1800,7 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;…s is an examp…&quot;</span>
 </pre>
 
-<p>Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y fue corregido. Mira el ejemplo de la salida correcta de este método:</p>
+<p>Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y se corrigió. Mira el ejemplo de la salida correcta de este método:</p>
 
 <pre class="mac_classic"><span class="FunctionName">excerpt</span>(<span class="String"><span class="String">'</span>This is an example<span class="String">'</span></span>, <span class="String"><span class="String">'</span>an<span class="String">'</span></span>, <span class="Number">5</span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;…s is an exam…&quot;</span>
@@ -1810,7 +1810,7 @@ stylesheet_link_tag <span class="UserDefinedConstant"><span class="UserDefinedCo
 
 <p>El método <strong>simple_format</strong> básicamente recibe como parámetro cualquier texto y le da formato de una manera muy simple a <strong>HTML</strong>. Toma el texto y reemplaza los saltos de línea (\n) por el tag <strong>HTML</strong> "&lt; br />". Y cuando tenemos dos saltos de línea, uno atrás del otro, separa el texto con tags "&lt; p>".</p>
 
-<p>En Rails 2.1 este método recibe un parámetros adicional. Además del texto, podemos informarle que atributo <strong>HTML</strong> nos gustaria que el tag "&lt; p>" incluyera. Veamos el ejemplo: </p>
+<p>En Rails 2.1 este método recibe un parámetro adicional. Además del texto, podemos informarle que atributo <strong>HTML</strong> nos gustaria que el tag "&lt; p>" incluyera. Veamos el ejemplo: </p>
 
 <pre class="mac_classic"><span class="FunctionName">simple_format</span>(<span class="String"><span class="String">&quot;</span>Hello Mom!<span class="String">&quot;</span></span>, <span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>class</span> =&gt; <span class="String"><span class="String">'</span>description<span class="String">'</span></span>)
 <span class="Comment"><span class="Comment">#</span> =&gt; &quot;&lt;p class=’description’&gt;Hello Mom!&lt;/p&gt;&quot;</span>
@@ -1844,13 +1844,13 @@ rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</
 rake gems
 </pre>
 
-<p>Si una de las gemas tiene un archivo <strong>rails/init.rb</strong> y vos querés llevar la gema con tu aplicación, podés hacer: </p>
+<p>Si una de las gemas tiene un archivo <strong>rails/init.rb</strong> y vos querés llevar la gema con tu aplicación, puedes hacer: </p>
 
 <pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> Copia la gema especificada a vendor/gems/nome_do_gem-x.x.x</span>
 rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>unpack</span> <span class="Variable">GEM</span><span class="Keyword">=</span>gem_name
 </pre>
 
-<p>Entonces, la gema será copiada al directorio <strong>vendor/gems/gem_name-x.x.x</strong>. En caso de no especificas el nombre de la gema, Rails copiará todas las gemas al directorio <strong>vendor/gem</strong></p>
+<p>Entonces, la gema será copiada al directorio <strong>vendor/gems/gem_name-x.x.x</strong>. En caso de no especificar el nombre de la gema, Rails copiará todas las gemas al directorio <strong>vendor/gem</strong></p>
 
 <h2> config.gem en plugins</h2>
 
@@ -1874,7 +1874,7 @@ config.<span class="FunctionName">after_initialize</span> <span class="Keyword">
 <span class="Keyword">end</span>
 </pre>
 
-<p>Así que, cuando ejecutes la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.</p>
+<p>Así que, cuando ejecute la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.</p>
 
 <h2> gems:build</h2>
 
@@ -1900,7 +1900,7 @@ rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</
 
 <h2> Rails.logger, Rails.root, Rails.env y Rails.cache</h2>
 
-<p>En Rails 2.1 en vez de usar las constantes: <strong>RAILS_DEFAULT_LOGGER</strong>, <strong>RAILS_ROOT</strong>, <strong>RAILS_ENV</strong> and <strong>RAILS_CACHE</strong>. Ahora usaremos:</p>
+<p>En Rails 2.1 en vez de usar las constantes: <strong>RAILS_DEFAULT_LOGGER</strong>, <strong>RAILS_ROOT</strong>, <strong>RAILS_ENV</strong> y <strong>RAILS_CACHE</strong>, usaremos:</p>
 
 <pre class="mac_classic"><span class="Comment"><span class="Comment">#</span> RAILS_DEFAULT_LOGGER</span>
 <span class="LibraryObject">Rails</span>.<span class="FunctionName">logger</span>
@@ -1922,14 +1922,14 @@ rake gems<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</
 <pre class="mac_classic"><span class="LibraryObject">Rails</span>::<span class="FunctionName">VERSION</span>::<span class="FunctionName">STRING</span>
 </pre>
 
-<p>En Rails 2.1 cambió a:</p>
+<p>En Rails 2.1 usamos:</p>
 
 <pre class="mac_classic"><span class="LibraryObject">Rails</span>.<span class="FunctionName">version</span>
 </pre>
 
 <h2>Obteniendo información acerca de un plugin</h2>
 
-<p>Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. </p>
+<p>Esta es una de las nuevas características de Rails 2.1 que probablemente nunca use. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. </p>
 
 <p>Para probarlo, necesitamos crear un archivo que se llame <em>about.yml</em> en el directorio del plugin, con algo como lo siguiente:</p>
 
@@ -1946,7 +1946,7 @@ plugin.<span class="FunctionName">about</span>[<span class="String"><span class=
 plugin.<span class="FunctionName">about</span>[<span class="String"><span class="String">&quot;</span>url<span class="String">&quot;</span></span>] <span class="Comment"><span class="Comment">#</span> =&gt; “http://www.nomedojogo.com”</span>
 </pre>
 
-<p>Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. </p>
+<p>Si encuentras algún buen uso de esta carácterística y la quieres compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. </p>
 
 <h1> Rake Tasks, Plugins y Scripts</h1>
 
@@ -1954,15 +1954,15 @@ plugin.<span class="FunctionName">about</span>[<span class="String"><span class=
 
 <h3> rails:update</h3>
 
-<p>De ahora en más, cada vez que ejecutes la tarea <strong>rake rails:freeze:edge</strong>, esta también ejecutará  <strong>rails:update</strong>, actualizando los archivos de configuración y los <em>JavaScripts</em>.</p>
+<p>De ahora en más, cada vez que se ejecute la tarea <strong>rake rails:freeze:edge</strong>, esta también ejecutará  <strong>rails:update</strong>, actualizando los archivos de configuración y los <em>JavaScripts</em>.</p>
 
 <h3> Base de datos en 127.0.0.1</h3>
 
-<p>Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará <strong>127.0.0.1</strong>. Esto funciona para las tareas <strong>create</strong> y <strong>drop</strong>. El archivo database.rake también fue refactorizado para hacer el codigo menos repetitivo. </p>
+<p>Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará <strong>127.0.0.1</strong>. Esto funciona para las tareas <strong>create</strong> y <strong>drop</strong>. El archivo database.rake también fue refactorizado para hacer el código menos repetitivo. </p>
 
 <h3> Congelando a una versión de Rails específica.</h3>
 
-<p>Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Solo podías utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: </p>
+<p>Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Sólo se podía utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: </p>
 
 <pre class="mac_classic">rake rails<span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>freeze</span><span class="UserDefinedConstant"><span class="UserDefinedConstant">:</span>edge</span> <span class="Variable">RELEASE</span><span class="Keyword">=</span><span class="Number">1.2</span>.<span class="Number">0</span>
 </pre>
@@ -1971,11 +1971,11 @@ plugin.<span class="FunctionName">about</span>[<span class="String"><span class=
 
 <h4> rake time:zones:all</h4>
 
-<p>Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También podés filtar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.</p>
+<p>Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También se puede filtrar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.</p>
 
 <h4> rake time:zones:us</h4>
 
-<p>Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es valida en este contexto.</p>
+<p>Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es válida en este contexto.</p>
 
 <h4> rake time:zones:local</h4>
 
@@ -1992,13 +1992,13 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <p>Este script hace lo mismo que script/console, solo que para la base de datos. En otras palabras, te conecta con el cliente por línea de comando de tu base de datos.</p>
 
-<p>Mirando al código, este funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".</p>
+<p>Mirando al código, éste funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".</p>
 
 <h2> Plugins</h2>
 
-<h3> Gemas ahora pueden ser plugins</h3>
+<h3> Las Gemas ahora pueden ser plugins</h3>
 
-<p>Ahora, cualqioer gema que tenga un archivo <strong>rails/init.rb</strong> puede ser instalado dentro del directorio <strong>vendor</strong> de tu proyecto Rails igual que un <strong>plugin</strong>.</p>
+<p>Ahora, cualquier gema que tenga un archivo <strong>rails/init.rb</strong> puede ser instalado dentro del directorio <strong>vendor</strong> de tu proyecto Rails igual que un <strong>plugin</strong>.</p>
 
 <h3> Usando generadores en plugins</h3>
 
@@ -2007,7 +2007,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 <pre class="mac_classic">config.<span class="FunctionName">plugin_paths</span> <span class="Keyword">=</span> [<span class="String"><span class="String">'</span>lib/plugins<span class="String">'</span></span>, <span class="String"><span class="String">'</span>vendor/plugins<span class="String">'</span></span>]
 </pre>
 
-<p>Rails 2.0 tenía un bug en esta configuración que muestraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentra generadores en plugins que estén dentro de <strong>vendor/plugins</strong>. En Rails 2.1 ese bug fue corregido.   <br/>
+<p>Rails 2.0 tenía un bug en esta configuración que mostraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentraba generadores en plugins que estuvieran dentro de <strong>vendor/plugins</strong>. En Rails 2.1 ese bug fue corregido.  <br/>
 </p>
 
 <h1> Prototype y script.aculo.us</h1>
@@ -2020,13 +2020,13 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <h2> Details</h2>
 
-<p>El foco principal de los cambios de Rails fue Ruby 1.9, aún detalles menores fueon analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar <strong>File.exists?</strong> por <strong>File.exist?</strong> no fueron dejados de lado.</p>
+<p>El foco principal de los cambios de Rails fue Ruby 1.9. Aspectos menores fueron analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar <strong>File.exists?</strong> por <strong>File.exist?</strong> no fueron dejados de lado.</p>
 
-<p>Además, en Ruby 1.9, el modulo <strong>Base64</strong> (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  <strong>ActiveSupport::Base64</strong>.</p>
+<p>Además, en Ruby 1.9, el módulo <strong>Base64</strong> (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  <strong>ActiveSupport::Base64</strong>.</p>
 
 <h2>Nuevos métodos para la clase DateTime</h2>
 
-<p>Con el objetivo de mantener compatibilidad (duck-typing) con la clase <strong>Time</strong>, tres nuevos métodos fueron agregado a la clase <strong>DateTime</strong>. Los métodos son <strong>#utc</strong>, <strong>#utc?</strong> y <strong>#utc_offset</strong>. veamos un ejemplo de cada uno:</p>
+<p>Con el objetivo de mantener compatibilidad (duck-typing) con la clase <strong>Time</strong>, tres nuevos métodos fueron agregados a la clase <strong>DateTime</strong>. Los métodos son <strong>#utc</strong>, <strong>#utc?</strong> y <strong>#utc_offset</strong>. veamos un ejemplo de cada uno:</p>
 
 <pre class="mac_classic"><span class="Keyword">&gt;&gt;</span> date <span class="Keyword">=</span> <span class="LibraryObject">DateTime</span>.<span class="FunctionName">civil</span>(<span class="Number">2005</span>, <span class="Number">2</span>, <span class="Number">21</span>, <span class="Number">10</span>, <span class="Number">11</span>, <span class="Number">12</span>, <span class="Variable">Rational</span>(<span class="Keyword">-</span><span class="Number">6</span>, <span class="Number">24</span>))
 <span class="Comment"><span class="Comment">#</span>=&gt; Mon, 21 Feb 2005 10:11:12 -0600</span>
@@ -2048,7 +2048,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <h2>Ruby-debug Nativo</h2>
 
-<p>Fue habilitado nuevamente la opción para utilizar <strong>ruby-debug</strong> en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método <strong>debugger</strong>.</p>
+<p>Fue habilitada nuevamente la opción para utilizar <strong>ruby-debug</strong> en pruebas con Rails. Ahora, teniendo en cuenta que la gema debe estar instalada, sólo se necesita el usar el método <strong>debugger</strong>.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
@@ -2058,9 +2058,9 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 
-<h2> Aregar columnas en PostgreSQL</h2>
+<h2> Agregar columnas en PostgreSQL</h2>
 
-<p>Había un bug usando  <strong>PostgreSQL</strong>. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:</p>
+<p>Existía un bug cuando se usaba <strong>PostgreSQL</strong>. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:</p>
 
 <p>Archivo: <em>db/migrate/002_add_cost.rb</em></p>
 
@@ -2076,7 +2076,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
     <span class="Keyword">end</span>
 </pre>
 
-<p>Note que estamos creadno una columna con <strong>:precision => 6</strong> y  <strong>:scale => 2</strong>. Ahora ejecutamos <strong>rake db:migrate</strong> y vemos como se ve nuestra tabla en la base de datos:</p>
+<p>Note que estamos creando una columna con <strong>:precision => 6</strong> y  <strong>:scale => 2</strong>. Ahora ejecutamos <strong>rake db:migrate</strong> y vemos como se ve nuestra tabla en la base de datos:</p>
 
 <table border="1" cellspacing="0" cellpadding="5">
         <tr>
@@ -2107,7 +2107,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 </table>
 
 
-<p>Vea la columna "cost" que acabamos de crear. Es un <strong>numeric</strong> común, pero debería ser como la columna "price" de arriba, más precisamente un <strong>numeric(6,2)</strong>. En Rails 2.1 este error no sucede más y la columan se crea correctamente.</p>
+<p>Vea la columna "cost" que acabamos de crear. Es un <strong>numeric</strong> común, pero debería ser como la columna "price" de arriba, más precisamente un <strong>numeric(6,2)</strong>. En Rails 2.1 este error no sucede más y la columa se crea correctamente.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
@@ -2148,7 +2148,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 
 <p>Vea la llamada al método  <strong>protect_from_forgery</strong>.</p>
 
-<p>¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de un fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.</p>
+<p>¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de un fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.</p>
 
 <p>Cross Site Request Forgery es un tipo de ataque fuerza al usuario a ejecutar comandos si que este lo sepa. Y con el incremento del uso de ajax, las cosas empeoran.</p>
 
@@ -2164,14 +2164,14 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
 </ul>
 
 
-<p>Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, noes una bala de plata.</p>
+<p>Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, no es una bala de plata.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 
 <h2> Use method_missing, sin dejar cabos sueltos</h2>
 
-<p>Debido a la naturaleza dinámica de Ruby, el método <strong>respond_to?</strong> es crucial. ¿Cuantas veces necesitamos verificar si un método existe en el objeto que estamos manipulando, o si un objeto es lo que estamos esperando (<strong>is_a?</strong>)?</p>
+<p>Debido a la naturaleza dinámica de Ruby, el método <strong>respond_to?</strong> es crucial. ¿Cuántas veces necesitamos verificar si un método existe en el objeto que estamos manipulando, o si un objeto es lo que estamos esperando (<strong>is_a?</strong>)?</p>
 
 <p>Sin embargo hay algo muy importante que mucha gente olvida. Mire por ejemplo esta clase que usa el método <strong>method_missing</strong>:</p>
 
@@ -2191,7 +2191,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
     rex.<span class="FunctionName">ladrar_y_correr</span> <span class="Comment"><span class="Comment">#</span>=&gt; woofwoof!</span>
 </pre>
 
-<p>Creo que ud conoce <strong>method_missing</strong>, o no? En el ejemplo de arriba estoy creando una instacia de la clase <strong>Perro</strong> y llamando a los métodos <strong>ladrar</strong>, <strong>ladrar!</strong> y <strong>ladrar<em>y</em>correr</strong> que no existen. Entonces el método <strong>method_missing</strong> es invocado, dónde uso una simple expresión regular para retornar "woofwoof!", en caso de que el nombre del m;etodo comience con ladrar.</p>
+<p>Creo que ud conoce <strong>method_missing</strong>, o no? En el ejemplo de arriba estoy creando una instacia de la clase <strong>Perro</strong> y llamando a los métodos <strong>ladrar</strong>, <strong>ladrar!</strong> y <strong>ladrar<em>y</em>correr</strong> que no existen. Entonces el método <strong>method_missing</strong> es invocado, donde uso una simple expresión regular para retornar "woofwoof!", en caso  que el nombre del método comience con ladrar.</p>
 
 <p>Pero veamos que pasa cuando intento usar el método <strong>respond_to?</strong>:</p>
 
@@ -2199,7 +2199,7 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
     rex.<span class="FunctionName">ladrar</span> <span class="Comment"><span class="Comment">#</span>=&gt; woofwoof!</span>
 </pre>
 
-<p>Retorna false, y tiene mucho sentido dado que el método no existe realmente. Entonces es mi responsabilidad cambiar el método <strong>respond_to?</strong> para que funcione correctamente con esta regla especial. Voy a cambiar mi clase así:</p>
+<p>Retorna false, y tiene mucho sentido dado que el método no existe realmente. Entonces es mi responsabilidad cambiar el método <strong>respond_to?</strong> para que funcione correctamente con esta regla especial. Voy a modificar mi clase de la siguiente forma:</p>
 
 <pre class="mac_classic">    <span class="Keyword">class</span> <span class="TypeName">Perro</span>
       <span class="Variable">METODO_LADRAR</span> <span class="Keyword">=</span> <span class="String"><span class="String">/</span></span><span class="String">^ladrar</span><span class="String"><span class="String">/</span></span>
@@ -2223,18 +2223,18 @@ Se agregó soporte para plugins alojados en repositorios GIT.</p>
     rex.<span class="FunctionName">ladrar</span> <span class="Comment"><span class="Comment">#</span>=&gt; woofwoof!</span>
 </pre>
 
-<p>Ahora sí! Este es un error muy común que he visto en algunos códigos, inclusive el propio Rails. Intente ejecutar el método  <strong>respond_to?</strong> para verificar la existencia de métodos como <strong>find_by_name</strong>, por ejemplo.</p>
+<p>Ahora sí! Este es un error muy común que he visto en algunos códigos, inclusive en el propio Rails. Intente ejecutar el método  <strong>respond_to?</strong> para verificar la existencia de métodos como <strong>find_by_name</strong>, por ejemplo.</p>
 
 <p>Ruby es un lenguaje impresionante y altamente flexible, pero si no prestamos atención podemos dejar cabos sueltos como este.</p>
 
-<p>Por supuesto que en Rails 2.1 este problema se solucionó, podemos usar  <strong>respond_to?</strong> para verificar la existencia de métodos como <strong>find_by_algo</strong>.</p>
+<p>Por supuesto que en Rails 2.1 este problema ya se solucionó. Podemos usar  <strong>respond_to?</strong> para verificar la existencia de métodos como <strong>find_by_algo</strong>.</p>
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
 
 <h2> PostgreSQL</h2>
 
-<p>En Rails 2.0, el adaptador para <strong>PostgreSQL</strong> tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3</p>
+<p>En Rails 2.0, el adaptador para <strong>PostgreSQL</strong> tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3.</p>
 
 <h1> CHANGELOG</h1>
 

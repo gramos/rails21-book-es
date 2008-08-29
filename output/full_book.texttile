@@ -31,7 +31,7 @@ A toda la comunidad Brazilera de Ruby on Rails que nos ayudó directa o indirect
 
 Este libro fue orgullosamente traducido al español por estos chicos Argentinos:
 
-**Lucas Florio** - [http://www.pedropimentel.com](http://www.pedropimentel.com)
+**Lucas Florio** - [http://blog.lucasefe.com.ar/](http://blog.lucasefe.com.ar/)
 
 Capítulos 8-12
 
@@ -1418,7 +1418,7 @@ Now look how we can do the same in Rails 2.1:
 
 # ActionController
 
-ActionController es la capa responsable de recibir las peticiones web y tomar decisiones de qué se debe ejecutar y renderizar o redirgir la petición a otra acctión
+ActionController es la capa responsable de recibir las peticiones web y tomar decisiones con respecto a qué se debe ejecutar y renderizar o si se debe redirigir la petición a otra acción
 Una acción es definida como método público dentro de los controladores que están automáticamente disponibles a través de las rutas.
 
 
@@ -1459,23 +1459,23 @@ Ahora es posible testear una ruta con un método HTTP. Vea el siguiente ejempo:
 
 ### Map.resources
 
-Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también estén español. En otras palabras, en vez de tener:
+Image que tiene un sitio escrito en español, y quiere remodelar todas las rutas para que también para que se correspondan con el idioma. En otras palabras, en vez de tener:
 
         http://www.mysite.com.br/products/1234/reviews
 
-quiesiera tener algo así:
+quisiera tener algo así:
 
-        http://www.mysite.com.br/produtos/1234/comentarios
+        http://www.mysite.com.br/productos/1234/comentarios
 
 
 
-Esto era posible, pero no en de una forma simple y sin compromete algunas de las convenciones de rails.
+Esto era posible, pero no en de una forma simple y sin comprometer algunas de las convenciones de rails.
 
-Ahora tenemos la opción **:as** dentro de **map.resources** para personalizar nuestras rutas. Mire el ejemplo para tener  la URL de arriba en español:
+Ahora tenemos la opción **:as** dentro de **map.resources** para personalizar nuestras rutas. Mire el ejemplo para obtener la URL de arriba en español:
 
-        map.resources :products, :as => 'produtos' do |product|
+        map.resources :products, :as => 'productos' do |product|
           # product_reviews_path(product) ==
-          # '/produtos/1234/comentarios
+          # '/productos/1234/comentarios
           product.resources :product_reviews, :as => 'comentarios'
         end
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
@@ -1526,7 +1526,7 @@ Ahora luce de la siguiente forma:
 	<% end %>
 ## ActionView::Helpers::DateHelper
 
-Ahora, todos estos métodos de módulo para trabajar con fechas (**date\_select**, **time\_select**, **select\_datetime**, etc.) aceptan opciones  **HTML**. Mira un ejemplo usando **date\_select**
+Ahora todos estos métodos de módulo para trabajar con fechas (**date\_select**, **time\_select**, **select\_datetime**, etc.) aceptan opciones  **HTML**. Mira un ejemplo usando **date\_select**
 
 	<%= date_select 'item','happening', :order => [:day], :class => 'foobar'%>
 	
@@ -1597,7 +1597,7 @@ Por otro lado, podemos personalizar de otras formas, por ejemplo:
 		:delimiter => ".", :unit => "R$")
 	# => "9,99 em reais"
 
-Cuando creas tu cadena de formateo, se puedes especificar el siguiente parámetro: 
+Cuando creas tu cadena de formateo, se puede especificar el siguiente parámetro: 
 
 	%u Para la moneda
 	%n Para el número
@@ -1610,7 +1610,7 @@ El método **excerpt** nos ayuda a encontrar una palabra dentro de una frase y n
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an examp…"
 	
-Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y fue corregido. Mira el ejemplo de la salida correcta de este método:
+Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caracteres y no 5. Esto era un bug y se corrigió. Mira el ejemplo de la salida correcta de este método:
 
 	excerpt('This is an example', 'an', 5)
 	# => "…s is an exam…"
@@ -1619,7 +1619,7 @@ Pero había un problema. Si cuentas, vas a notar que el método retorna 6 caract
 
 El método **simple\_format** básicamente recibe como parámetro cualquier texto y le da formato de una manera muy simple a **HTML**. Toma el texto y reemplaza los saltos de línea (\n) por el tag **HTML** "< br />". Y cuando tenemos dos saltos de línea, uno atrás del otro, separa el texto con tags "< p>".
 
-En Rails 2.1 este método recibe un parámetros adicional. Además del texto, podemos informarle que atributo **HTML** nos gustaria que el tag "< p>" incluyera. Veamos el ejemplo: 
+En Rails 2.1 este método recibe un parámetro adicional. Además del texto, podemos informarle que atributo **HTML** nos gustaria que el tag "< p>" incluyera. Veamos el ejemplo: 
 
 	simple_format("Hello Mom!", :class => 'description')
 	# => "<p class=’description’>Hello Mom!</p>"
@@ -1648,12 +1648,12 @@ También es posible listar cuales gemas están siendo usadas en el proyecto ejec
 	# Listando todas las dependencias
 	rake gems
 
-Si una de las gemas tiene un archivo **rails/init.rb** y vos querés llevar la gema con tu aplicación, podés hacer: 
+Si una de las gemas tiene un archivo **rails/init.rb** y vos querés llevar la gema con tu aplicación, puedes hacer: 
 
 	# Copia la gema especificada a vendor/gems/nome_do_gem-x.x.x
 	rake gems:unpack GEM=gem_name
 
-Entonces, la gema será copiada al directorio **vendor/gems/gem\_name-x.x.x**. En caso de no especificas el nombre de la gema, Rails copiará todas las gemas al directorio **vendor/gem**
+Entonces, la gema será copiada al directorio **vendor/gems/gem\_name-x.x.x**. En caso de no especificar el nombre de la gema, Rails copiará todas las gemas al directorio **vendor/gem**
 
 ## config.gem en plugins
 
@@ -1675,7 +1675,7 @@ Pero en Rails 2.1 el archivo **init.rb** sería:
 	  ActionController::Base.send :include, OpenIdAuthentication
 	end
 
-Así que, cuando ejecutes la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.
+Así que, cuando ejecute la tarea para instalar todas las gemas necesarias, éstas estarán entre ellas.
 
 ## gems:build
 
@@ -1696,7 +1696,7 @@ Se agregó un acceso directo para recuperar el path del directorio **"public"** 
 	Rails.public_path
 ## Rails.logger, Rails.root, Rails.env y Rails.cache
 
-En Rails 2.1 en vez de usar las constantes: **RAILS\_DEFAULT\_LOGGER**, **RAILS\_ROOT**, **RAILS\_ENV** and **RAILS\_CACHE**. Ahora usaremos:
+En Rails 2.1 en vez de usar las constantes: **RAILS\_DEFAULT\_LOGGER**, **RAILS\_ROOT**, **RAILS\_ENV** y **RAILS\_CACHE**, usaremos:
 
 	# RAILS_DEFAULT_LOGGER
 	Rails.logger
@@ -1716,14 +1716,14 @@ En versiones anteriores para descubrir, en tiempo de ejecución, cual es la vers
 
 	Rails::VERSION::STRING
 
-En Rails 2.1 cambió a:
+En Rails 2.1 usamos:
 
 	Rails.version
 
 
 ##Obteniendo información acerca de un plugin
 
-Esta es una de las nuevas características de Rails 2.1 que probablemente nunca uses. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
+Esta es una de las nuevas características de Rails 2.1 que probablemente nunca use. Digo "probablemente", porque en algunos casos específicos puede ser útil, por ejemplo, para saber la versión de un plugin. 
 
 Para probarlo, necesitamos crear un archivo que se llame *about.yml* en el directorio del plugin, con algo como lo siguiente:
 
@@ -1738,7 +1738,7 @@ Podemos obtener esta información luego de esta manera:
 	plugin.about["author"] # => “Carlos Brando”
 	plugin.about["url"] # => “http://www.nomedojogo.com”
 
-Si encontrás algún buen uso de esta carácterística y la querés compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
+Si encuentras algún buen uso de esta carácterística y la quieres compartir conmigo, tal vez cambie mi opinión acerca de su real necesidad. 
 
 
 # Rake Tasks, Plugins y Scripts
@@ -1747,15 +1747,15 @@ Si encontrás algún buen uso de esta carácterística y la querés compartir co
 
 ### rails:update
 
-De ahora en más, cada vez que ejecutes la tarea **rake rails:freeze:edge**, esta también ejecutará  **rails:update**, actualizando los archivos de configuración y los *JavaScripts*.
+De ahora en más, cada vez que se ejecute la tarea **rake rails:freeze:edge**, esta también ejecutará  **rails:update**, actualizando los archivos de configuración y los *JavaScripts*.
 
 ### Base de datos en 127.0.0.1
 
-Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará **127.0.0.1**. Esto funciona para las tareas **create** y **drop**. El archivo database.rake también fue refactorizado para hacer el codigo menos repetitivo. 
+Un cambio fue realizado en el archivo database.rake que solía buscar unicamente en localhost bases de datos locales. Ahora considerará **127.0.0.1**. Esto funciona para las tareas **create** y **drop**. El archivo database.rake también fue refactorizado para hacer el código menos repetitivo. 
 
 ### Congelando a una versión de Rails específica.
 
-Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Solo podías utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: 
+Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dentro de un proyecto. Sólo se podía utilizar la Revisión como parámetro. En Rails 2.1, podemos congelar a una versión específica con el siguiente comando: 
 
 	rake rails:freeze:edge RELEASE=1.2.0
 
@@ -1763,11 +1763,11 @@ Hasta Rails 2.1 no era posible congelar a una versión de Rails específica dent
 
 #### rake time:zones:all
 
-Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También podés filtar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.
+Devuelve todas las zonas horarias conocidas para Rails, agrupadas por uso horario. También se puede filtrar los valores retornados usando el parámetro óptico OFFSET, por ejemplo: OFFSET=-6.
 
 #### rake time:zones:us
 
-Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es valida en este contexto.
+Muestra lista con todas las zonas horarias de Estados Unidos. La opción OFFSET también es válida en este contexto.
 
 #### rake time:zones:local
 
@@ -1786,13 +1786,13 @@ Se agregó soporte para plugins alojados en repositorios GIT.
 
 Este script hace lo mismo que script/console, solo que para la base de datos. En otras palabras, te conecta con el cliente por línea de comando de tu base de datos.
 
-Mirando al código, este funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".
+Mirando al código, éste funcionaría solamente con mysql, postgresql y sqlite(3). Cuando sea especificada otra base de datos en el archivo database.yml, el script mostrará: "not supported for this database type".
 
 ## Plugins
 
-### Gemas ahora pueden ser plugins
+### Las Gemas ahora pueden ser plugins
 
-Ahora, cualqioer gema que tenga un archivo **rails/init.rb** puede ser instalado dentro del directorio **vendor** de tu proyecto Rails igual que un **plugin**.
+Ahora, cualquier gema que tenga un archivo **rails/init.rb** puede ser instalado dentro del directorio **vendor** de tu proyecto Rails igual que un **plugin**.
 
 ### Usando generadores en plugins
 
@@ -1800,7 +1800,7 @@ Es posible configurar **Rails** para buscar **plugins** en directorios diferente
 
 	config.plugin_paths = ['lib/plugins', 'vendor/plugins']
 
-Rails 2.0 tenía un bug en esta configuración que muestraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentra generadores en plugins que estén dentro de **vendor/plugins**. En Rails 2.1 ese bug fue corregido.  	
+Rails 2.0 tenía un bug en esta configuración que mostraba cuando un plugin tenía generadores. Por ese bug, Rails solo encuentraba generadores en plugins que estuvieran dentro de **vendor/plugins**. En Rails 2.1 ese bug fue corregido.  	
 
 # Prototype y script.aculo.us
 
@@ -1812,13 +1812,13 @@ Rails 2.1 ahora usa Prototype versión 1.6.0.1. Este sirve como base de la versi
 
 ## Details
 
-El foco principal de los cambios de Rails fue Ruby 1.9, aún detalles menores fueon analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar **File.exists?** por **File.exist?** no fueron dejados de lado.
+El foco principal de los cambios de Rails fue Ruby 1.9. Aspectos menores fueron analizados para incrementar la compatibilidad de Rails con la nueva versión de Ruby. Detalles como cambiar **File.exists?** por **File.exist?** no fueron dejados de lado.
 
-Además, en Ruby 1.9, el modulo **Base64** (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  **ActiveSupport::Base64**.
+Además, en Ruby 1.9, el módulo **Base64** (base64.rb) fue eliminado, por esa razón, todas las referencias fueron remplazadas por  **ActiveSupport::Base64**.
 
 ##Nuevos métodos para la clase DateTime
 
-Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, tres nuevos métodos fueron agregado a la clase **DateTime**. Los métodos son **#utc**, **#utc?** y **#utc\_offset**. veamos un ejemplo de cada uno:
+Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, tres nuevos métodos fueron agregados a la clase **DateTime**. Los métodos son **#utc**, **#utc?** y **#utc\_offset**. veamos un ejemplo de cada uno:
 
 	>> date = DateTime.civil(2005, 2, 21, 10, 11, 12, Rational(-6, 24))
 	#=> Mon, 21 Feb 2005 10:11:12 -0600
@@ -1839,7 +1839,7 @@ Con el objetivo de mantener compatibilidad (duck-typing) con la clase **Time**, 
 
 ##Ruby-debug Nativo
 
-Fue habilitado nuevamente la opción para utilizar **ruby-debug** en pruebas con Rails. Ahora, teniendo en cueta que tenés la gema instalada, solo se necesita el método **debugger**.
+Fue habilitada nuevamente la opción para utilizar **ruby-debug** en pruebas con Rails. Ahora, teniendo en cuenta que la gema debe estar instalada, sólo se necesita el usar el método **debugger**.
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
@@ -1847,9 +1847,9 @@ Fue habilitado nuevamente la opción para utilizar **ruby-debug** en pruebas con
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
 
-## Aregar columnas en PostgreSQL
+## Agregar columnas en PostgreSQL
 
-Había un bug usando  **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
+Existía un bug cuando se usaba **PostgreSQL**. El bug ocurría cuando creabamos una migración para agregar una columna en una tabla existente. Por ejemplo:
 
 
 Archivo: *db/migrate/002\_add\_cost.rb*
@@ -1865,7 +1865,7 @@ Archivo: *db/migrate/002\_add\_cost.rb*
           end
         end
 
-Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
+Note que estamos creando una columna con **:precision => 6** y  **:scale => 2**. Ahora ejecutamos **rake db:migrate** y vemos como se ve nuestra tabla en la base de datos:
 
 <table border="1" cellspacing="0" cellpadding="5">
         <tr>
@@ -1895,7 +1895,7 @@ Note que estamos creadno una columna con **:precision => 6** y  **:scale => 2**.
         </tr>
 </table>
 
-Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columan se crea correctamente.
+Vea la columna "cost" que acabamos de crear. Es un **numeric** común, pero debería ser como la columna "price" de arriba, más precisamente un **numeric(6,2)**. En Rails 2.1 este error no sucede más y la columa se crea correctamente.
 
 
 <!-- -*- mode: markdown; coding: utf-8; -*- -->
@@ -1932,7 +1932,7 @@ En Rails 2.0 el archivo *application.rb* era así:
 
 Vea la llamada al método  **protect\_from\_forgery**.
 
-¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de un fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar un el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.
+¿Escuchó hablar sobre Cross Site Scripting? Este es el nombre de un fallo de seguridad que se puede encontrar en la mayoría de los sitios y aplicaciones web que permiten a gente mala (estoy hablando de adolescentes que no tienen nada que hacer y tampoco tienen vida social) alterar el contenido de las páginas web, para llevar acabo 'fishing attacks', tomando el control del navegador a través de código javascript y en la mayoría de las veces forzando el usuario a ejecutar el comando que ellos quieran. Este último tipo de ataque se llama 'cross-site request forgery'.
 
 Cross Site Request Forgery es un tipo de ataque fuerza al usuario a ejecutar comandos si que este lo sepa. Y con el incremento del uso de ajax, las cosas empeoran.
 
@@ -1946,7 +1946,7 @@ Si ud. quiere aprender más acerca de CSRF (Cross-Site Request Forgery) vaya a l
 
 * [http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750](http://www.nomedojogo.com/2008/01/14/como-um-garoto-chamado-samy-pode-derrubar-seu-site/isc.sans.org/diary.html?storyid=1750)
 
-Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, noes una bala de plata.
+Pero recuerde que esta no es una solución definitiva al problema, o como decimos comunmente, no es una bala de plata.
 
 
 
@@ -1954,7 +1954,7 @@ Pero recuerde que esta no es una solución definitiva al problema, o como decimo
 
 ## Use method\_missing, sin dejar cabos sueltos
 
-Debido a la naturaleza dinámica de Ruby, el método **respond\_to?** es crucial. ¿Cuantas veces necesitamos verificar si un método existe en el objeto que estamos manipulando, o si un objeto es lo que estamos esperando (**is\_a?**)?
+Debido a la naturaleza dinámica de Ruby, el método **respond\_to?** es crucial. ¿Cuántas veces necesitamos verificar si un método existe en el objeto que estamos manipulando, o si un objeto es lo que estamos esperando (**is\_a?**)?
 
 Sin embargo hay algo muy importante que mucha gente olvida. Mire por ejemplo esta clase que usa el método **method\_missing**:
 
@@ -1974,7 +1974,7 @@ Sin embargo hay algo muy importante que mucha gente olvida. Mire por ejemplo est
         rex.ladrar_y_correr #=> woofwoof!
 
 
-Creo que ud conoce **method\_missing**, o no? En el ejemplo de arriba estoy creando una instacia de la clase **Perro** y llamando a los métodos **ladrar**, **ladrar!** y **ladrar_y_correr** que no existen. Entonces el método **method\_missing** es invocado, dónde uso una simple expresión regular para retornar "woofwoof!", en caso de que el nombre del m;etodo comience con ladrar.
+Creo que ud conoce **method\_missing**, o no? En el ejemplo de arriba estoy creando una instacia de la clase **Perro** y llamando a los métodos **ladrar**, **ladrar!** y **ladrar_y_correr** que no existen. Entonces el método **method\_missing** es invocado, donde uso una simple expresión regular para retornar "woofwoof!", en caso  que el nombre del método comience con ladrar.
 
 
 Pero veamos que pasa cuando intento usar el método **respond\_to?**:
@@ -1983,7 +1983,7 @@ Pero veamos que pasa cuando intento usar el método **respond\_to?**:
         rex.ladrar #=> woofwoof!
 
 
-Retorna false, y tiene mucho sentido dado que el método no existe realmente. Entonces es mi responsabilidad cambiar el método **respond\_to?** para que funcione correctamente con esta regla especial. Voy a cambiar mi clase así:
+Retorna false, y tiene mucho sentido dado que el método no existe realmente. Entonces es mi responsabilidad cambiar el método **respond\_to?** para que funcione correctamente con esta regla especial. Voy a modificar mi clase de la siguiente forma:
 
 
         class Perro
@@ -2007,12 +2007,12 @@ Retorna false, y tiene mucho sentido dado que el método no existe realmente. En
         rex.respond_to?(:ladrar) #=> true
         rex.ladrar #=> woofwoof!
 
-Ahora sí! Este es un error muy común que he visto en algunos códigos, inclusive el propio Rails. Intente ejecutar el método  **respond\_to?** para verificar la existencia de métodos como **find\_by\_name**, por ejemplo.
+Ahora sí! Este es un error muy común que he visto en algunos códigos, inclusive en el propio Rails. Intente ejecutar el método  **respond\_to?** para verificar la existencia de métodos como **find\_by\_name**, por ejemplo.
 
 
 Ruby es un lenguaje impresionante y altamente flexible, pero si no prestamos atención podemos dejar cabos sueltos como este.
 
-Por supuesto que en Rails 2.1 este problema se solucionó, podemos usar  **respond\_to?** para verificar la existencia de métodos como **find\_by\_algo**.
+Por supuesto que en Rails 2.1 este problema ya se solucionó. Podemos usar  **respond\_to?** para verificar la existencia de métodos como **find\_by\_algo**.
 
 
 
@@ -2020,7 +2020,7 @@ Por supuesto que en Rails 2.1 este problema se solucionó, podemos usar  **respo
 
 ## PostgreSQL
 
-En Rails 2.0, el adaptador para **PostgreSQL** tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3
+En Rails 2.0, el adaptador para **PostgreSQL** tenía soporte solamente para las versiones 8.1 hasta 8.3. Se agregó soporte para las versiones 7.4 hasta la 8.3.
 
 
 
